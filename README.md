@@ -24,14 +24,21 @@ src/
 ├── assets/            # Imagens, fontes e outros recursos estáticos
 ├── components/        # Componentes reutilizáveis
 │   ├── common/        # Botões, inputs, cards, etc.
+│   ├── debug/         # Componentes para depuração
 │   ├── layout/        # Header, Footer, Container, etc.
 │   └── sections/      # Seções específicas da landing page
 ├── hooks/             # Custom hooks React
 ├── pages/             # Páginas/rotas da aplicação
 │   ├── Home/          # Página inicial (landing)
 │   └── NotFound/      # Página 404
+├── services/          # Serviços para integração com API
 ├── types/             # Definições de tipos TypeScript
+│   └── api/           # Tipos para integração com API
 ├── utils/             # Funções utilitárias
+│   ├── api.ts         # Cliente API com Axios
+│   ├── env.ts         # Utilitário para variáveis de ambiente
+│   └── errorHandler.ts # Tratamento de erros da API
+├── vite-env.d.ts      # Definições de tipos para variáveis de ambiente
 ├── App.tsx            # Componente principal
 ├── index.tsx          # Ponto de entrada
 └── routes.tsx         # Configuração de rotas
@@ -59,7 +66,17 @@ npm run dev
 yarn dev
 ```
 
-4. Acesse o projeto em [http://localhost:5173](http://localhost:5173)
+4. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
+# Edite o arquivo .env conforme necessário
+```
+
+5. Acesse o projeto em [http://localhost:5173](http://localhost:5173)
+
+## Variáveis de Ambiente
+
+O projeto utiliza variáveis de ambiente para configuração. Consulte o arquivo [ENV.md](ENV.md) para mais detalhes sobre as variáveis disponíveis e como configurá-las.
 
 ## Scripts Disponíveis
 
