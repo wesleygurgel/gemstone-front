@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,6 +35,24 @@ const Header = () => {
           <a href="#contact" className="font-medium text-black-800 hover:text-gold-500 transition-colors">
             Contato
           </a>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link 
+              to="/marketplace" 
+              className="font-medium bg-gold-500 text-white px-4 py-2 rounded-md hover:bg-gold-600 transition-colors flex items-center"
+            >
+              Marketplace
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="ml-1"
+              >
+                →
+              </motion.span>
+            </Link>
+          </motion.div>
         </nav>
 
         {/* CTA Button */}
@@ -92,6 +111,27 @@ const Header = () => {
             >
               Contato
             </a>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Link 
+                to="/marketplace" 
+                className="font-medium bg-gold-500 text-white px-4 py-2 rounded-md hover:bg-gold-600 transition-colors flex items-center justify-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Marketplace
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                  className="ml-1"
+                >
+                  →
+                </motion.span>
+              </Link>
+            </motion.div>
+
             <a 
               href="#contact" 
               className="btn bg-gold-500 text-white hover:bg-gold-600 w-full text-center"
