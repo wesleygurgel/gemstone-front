@@ -1,9 +1,9 @@
 import { ApiService } from './apiService';
-import { 
-  Product, 
-  ProductCreate, 
+import {
+  Product,
+  ProductCreate,
   ProductCreateResponse,
-  ProductUpdate, 
+  ProductUpdate,
   ProductListItem,
   Category,
   CategoryCreate,
@@ -84,7 +84,7 @@ class CategoryService extends ApiService<Category, CategoryCreate> {
    * @returns Promise resolving to an array of categories
    */
   getAllCategories = async (): Promise<Category[]> => {
-    return this.customGet<Category[]>('all/');
+    return this.customGet<Category[]>('');
   };
 
   /**
