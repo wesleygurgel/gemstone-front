@@ -1,5 +1,12 @@
 import api, { storeTokens, clearTokens } from '../utils/api';
-import { LoginRequest, RegisterRequest, TokenResponse, UserProfile } from '../types/api';
+import { 
+  LoginRequest, 
+  RegisterRequest, 
+  RegisterResponse, 
+  TokenResponse, 
+  UserProfile, 
+  ProfileUpdateRequest 
+} from '../types/api';
 
 /**
  * Authentication service for handling user authentication operations
@@ -10,8 +17,8 @@ const authService = {
    * @param userData User registration data
    * @returns Promise resolving to the registration response
    */
-  register: async (userData: RegisterRequest): Promise<UserProfile> => {
-    const response = await api.post<UserProfile>('/accounts/register/', userData);
+  register: async (userData: RegisterRequest): Promise<RegisterResponse> => {
+    const response = await api.post<RegisterResponse>('/accounts/register/', userData);
     return response.data;
   },
 
@@ -24,10 +31,10 @@ const authService = {
     // First, get the JWT tokens
     const tokenResponse = await api.post<TokenResponse>('/token/', credentials);
     const { access, refresh } = tokenResponse.data;
-    
+
     // Store tokens
     storeTokens(access, refresh);
-    
+
     // Then, get the user profile
     const profileResponse = await api.get<UserProfile>('/accounts/me/profile/');
     return profileResponse.data;
@@ -62,10 +69,20 @@ const authService = {
   /**
    * Update the current user's profile
    * @param profileData Updated profile data
+   * @returns Promise resolving to the updated profile data
+   */
+  updateProfile: async (profileData: ProfileUpdateRequest): Promise<ProfileUpdateRequest> => {
+    const response = await api.patch<ProfileUpdateRequest>('/accounts/me/profile/', profileData);
+    return response.data;
+  },
+
+  /**
+   * Update the current user's account information
+   * @param userData Updated user data
    * @returns Promise resolving to the updated user profile
    */
-  updateProfile: async (profileData: Partial<UserProfile>): Promise<UserProfile> => {
-    const response = await api.patch<UserProfile>('/accounts/me/profile/', profileData);
+  updateAccount: async (userData: Partial<UserProfile>): Promise<UserProfile> => {
+    const response = await api.patch<UserProfile>('/accounts/me/', userData);
     return response.data;
   },
 
