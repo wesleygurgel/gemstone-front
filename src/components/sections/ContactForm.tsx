@@ -64,12 +64,17 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-black-50">
-      <div className="container">
+    <section id="contact" className="py-20 bg-black-800 relative overflow-hidden">
+      {/* Background neon elements */}
+      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-gem-pink/5 blur-3xl"></div>
+      <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-gem-cyan/5 blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-gem-purple/5 blur-3xl"></div>
+
+      <div className="container relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <motion.h2 
-              className="text-3xl md:text-4xl font-bold text-black-900 mb-4"
+              className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gem-pink to-gem-cyan bg-clip-text text-transparent mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -78,7 +83,7 @@ const ContactForm = () => {
               Entre em contato com a Gemstone
             </motion.h2>
             <motion.p 
-              className="text-xl text-black-600 max-w-3xl mx-auto"
+              className="text-xl text-white/80 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -100,28 +105,31 @@ const ContactForm = () => {
                 href="https://maps.google.com/?q=417+NW+6th+St,+Downtown,+Miami,+FL+33136,+Estados+Unidos" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-white rounded-xl shadow-lg border-2 border-gold-200 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:border-gold-400 hover:translate-y-[-4px]"
+                className="bg-black-900/80 rounded-xl shadow-lg border border-gem-pink/30 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-neon-pink hover:translate-y-[-4px]"
                 aria-label="Ver endereço no Google Maps"
               >
-                <div className="bg-gradient-to-r from-gold-500 to-gold-400 text-white p-6 flex items-center">
-                  <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mr-4 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-pink to-gem-purple rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
+                <div className="relative flex flex-col h-full">
+                  <div className="bg-gradient-to-r from-gem-pink to-gem-purple text-white p-6 flex items-center">
+                    <div className="w-14 h-14 bg-black-900 rounded-full flex items-center justify-center mr-4 shadow-md">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gem-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold">Endereço</h3>
+                  </div>
+                  <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
+                    <p className="text-white/90 text-lg mb-1">417 NW 6th St, Downtown</p>
+                    <p className="text-white/90 text-lg mb-1">Miami, FL 33136</p>
+                    <p className="text-white/90 text-lg">Estados Unidos</p>
+                  </div>
+                  <div className="p-4 bg-black-800/60 text-gem-pink text-center font-medium border-t border-gem-pink/20 group-hover:bg-black-800/80 transition-colors duration-300">
+                    Ver no Google Maps
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold">Endereço</h3>
-                </div>
-                <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
-                  <p className="text-black-700 text-lg mb-1">417 NW 6th St, Downtown</p>
-                  <p className="text-black-700 text-lg mb-1">Miami, FL 33136</p>
-                  <p className="text-black-700 text-lg">Estados Unidos</p>
-                </div>
-                <div className="p-4 bg-gold-50 text-gold-600 text-center font-medium border-t border-gold-100 group-hover:bg-gold-100 transition-colors duration-300">
-                  Ver no Google Maps
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
                 </div>
               </a>
             </motion.div>
@@ -135,26 +143,29 @@ const ContactForm = () => {
             >
               <a 
                 href="tel:+17863036211" 
-                className="bg-white rounded-xl shadow-lg border-2 border-gold-200 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:border-gold-400 hover:translate-y-[-4px]"
+                className="bg-black-900/80 rounded-xl shadow-lg border border-gem-violet/30 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-neon-violet hover:translate-y-[-4px]"
                 aria-label="Ligar para Gemstone"
               >
-                <div className="bg-gradient-to-r from-gold-500 to-gold-400 text-white p-6 flex items-center">
-                  <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mr-4 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-violet to-gem-blue rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
+                <div className="relative flex flex-col h-full">
+                  <div className="bg-gradient-to-r from-gem-violet to-gem-blue text-white p-6 flex items-center">
+                    <div className="w-14 h-14 bg-black-900 rounded-full flex items-center justify-center mr-4 shadow-md">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gem-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold">Telefone</h3>
+                  </div>
+                  <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
+                    <p className="text-white/90 text-xl font-medium">+1 (786) 303-6211</p>
+                    <p className="text-white/60 mt-2">Disponível em horário comercial</p>
+                  </div>
+                  <div className="p-4 bg-black-800/60 text-gem-violet text-center font-medium border-t border-gem-violet/20 group-hover:bg-black-800/80 transition-colors duration-300">
+                    Ligar agora
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold">Telefone</h3>
-                </div>
-                <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
-                  <p className="text-black-700 text-xl font-medium">+1 (786) 303-6211</p>
-                  <p className="text-black-500 mt-2">Disponível em horário comercial</p>
-                </div>
-                <div className="p-4 bg-gold-50 text-gold-600 text-center font-medium border-t border-gold-100 group-hover:bg-gold-100 transition-colors duration-300">
-                  Ligar agora
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
                 </div>
               </a>
             </motion.div>
@@ -168,140 +179,150 @@ const ContactForm = () => {
             >
               <a 
                 href="mailto:contact@gemstonemiami.com" 
-                className="bg-white rounded-xl shadow-lg border-2 border-gold-200 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-xl hover:border-gold-400 hover:translate-y-[-4px]"
+                className="bg-black-900/80 rounded-xl shadow-lg border border-gem-cyan/30 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-neon-cyan hover:translate-y-[-4px]"
                 aria-label="Enviar email para Gemstone"
               >
-                <div className="bg-gradient-to-r from-gold-500 to-gold-400 text-white p-6 flex items-center">
-                  <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mr-4 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-blue to-gem-cyan rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
+                <div className="relative flex flex-col h-full">
+                  <div className="bg-gradient-to-r from-gem-blue to-gem-cyan text-white p-6 flex items-center">
+                    <div className="w-14 h-14 bg-black-900 rounded-full flex items-center justify-center mr-4 shadow-md">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gem-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold">Email</h3>
+                  </div>
+                  <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
+                    <p className="text-white/90 text-xl font-medium">contact@gemstonemiami.com</p>
+                    <p className="text-white/60 mt-2">Responderemos em até 24 horas</p>
+                  </div>
+                  <div className="p-4 bg-black-800/60 text-gem-cyan text-center font-medium border-t border-gem-cyan/20 group-hover:bg-black-800/80 transition-colors duration-300">
+                    Enviar email
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold">Email</h3>
-                </div>
-                <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
-                  <p className="text-black-700 text-xl font-medium">contact@gemstonemiami.com</p>
-                  <p className="text-black-500 mt-2">Responderemos em até 24 horas</p>
-                </div>
-                <div className="p-4 bg-gold-50 text-gold-600 text-center font-medium border-t border-gold-100 group-hover:bg-gold-100 transition-colors duration-300">
-                  Enviar email
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
                 </div>
               </a>
             </motion.div>
           </div>
 
           <motion.div
-            className="mb-12 rounded-lg overflow-hidden shadow-lg border border-gold-200"
+            className="mb-12 rounded-lg overflow-hidden shadow-lg border border-gem-violet/30 relative group"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6878806471!2d-80.20212492394026!3d25.77893770992881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b6a3a4d29c33%3A0x1c5e1d3d5c1d3d5c!2s417%20NW%206th%20St%2C%20Miami%2C%20FL%2033136%2C%20USA!5e0!3m2!1sen!2sbr!4v1650000000000!5m2!1sen!2sbr" 
-              width="100%" 
-              height="450" 
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Gemstone Location"
-              aria-label="Google Maps showing Gemstone's location"
-            ></iframe>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-violet to-gem-blue rounded-lg blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+            <div className="relative">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6878806471!2d-80.20212492394026!3d25.77893770992881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b6a3a4d29c33%3A0x1c5e1d3d5c1d3d5c!2s417%20NW%206th%20St%2C%20Miami%2C%20FL%2033136%2C%20USA!5e0!3m2!1sen!2sbr!4v1650000000000!5m2!1sen!2sbr" 
+                width="100%" 
+                height="450" 
+                style={{ border: 0 }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Gemstone Location"
+                aria-label="Google Maps showing Gemstone's location"
+                className="grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+              ></iframe>
+            </div>
           </motion.div>
 
           <motion.div
-            className="bg-white p-8 rounded-lg shadow-lg border border-gold-200"
+            className="bg-black-900/80 p-8 rounded-lg shadow-lg border border-gem-purple/30 relative group"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {formStatus.type && (
-              <div 
-                className={`mb-6 p-4 rounded-lg ${
-                  formStatus.type === 'success' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}
-              >
-                {formStatus.message}
-              </div>
-            )}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-pink to-gem-purple rounded-lg blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+            <div className="relative">
+              {formStatus.type && (
+                <div 
+                  className={`mb-6 p-4 rounded-lg ${
+                    formStatus.type === 'success' 
+                      ? 'bg-green-900/30 text-green-300 border border-green-500/30' 
+                      : 'bg-red-900/30 text-red-300 border border-red-500/30'
+                  }`}
+                >
+                  {formStatus.message}
+                </div>
+              )}
 
-            <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="name" className="block text-black-700 mb-2">
-                    Nome
+              <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label htmlFor="name" className="block text-white mb-2">
+                      Nome
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-black-800 border border-gem-purple/30 text-white focus:outline-none focus:ring-2 focus:ring-gem-purple focus:border-transparent placeholder-white/50"
+                      placeholder="Seu nome"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-white mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-black-800 border border-gem-purple/30 text-white focus:outline-none focus:ring-2 focus:ring-gem-purple focus:border-transparent placeholder-white/50"
+                      placeholder="seu.email@exemplo.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="company" className="block text-white mb-2">
+                    Empresa
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="company"
+                    name="company"
+                    value={formData.company || ''}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gold-200 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent"
-                    placeholder="Seu nome"
+                    className="w-full px-4 py-3 rounded-lg bg-black-800 border border-gem-purple/30 text-white focus:outline-none focus:ring-2 focus:ring-gem-purple focus:border-transparent placeholder-white/50"
+                    placeholder="Nome da sua empresa"
                   />
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-black-700 mb-2">
-                    Email
+
+                <div className="mb-6">
+                  <label htmlFor="message" className="block text-white mb-2">
+                    Mensagem
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gold-200 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent"
-                    placeholder="seu.email@exemplo.com"
-                  />
+                    rows={5}
+                    className="w-full px-4 py-3 rounded-lg bg-black-800 border border-gem-purple/30 text-white focus:outline-none focus:ring-2 focus:ring-gem-purple focus:border-transparent placeholder-white/50"
+                    placeholder="Como podemos ajudar?"
+                  ></textarea>
                 </div>
-              </div>
 
-              <div className="mb-6">
-                <label htmlFor="company" className="block text-black-700 mb-2">
-                  Empresa
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company || ''}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gold-200 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent"
-                  placeholder="Nome da sua empresa"
-                />
-              </div>
-
-              <div className="mb-6">
-                <label htmlFor="message" className="block text-black-700 mb-2">
-                  Mensagem
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-3 rounded-lg border border-gold-200 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent"
-                  placeholder="Como podemos ajudar?"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="btn bg-gold-500 text-black-900 hover:bg-gold-400 w-full md:w-auto flex items-center justify-center"
-              >
-                <Send size={18} className="mr-2" />
-                Enviar Mensagem
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  className="btn bg-gradient-to-r from-gem-pink to-gem-purple text-white hover:shadow-neon-pink w-full md:w-auto flex items-center justify-center transition-all duration-300"
+                >
+                  <Send size={18} className="mr-2" />
+                  Enviar Mensagem
+                </button>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>

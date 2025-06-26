@@ -29,6 +29,21 @@ export default {
           900: '#212121', // Main black color
         },
         white: '#FFFFFF',
+        // Logo colors
+        gem: {
+          pink: '#D1497E',
+          purple: '#A674E3',
+          violet: '#7676F0',
+          blue: '#4F9EF4',
+          cyan: '#3BC8F5',
+        },
+      },
+      boxShadow: {
+        'neon-pink': '0 0 5px #D1497E, 0 0 10px #D1497E, 0 0 15px #D1497E',
+        'neon-purple': '0 0 5px #A674E3, 0 0 10px #A674E3, 0 0 15px #A674E3',
+        'neon-violet': '0 0 5px #7676F0, 0 0 10px #7676F0, 0 0 15px #7676F0',
+        'neon-blue': '0 0 5px #4F9EF4, 0 0 10px #4F9EF4, 0 0 15px #4F9EF4',
+        'neon-cyan': '0 0 5px #3BC8F5, 0 0 10px #3BC8F5, 0 0 15px #3BC8F5',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
