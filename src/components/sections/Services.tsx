@@ -67,10 +67,32 @@ const services = [
 const Services = () => {
   return (
     <section id="services" className="py-20 bg-black-900 relative overflow-hidden">
-      {/* Background neon elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-gem-violet/5 blur-3xl"></div>
-      <div className="absolute bottom-40 left-10 w-96 h-96 rounded-full bg-gem-pink/5 blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-96 bg-gradient-to-r from-gem-pink/5 via-gem-purple/5 to-gem-cyan/5 blur-3xl opacity-30"></div>
+      {/* Modern subtle particle background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top right particles */}
+        <div className="absolute top-20 right-20 w-1 h-1 rounded-full bg-gem-violet/30"></div>
+        <div className="absolute top-40 right-40 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-60 right-60 w-2 h-2 rounded-full bg-gem-pink/20"></div>
+        <div className="absolute top-80 right-80 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-100 right-100 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Bottom left particles */}
+        <div className="absolute bottom-40 left-10 w-1.5 h-1.5 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute bottom-60 left-30 w-1 h-1 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute bottom-80 left-50 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-100 left-70 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute bottom-120 left-90 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Center particles - scattered across the section */}
+        <div className="absolute top-1/4 left-1/4 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute top-2/3 left-2/3 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-3/4 left-3/4 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Subtle gradient overlay */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-gem-pink/5 via-gem-purple/5 to-gem-cyan/5 blur-2xl opacity-20"></div>
+      </div>
 
       <div className="container relative z-10">
         <div className="text-center mb-16">

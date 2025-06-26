@@ -65,10 +65,32 @@ const ContactForm = () => {
 
   return (
     <section id="contact" className="py-20 bg-black-800 relative overflow-hidden">
-      {/* Background neon elements */}
-      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-gem-pink/5 blur-3xl"></div>
-      <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-gem-cyan/5 blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-gem-purple/5 blur-3xl"></div>
+      {/* Modern subtle particle background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top left particles */}
+        <div className="absolute top-20 left-20 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-40 left-40 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-60 left-30 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute top-80 left-50 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-100 left-70 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Bottom right particles */}
+        <div className="absolute bottom-20 right-20 w-1.5 h-1.5 rounded-full bg-gem-cyan/30"></div>
+        <div className="absolute bottom-40 right-40 w-1 h-1 rounded-full bg-gem-blue/25"></div>
+        <div className="absolute bottom-60 right-30 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-80 right-50 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute bottom-100 right-70 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+
+        {/* Center particles */}
+        <div className="absolute top-1/2 left-1/3 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute top-1/2 left-1/3 translate-x-10 translate-y-10 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+        <div className="absolute top-1/2 left-1/3 translate-x-20 translate-y-20 w-2 h-2 rounded-full bg-gem-blue/20"></div>
+        <div className="absolute top-1/2 left-1/3 translate-x-30 translate-y-30 w-1 h-1 rounded-full bg-gem-violet/30"></div>
+        <div className="absolute top-1/2 left-1/3 translate-x-40 translate-y-40 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Subtle gradient overlay */}
+        <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 bg-gradient-to-br from-gem-pink/5 to-gem-cyan/5 blur-2xl opacity-20"></div>
+      </div>
 
       <div className="container relative z-10">
         <div className="max-w-5xl mx-auto">

@@ -53,10 +53,29 @@ const documents = [
 const Compliance = () => {
   return (
     <section id="compliance" className="py-20 bg-black-800 relative overflow-hidden">
-      {/* Background neon elements */}
+      {/* Modern subtle particle background */}
       <div className="absolute top-0 left-0 w-full h-full bg-black-900 opacity-50"></div>
-      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-gem-violet/5 blur-3xl"></div>
-      <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-gem-pink/5 blur-3xl"></div>
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top left particles */}
+        <div className="absolute top-20 left-20 w-1 h-1 rounded-full bg-gem-violet/30"></div>
+        <div className="absolute top-40 left-40 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-60 left-60 w-2 h-2 rounded-full bg-gem-pink/20"></div>
+        <div className="absolute top-80 left-80 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-100 left-100 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Bottom right particles */}
+        <div className="absolute bottom-20 right-20 w-1.5 h-1.5 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute bottom-40 right-40 w-1 h-1 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute bottom-60 right-60 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-80 right-80 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute bottom-100 right-100 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Diagonal particles */}
+        <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+      </div>
 
       <div className="container relative z-10">
         <div className="text-center mb-16">

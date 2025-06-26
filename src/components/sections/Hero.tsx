@@ -4,10 +4,30 @@ import heroImage from '../../assets/images/hero.webp';
 const Hero = () => {
   return (
     <section className="bg-gradient-to-r from-black-900 to-black-800 text-white py-20 relative overflow-hidden">
-      {/* Background neon elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-gem-pink/5 blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-gem-cyan/5 blur-3xl"></div>
-      <div className="absolute top-40 right-1/4 w-40 h-40 rounded-full bg-gem-purple/5 blur-3xl"></div>
+      {/* Modern subtle particle background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top left particles */}
+        <div className="absolute top-10 left-10 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-20 left-30 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-40 left-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute top-60 left-40 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-80 left-60 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Bottom right particles */}
+        <div className="absolute bottom-10 right-10 w-1.5 h-1.5 rounded-full bg-gem-cyan/30"></div>
+        <div className="absolute bottom-30 right-30 w-1 h-1 rounded-full bg-gem-blue/25"></div>
+        <div className="absolute bottom-50 right-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-70 right-40 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute bottom-90 right-60 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+
+        {/* Center right particles */}
+        <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+        <div className="absolute top-2/5 right-1/3 w-2 h-2 rounded-full bg-gem-blue/20"></div>
+
+        {/* Subtle gradient overlay */}
+        <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 bg-gradient-to-br from-gem-pink/5 to-gem-cyan/5 blur-2xl opacity-30"></div>
+      </div>
 
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

@@ -31,9 +31,23 @@ const values = [
 const About = () => {
   return (
     <section id="about" className="py-20 bg-black-900 relative overflow-hidden">
-      {/* Background neon elements */}
-      <div className="absolute top-40 right-0 w-96 h-96 rounded-full bg-gem-purple/10 blur-3xl"></div>
-      <div className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-gem-blue/10 blur-3xl"></div>
+      {/* Modern subtle particle background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 right-10 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute top-40 right-20 w-2 h-2 rounded-full bg-gem-pink/20"></div>
+        <div className="absolute top-60 right-40 w-1.5 h-1.5 rounded-full bg-gem-blue/25"></div>
+        <div className="absolute top-80 right-60 w-1 h-1 rounded-full bg-gem-cyan/20"></div>
+        <div className="absolute top-30 right-80 w-2 h-2 rounded-full bg-gem-violet/15"></div>
+
+        <div className="absolute bottom-20 left-10 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+        <div className="absolute bottom-40 left-20 w-1 h-1 rounded-full bg-gem-purple/20"></div>
+        <div className="absolute bottom-60 left-40 w-2 h-2 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute bottom-80 left-60 w-1 h-1 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-30 left-80 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+
+        {/* Subtle gradient overlay */}
+        <div className="absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-br from-gem-purple/5 to-gem-blue/5 blur-2xl opacity-30"></div>
+      </div>
 
       <div className="container relative z-10">
         <div className="text-center mb-16">
