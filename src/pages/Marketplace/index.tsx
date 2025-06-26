@@ -75,14 +75,6 @@ const Marketplace = () => {
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
-        <Breadcrumb className="mb-6" />
-
-        {/* Horizontal category navigation (visible on all screens) */}
-        <div className="mb-6">
-          <CategoryNavigation variant="horizontal" />
-        </div>
-
         <div className="flex flex-col md:flex-row gap-6">
           {/* Sidebar - visible on md and up */}
           <div className="hidden md:block w-64 flex-shrink-0">

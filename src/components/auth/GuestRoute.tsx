@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+import LoadingOverlay from '@/components/common/LoadingOverlay';
 
 interface GuestRouteProps {
   children: ReactNode;
@@ -9,13 +10,18 @@ interface GuestRouteProps {
 const GuestRoute = ({ children }: GuestRouteProps) => {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
-  
+
   // Get the redirect path from location state or default to marketplace
   const from = location.state?.from?.pathname || '/marketplace';
 
-  // Show loading state or spinner while checking authentication
+  // Render children with loading overlay while checking authentication
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return (
+      <>
+        {children}
+        <LoadingOverlay />
+      </>
+    );
   }
 
   // Redirect to marketplace or previous location if authenticated

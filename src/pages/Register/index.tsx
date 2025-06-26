@@ -70,22 +70,22 @@ const Register = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white rounded-lg shadow-xl p-8 border border-gold-200"
+            className="bg-black-800 rounded-lg shadow-xl p-8 border border-gem-purple/20"
           >
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-black-800 mb-2">Crie sua conta</h1>
-              <p className="text-black-600">Junte-se à Gemstone hoje</p>
+              <h1 className="text-3xl font-bold text-white mb-2">Crie sua conta</h1>
+              <p className="text-white/70">Junte-se à Gemstone hoje</p>
             </div>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
+              <div className="mb-6 p-4 bg-red-900/20 border-l-4 border-red-500 text-red-400">
                 <p>{error}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
-                <label htmlFor="username" className="block text-sm font-medium text-black-700 mb-2">
+                <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">
                   Nome de usuário
                 </label>
                 <input
@@ -94,13 +94,13 @@ const Register = () => {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required
                 />
               </div>
 
               <div className="mb-6">
-                <label htmlFor="email" className="block text-sm font-medium text-black-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
                   Email
                 </label>
                 <input
@@ -109,13 +109,13 @@ const Register = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required
                 />
               </div>
 
               <div className="mb-6">
-                <label htmlFor="password" className="block text-sm font-medium text-black-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-white/80 mb-2">
                   Senha
                 </label>
                 <input
@@ -124,15 +124,15 @@ const Register = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required
                   minLength={8}
                 />
-                <p className="mt-1 text-sm text-gray-500">Mínimo de 8 caracteres</p>
+                <p className="mt-1 text-sm text-white/50">Mínimo de 8 caracteres</p>
               </div>
 
               <div className="mb-6">
-                <label htmlFor="password_confirm" className="block text-sm font-medium text-black-700 mb-2">
+                <label htmlFor="password_confirm" className="block text-sm font-medium text-white/80 mb-2">
                   Confirmar Senha
                 </label>
                 <input
@@ -141,27 +141,27 @@ const Register = () => {
                   name="password_confirm"
                   value={formData.password_confirm}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required
                 />
                 {passwordError && (
-                  <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+                  <p className="mt-1 text-sm text-red-400">{passwordError}</p>
                 )}
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gold-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-gold-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 disabled:opacity-70"
+                className="w-full bg-gradient-to-r from-gem-purple to-gem-blue text-white py-3 px-4 rounded-lg font-medium hover:shadow-neon-purple transition-all focus:outline-none focus:ring-2 focus:ring-gem-purple focus:ring-offset-2 disabled:opacity-70"
               >
                 {loading ? 'Criando conta...' : 'Criar Conta'}
               </button>
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-black-600">
+              <p className="text-white/70">
                 Já tem uma conta?{' '}
-                <Link to="/login" className="text-gold-600 hover:text-gold-700 font-medium">
+                <Link to="/login" className="text-gem-purple hover:text-gem-pink font-medium">
                   Faça login
                 </Link>
               </p>
