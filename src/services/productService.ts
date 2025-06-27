@@ -43,15 +43,6 @@ class ProductService extends ApiService<Product, ProductCreate, ProductUpdate> {
   };
 
   /**
-   * Get products by category
-   * @param categoryId The category ID or slug
-   * @returns Promise resolving to an array of products in the category
-   */
-  getProductsByCategory = async (categoryId: number | string): Promise<ProductListItem[]> => {
-    return this.getAll({ category: categoryId });
-  };
-
-  /**
    * Search products
    * @param query The search query
    * @returns Promise resolving to an array of matching products
@@ -85,6 +76,15 @@ class CategoryService extends ApiService<Category, CategoryCreate> {
    */
   getAllCategories = async (): Promise<Category[]> => {
     return this.customGet<Category[]>('');
+  };
+
+  /**
+   * Get products by category
+   * @param categoryId The category ID or slug
+   * @returns Promise resolving to an array of products in the category
+   */
+  getProductsByCategory = async (categoryId: number | string): Promise<ProductListItem[]> => {
+    return this.customGet<ProductListItem[]>(`${categoryId}`);
   };
 
   /**

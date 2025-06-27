@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ChevronRight, ChevronDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { ChevronRight, ChevronDown, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { categoryService } from '@/services';
-import { Category } from '@/types/api';
+import { categoryService, productService } from '@/services';
+import { Category, ProductListItem } from '@/types/api';
 
 interface CategoryNavigationProps {
   className?: string;
   variant?: 'sidebar' | 'horizontal';
+  onCategorySelect?: (products: ProductListItem[]) => void;
 }
 
-const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNavigationProps) => {
+const CategoryNavigation = ({ className = '', variant = 'sidebar', onCategorySelect }: CategoryNavigationProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | string | null>(null);
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null);
   const location = useLocation();
 
   // Mock subcategories for demonstration (in a real app, these would come from the API)
@@ -66,11 +69,87 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
     setActiveCategory(activeCategory === categoryId ? null : categoryId);
   };
 
+  const handleCategorySelect = async (categoryId: number | string, categoryName?: string) => {
+    if (onCategorySelect) {
+      try {
+        // Set the selected category
+        setSelectedCategoryId(categoryId);
+
+        // Find the category name if not provided
+        if (!categoryName) {
+          const category = categories.find(c => c.id === categoryId || c.slug === categoryId);
+          if (category) {
+            categoryName = category.name;
+          } else {
+            // Check if it's a subcategory
+            for (const catId in subcategories) {
+              const subcat = subcategories[Number(catId)]?.find(
+                sc => sc.id === categoryId || sc.slug === categoryId
+              );
+              if (subcat) {
+                categoryName = subcat.name;
+                break;
+              }
+            }
+          }
+        }
+
+        setSelectedCategoryName(categoryName || String(categoryId));
+
+        const categoryData = await categoryService.getProductsByCategory(categoryId);
+        // Check if the response is a category object with a products array
+        if (categoryData && typeof categoryData === 'object' && 'products' in categoryData) {
+          onCategorySelect(categoryData.products);
+        } else {
+          // If it's already an array of products, pass it directly
+          onCategorySelect(categoryData);
+        }
+      } catch (error) {
+        console.error('Failed to fetch products by category:', error);
+      }
+    }
+  };
+
+  const handleResetFilter = async () => {
+    if (onCategorySelect) {
+      try {
+        setSelectedCategoryId(null);
+        setSelectedCategoryName(null);
+
+        // Fetch all products
+        const products = await productService.getProducts();
+        onCategorySelect(products);
+      } catch (error) {
+        console.error('Failed to fetch all products:', error);
+      }
+    }
+  };
+
   if (variant === 'sidebar') {
     return (
       <div className={`bg-black-800 rounded-lg border border-gem-purple/20 p-4 ${className}`}>
-        <h3 className="text-xl font-semibold mb-4 text-white">Categorias</h3>
-        
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold text-white">Categorias</h3>
+          {selectedCategoryId && (
+            <button
+              onClick={handleResetFilter}
+              className="flex items-center text-sm text-gem-pink hover:text-gem-purple transition-colors"
+              title="Limpar filtro"
+            >
+              <X size={16} className="mr-1" />
+              Limpar
+            </button>
+          )}
+        </div>
+
+        {selectedCategoryName && (
+          <div className="mb-4 px-3 py-2 bg-gem-purple/10 border border-gem-purple/30 rounded-md">
+            <p className="text-sm text-white/80">
+              Filtrando por: <span className="text-gem-pink font-medium">{selectedCategoryName}</span>
+            </p>
+          </div>
+        )}
+
         {loading ? (
           <div className="space-y-2">
             {[1, 2, 3, 4].map((i) => (
@@ -84,12 +163,17 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
             {categories.map((category) => (
               <li key={category.id} className="mb-2">
                 <div className="flex items-center justify-between">
-                  <Link 
-                    to={`/marketplace/category/${category.slug}`}
-                    className="text-white/90 hover:text-gem-pink transition-colors flex-grow py-1"
+                  <button 
+                    onClick={() => handleCategorySelect(category.id, category.name)}
+                    className={`flex-grow py-1 text-left transition-colors ${
+                      selectedCategoryId === category.id 
+                        ? 'text-gem-pink font-medium' 
+                        : 'text-white/90 hover:text-gem-pink'
+                    }`}
                   >
                     {category.name}
-                  </Link>
+                    {selectedCategoryId === category.id && ' ✓'}
+                  </button>
                   {subcategories[category.id] && (
                     <button 
                       onClick={() => toggleCategory(category.id)}
@@ -99,7 +183,7 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
                     </button>
                   )}
                 </div>
-                
+
                 <AnimatePresence>
                   {activeCategory === category.id && subcategories[category.id] && (
                     <motion.ul
@@ -111,12 +195,17 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
                     >
                       {subcategories[category.id].map((subcat) => (
                         <li key={subcat.id}>
-                          <Link 
-                            to={`/marketplace/category/${subcat.slug}`}
-                            className="text-white/70 hover:text-gem-cyan transition-colors py-1 block text-sm"
+                          <button 
+                            onClick={() => handleCategorySelect(subcat.id, subcat.name)}
+                            className={`py-1 block text-sm text-left w-full transition-colors ${
+                              selectedCategoryId === subcat.id 
+                                ? 'text-gem-cyan font-medium' 
+                                : 'text-white/70 hover:text-gem-cyan'
+                            }`}
                           >
                             {subcat.name}
-                          </Link>
+                            {selectedCategoryId === subcat.id && ' ✓'}
+                          </button>
                         </li>
                       ))}
                     </motion.ul>
@@ -133,6 +222,23 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
   // Horizontal variant
   return (
     <div className={`${className}`}>
+      <div className="flex items-center justify-between mb-2">
+        {selectedCategoryName && (
+          <div className="flex items-center">
+            <span className="text-sm text-white/80 mr-2">
+              Filtrando por: <span className="text-gem-pink font-medium">{selectedCategoryName}</span>
+            </span>
+            <button
+              onClick={handleResetFilter}
+              className="flex items-center text-xs text-gem-pink hover:text-gem-purple transition-colors"
+              title="Limpar filtro"
+            >
+              <X size={14} className="mr-1" />
+              Limpar
+            </button>
+          </div>
+        )}
+      </div>
       <nav className="flex items-center space-x-1 overflow-x-auto pb-2 hide-scrollbar">
         {loading ? (
           <div className="flex space-x-4">
@@ -145,26 +251,36 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar' }: CategoryNav
         ) : (
           categories.map((category) => (
             <div key={category.id} className="relative group">
-              <Link 
-                to={`/marketplace/category/${category.slug}`}
-                className="px-3 py-2 text-white/90 hover:text-gem-pink transition-colors whitespace-nowrap flex items-center"
+              <button 
+                onClick={() => handleCategorySelect(category.id, category.name)}
+                className={`px-3 py-2 whitespace-nowrap flex items-center transition-colors ${
+                  selectedCategoryId === category.id 
+                    ? 'text-gem-pink font-medium bg-black-700/50 rounded' 
+                    : 'text-white/90 hover:text-gem-pink'
+                }`}
               >
                 {category.name}
+                {selectedCategoryId === category.id && ' ✓'}
                 {subcategories[category.id] && (
                   <ChevronDown size={16} className="ml-1 text-white/70" />
                 )}
-              </Link>
-              
+              </button>
+
               {subcategories[category.id] && (
                 <div className="absolute left-0 mt-1 w-48 bg-black-800 rounded-md shadow-lg py-1 z-50 border border-gem-violet/30 hidden group-hover:block">
                   {subcategories[category.id].map((subcat) => (
-                    <Link 
+                    <button 
                       key={subcat.id}
-                      to={`/marketplace/category/${subcat.slug}`}
-                      className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-cyan transition-colors"
+                      onClick={() => handleCategorySelect(subcat.id, subcat.name)}
+                      className={`block px-4 py-2 text-sm w-full text-left transition-colors ${
+                        selectedCategoryId === subcat.id 
+                          ? 'text-gem-cyan font-medium bg-black-700' 
+                          : 'text-white/80 hover:bg-black-700 hover:text-gem-cyan'
+                      }`}
                     >
                       {subcat.name}
-                    </Link>
+                      {selectedCategoryId === subcat.id && ' ✓'}
+                    </button>
                   ))}
                 </div>
               )}

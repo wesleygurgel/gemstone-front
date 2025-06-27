@@ -82,7 +82,10 @@ const Marketplace = () => {
           {/* Sidebar - visible on md and up */}
           <div className="hidden md:block w-64 flex-shrink-0">
             {/* Category navigation (sidebar variant) */}
-            <CategoryNavigation className="mb-6" />
+            <CategoryNavigation 
+              className="mb-6" 
+              onCategorySelect={setProducts} 
+            />
 
             {/* Filters */}
             <ProductFilters 
