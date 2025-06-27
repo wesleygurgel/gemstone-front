@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Menu } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import CategoryNavigation from '@/components/marketplace/CategoryNavigation';
-import Breadcrumb from '@/components/marketplace/Breadcrumb';
 import ProductFilters from '@/components/marketplace/ProductFilters';
 import ProductGrid from '@/components/marketplace/ProductGrid';
 import { productService, cartService } from '@/services';
@@ -24,7 +23,11 @@ const Marketplace = () => {
       try {
         setLoading(true);
         const response = await productService.getProducts();
-        setProducts(response.results);
+        console.log('API Response:', response);
+        // The productService.getProducts() now returns the array of products directly
+        console.log('Products from API:', response);
+        setProducts(response);
+        console.log('Products state after setting:', response);
         setError(null);
       } catch (err) {
         console.error('Failed to fetch products:', err);
@@ -103,6 +106,7 @@ const Marketplace = () => {
             </div>
 
             {/* Product grid */}
+            {console.log('Before rendering ProductGrid - products:', products)}
             <ProductGrid 
               products={products}
               loading={loading}

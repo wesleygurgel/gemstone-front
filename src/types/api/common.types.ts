@@ -17,15 +17,6 @@ export interface ValidationError {
   [field: string]: string[];
 }
 
-/**
- * Paginated response structure
- */
-export interface PaginatedResponse<T> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-}
 
 /**
  * Handled API error with type information

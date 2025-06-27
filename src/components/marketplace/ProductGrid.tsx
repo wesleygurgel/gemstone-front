@@ -21,6 +21,9 @@ const ProductGrid = ({
   onAddToWishlist,
   className = ''
 }: ProductGridProps) => {
+  console.log('ProductGrid received props:', { products, loading, error });
+  console.log('Products array length:', products?.length);
+  console.log('Products array content:', products);
   // If there's an error, display error message
   if (error) {
     return (

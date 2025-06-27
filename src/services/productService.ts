@@ -9,7 +9,6 @@ import {
   CategoryCreate,
   CategoryResponse
 } from '../types/api';
-import { PaginatedResponse } from '../types/api';
 
 /**
  * Service for product-related API operations
@@ -23,15 +22,16 @@ class ProductService extends ApiService<Product, ProductCreate, ProductUpdate> {
   /**
    * Get products with pagination and filtering
    * @param params Filter parameters
-   * @returns Promise resolving to a paginated response of products
+   * @returns Promise resolving to an array of products
    */
   getProducts = async (params?: {
     category?: number | string;
     available?: boolean;
     featured?: boolean;
     search?: string;
-  }): Promise<PaginatedResponse<ProductListItem>> => {
-    return this.getAll(params);
+  }): Promise<ProductListItem[]> => {
+    const response = await this.getAll(params);
+    return response;
   };
 
   /**
@@ -47,16 +47,16 @@ class ProductService extends ApiService<Product, ProductCreate, ProductUpdate> {
    * @param categoryId The category ID or slug
    * @returns Promise resolving to an array of products in the category
    */
-  getProductsByCategory = async (categoryId: number | string): Promise<PaginatedResponse<ProductListItem>> => {
+  getProductsByCategory = async (categoryId: number | string): Promise<ProductListItem[]> => {
     return this.getAll({ category: categoryId });
   };
 
   /**
    * Search products
    * @param query The search query
-   * @returns Promise resolving to a paginated response of matching products
+   * @returns Promise resolving to an array of matching products
    */
-  searchProducts = async (query: string): Promise<PaginatedResponse<ProductListItem>> => {
+  searchProducts = async (query: string): Promise<ProductListItem[]> => {
     return this.getAll({ search: query });
   };
 

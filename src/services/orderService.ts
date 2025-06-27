@@ -7,7 +7,6 @@ import {
   OrderStatus, 
   PaymentStatus 
 } from '../types/api';
-import { PaginatedResponse } from '../types/api';
 
 /**
  * Service for order-related API operations
@@ -30,9 +29,9 @@ class OrderService extends ApiService<OrderDetail, CreateOrderRequest> {
   /**
    * Get orders for the current user
    * @param params Filter parameters
-   * @returns Promise resolving to a paginated response of orders
+   * @returns Promise resolving to an array of orders
    */
-  getUserOrders = async (params?: OrderFilterParams): Promise<PaginatedResponse<OrderDetail>> => {
+  getUserOrders = async (params?: OrderFilterParams): Promise<OrderDetail[]> => {
     return this.getAll(params);
   };
 
