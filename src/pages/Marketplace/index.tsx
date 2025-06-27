@@ -70,6 +70,8 @@ const Marketplace = () => {
     console.log('Add to wishlist:', productId);
   };
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <MarketplaceLayout>
       <Helmet>
@@ -125,7 +127,7 @@ const Marketplace = () => {
       <ProductFilters 
         isMobile={true}
         isOpen={isFilterDrawerOpen}
-        onClose={() => setIsFilterDrawerOpen(false)}
+        onClose={() => {setIsFilterDrawerOpen(false)}}
         onFilterChange={handleFilterChange}
         onSortChange={handleSortChange}
       />

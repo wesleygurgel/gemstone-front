@@ -106,7 +106,7 @@ const ProductFilters = ({
   const handleCheckboxChange = (sectionId: string, optionId: string, checked: boolean) => {
     setSelectedFilters(prev => {
       const sectionFilters = [...(prev[sectionId] || [])];
-      
+
       if (checked) {
         if (!sectionFilters.includes(optionId)) {
           sectionFilters.push(optionId);
@@ -117,7 +117,7 @@ const ProductFilters = ({
           sectionFilters.splice(index, 1);
         }
       }
-      
+
       return {
         ...prev,
         [sectionId]: sectionFilters
@@ -139,7 +139,7 @@ const ProductFilters = ({
     // Ensure min is not greater than max
     const validMin = Math.min(currentMin, currentMax);
     const validMax = Math.max(currentMin, currentMax);
-    
+
     setPriceRange({ min: validMin, max: validMax });
   };
 
@@ -171,20 +171,33 @@ const ProductFilters = ({
     }
   }, [priceRange, selectedFilters, currentSort, onFilterChange]);
 
+  // Prevent body scrolling when drawer is open
+  useEffect(() => {
+    if (isMobile && isOpen) {
+      // Disable scrolling on the body
+      document.body.style.overflow = 'hidden';
+
+      // Re-enable scrolling when drawer closes or component unmounts
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isMobile, isOpen]);
+
   // Count total active filters
   const countActiveFilters = (): number => {
     let count = 0;
-    
+
     // Count selected checkboxes
     Object.values(selectedFilters).forEach(options => {
       count += options.length;
     });
-    
+
     // Count price range if it's not the default
     if (priceRange.min !== 1000 || priceRange.max !== 50000) {
       count += 1;
     }
-    
+
     return count;
   };
 
@@ -222,8 +235,11 @@ const ProductFilters = ({
                   <X size={20} />
                 </button>
               </div>
-              
-              <div className="flex-grow overflow-y-auto p-4">
+
+              <div 
+                className="flex-grow overflow-y-auto p-4"
+                onTouchMove={(e) => e.stopPropagation()}
+              >
                 {/* Price Range */}
                 <div className="mb-6">
                   <h4 className="font-medium text-white mb-3">Faixa de Preço</h4>
@@ -255,7 +271,7 @@ const ProductFilters = ({
                     Aplicar
                   </button>
                 </div>
-                
+
                 {/* Filter Sections */}
                 {filterSections.map((section) => (
                   <div key={section.id} className="mb-6">
@@ -266,7 +282,7 @@ const ProductFilters = ({
                       <span>{section.title}</span>
                       {section.expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </button>
-                    
+
                     <AnimatePresence>
                       {section.expanded && (
                         <motion.div
@@ -295,7 +311,7 @@ const ProductFilters = ({
                     </AnimatePresence>
                   </div>
                 ))}
-                
+
                 {/* Sort Options */}
                 <div className="mb-6">
                   <h4 className="font-medium text-white mb-3">Ordenar Por</h4>
@@ -312,7 +328,7 @@ const ProductFilters = ({
                   </select>
                 </div>
               </div>
-              
+
               <div className="p-4 border-t border-gem-purple/20">
                 <button
                   onClick={resetFilters}
@@ -352,7 +368,7 @@ const ProductFilters = ({
           </button>
         )}
       </div>
-      
+
       {/* Price Range */}
       <div className="mb-6">
         <h4 className="font-medium text-white mb-3">Faixa de Preço</h4>
@@ -384,7 +400,7 @@ const ProductFilters = ({
           Aplicar
         </button>
       </div>
-      
+
       {/* Filter Sections */}
       {filterSections.map((section) => (
         <div key={section.id} className="mb-6">
@@ -395,7 +411,7 @@ const ProductFilters = ({
             <span>{section.title}</span>
             {section.expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
-          
+
           <AnimatePresence>
             {section.expanded && (
               <motion.div
@@ -424,7 +440,7 @@ const ProductFilters = ({
           </AnimatePresence>
         </div>
       ))}
-      
+
       {/* Sort Options */}
       <div>
         <h4 className="font-medium text-white mb-3">Ordenar Por</h4>
