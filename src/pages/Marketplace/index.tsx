@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Menu } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
-import CategoryNavigation from '@/components/marketplace/CategoryNavigation';
 import ProductFilters from '@/components/marketplace/ProductFilters';
 import ProductGrid from '@/components/marketplace/ProductGrid';
 import { productService, cartService } from '@/services';
@@ -62,6 +61,11 @@ const Marketplace = () => {
     // Apply weight filters if active
     if (newFilters.weights.active && newFilters.weights.selected.length > 0) {
       params.weight = newFilters.weights.selected.join(',');
+    }
+
+    // Apply category filter if active
+    if (newFilters.categories.active && newFilters.categories.selectedId) {
+      params.category_id = newFilters.categories.selectedId;
     }
 
     // Apply sorting
@@ -139,12 +143,6 @@ const Marketplace = () => {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Sidebar - visible on md and up */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            {/* Category navigation (sidebar variant) */}
-            <CategoryNavigation 
-              className="mb-6" 
-              onCategorySelect={setProducts} 
-            />
-
             {/* Filters */}
             <ProductFilters 
               onFilterChange={handleFilterChange}

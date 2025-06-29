@@ -25,7 +25,12 @@ class ProductService extends ApiService<Product, ProductCreate, ProductUpdate> {
    * @returns Promise resolving to an array of products
    */
   getProducts = async (params?: {
-    category?: number | string;
+    category_id?: number | string;
+    min_price?: number;
+    max_price?: number;
+    product_type?: string;
+    weight?: string;
+    sort?: string;
     available?: boolean;
     featured?: boolean;
     search?: string;

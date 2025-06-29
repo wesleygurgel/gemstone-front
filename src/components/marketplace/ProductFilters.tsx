@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { X, SlidersHorizontal, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { categoryService } from '@/services';
+import { Category } from '@/types/api';
 
 // Define filter types
 interface FilterOption {
@@ -35,6 +37,11 @@ interface FilterState {
   weights: {
     active: boolean;
     selected: string[];
+  };
+  categories: {
+    active: boolean;
+    selectedId: number | null;
+    selectedName: string | null;
   };
   sort: string;
 }
@@ -71,6 +78,11 @@ const ProductFilters = ({
       active: false,
       selected: []
     },
+    categories: {
+      active: false,
+      selectedId: null,
+      selectedName: null
+    },
     sort: 'relevance'
   };
 
@@ -80,6 +92,11 @@ const ProductFilters = ({
   // Temporary states for inputs
   const [currentMin, setCurrentMin] = useState<number>(filters.priceRange.min);
   const [currentMax, setCurrentMax] = useState<number>(filters.priceRange.max);
+
+  // Categories state
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [categoriesError, setCategoriesError] = useState<string | null>(null);
 
   // Filter sections state
   const [filterSections, setFilterSections] = useState<FilterSection[]>([
@@ -193,12 +210,63 @@ const ProductFilters = ({
     }
   };
 
+  // Handle category selection
+  const handleCategorySelect = (categoryId: number, categoryName: string) => {
+    setFilters(prev => ({
+      ...prev,
+      categories: {
+        active: true,
+        selectedId: categoryId,
+        selectedName: categoryName
+      }
+    }));
+  };
+
+  // Clear category selection
+  const clearCategorySelection = () => {
+    setFilters(prev => ({
+      ...prev,
+      categories: {
+        active: false,
+        selectedId: null,
+        selectedName: null
+      }
+    }));
+  };
+
   // Reset all filters
   const resetFilters = () => {
     setFilters(initialFilterState);
     setCurrentMin(initialFilterState.priceRange.min);
     setCurrentMax(initialFilterState.priceRange.max);
   };
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoadingCategories(true);
+        const data = await categoryService.getAllCategories();
+        setCategories(data);
+        setCategoriesError(null);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+        setCategoriesError('Falha ao carregar categorias.');
+        // Fallback to mock data for demonstration
+        setCategories([
+          { id: 1, name: 'Ouro', slug: 'ouro', description: 'Produtos de ouro' },
+          { id: 2, name: 'Diamantes', slug: 'diamantes', description: 'Diamantes certificados' },
+          { id: 3, name: 'Joias', slug: 'joias', description: 'Joias exclusivas' },
+          { id: 4, name: 'Serviços Logísticos', slug: 'servicos-logisticos', description: 'Serviços de logística' },
+          { id: 5, name: 'Barramentos', slug: 'barramentos', description: 'Barramentos de metais preciosos' },
+        ]);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // Notify parent component when filters change
   useEffect(() => {
@@ -227,6 +295,7 @@ const ProductFilters = ({
     if (filters.priceRange.active) count++;
     if (filters.productTypes.active) count += filters.productTypes.selected.length;
     if (filters.weights.active) count += filters.weights.selected.length;
+    if (filters.categories.active) count++;
 
     return count;
   };
@@ -300,6 +369,56 @@ const ProductFilters = ({
                   >
                     Aplicar
                   </button>
+                </div>
+
+                {/* Categories Section */}
+                <div className="mb-6">
+                  <h4 className="font-medium text-white mb-3">Categorias</h4>
+
+                  {filters.categories.active && (
+                    <div className="mb-4 px-3 py-2 bg-gem-purple/10 border border-gem-purple/30 rounded-md">
+                      <div className="flex justify-between items-center">
+                        <p className="text-sm text-white/80">
+                          <span className="text-gem-pink font-medium">{filters.categories.selectedName}</span>
+                        </p>
+                        <button
+                          onClick={clearCategorySelection}
+                          className="text-xs text-gem-pink hover:text-gem-purple"
+                          title="Limpar filtro"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {loadingCategories ? (
+                    <div className="space-y-2">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="h-8 bg-black-700 animate-pulse rounded"></div>
+                      ))}
+                    </div>
+                  ) : categoriesError ? (
+                    <div className="text-red-500 text-sm">{categoriesError}</div>
+                  ) : (
+                    <ul className="space-y-1">
+                      {categories.map((category) => (
+                        <li key={category.id} className="mb-2">
+                          <button 
+                            onClick={() => handleCategorySelect(category.id, category.name)}
+                            className={`flex-grow py-1 text-left transition-colors ${
+                              filters.categories.selectedId === category.id 
+                                ? 'text-gem-pink font-medium' 
+                                : 'text-white/90 hover:text-gem-pink'
+                            }`}
+                          >
+                            {category.name}
+                            {filters.categories.selectedId === category.id && ' ✓'}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 {/* Filter Sections */}
@@ -433,6 +552,56 @@ const ProductFilters = ({
         >
           Aplicar
         </button>
+      </div>
+
+      {/* Categories Section */}
+      <div className="mb-6">
+        <h4 className="font-medium text-white mb-3">Categorias</h4>
+
+        {filters.categories.active && (
+          <div className="mb-4 px-3 py-2 bg-gem-purple/10 border border-gem-purple/30 rounded-md">
+            <div className="flex justify-between items-center">
+              <p className="text-sm text-white/80">
+                <span className="text-gem-pink font-medium">{filters.categories.selectedName}</span>
+              </p>
+              <button
+                onClick={clearCategorySelection}
+                className="text-xs text-gem-pink hover:text-gem-purple"
+                title="Limpar filtro"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {loadingCategories ? (
+          <div className="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-8 bg-black-700 animate-pulse rounded"></div>
+            ))}
+          </div>
+        ) : categoriesError ? (
+          <div className="text-red-500 text-sm">{categoriesError}</div>
+        ) : (
+          <ul className="space-y-1">
+            {categories.map((category) => (
+              <li key={category.id} className="mb-2">
+                <button 
+                  onClick={() => handleCategorySelect(category.id, category.name)}
+                  className={`flex-grow py-1 text-left transition-colors ${
+                    filters.categories.selectedId === category.id 
+                      ? 'text-gem-pink font-medium' 
+                      : 'text-white/90 hover:text-gem-pink'
+                  }`}
+                >
+                  {category.name}
+                  {filters.categories.selectedId === category.id && ' ✓'}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Filter Sections */}
