@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Menu } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
@@ -41,17 +41,73 @@ const Marketplace = () => {
     fetchProducts();
   }, []);
 
-  // Handle filter changes (non-functional for now)
-  const handleFilterChange = (newFilters: any) => {
-    console.log('Filter change (non-functional):', newFilters);
-    // Filters are kept in the UI but don't affect the product list
-  };
+  // Handle filter changes
+  const handleFilterChange = useCallback(async (newFilters: any) => {
+    console.log('Filter change:', newFilters);
 
-  // Handle sort changes (non-functional for now)
-  const handleSortChange = (newSort: string) => {
-    console.log('Sort change (non-functional):', newSort);
-    // Sorting is kept in the UI but doesn't affect the product list
-  };
+    // Create params object for API call
+    const params: any = {};
+
+    // Apply price range filter if active
+    if (newFilters.priceRange.active) {
+      params.min_price = newFilters.priceRange.min;
+      params.max_price = newFilters.priceRange.max;
+    }
+
+    // Apply product type filters if active
+    if (newFilters.productTypes.active && newFilters.productTypes.selected.length > 0) {
+      params.product_type = newFilters.productTypes.selected.join(',');
+    }
+
+    // Apply weight filters if active
+    if (newFilters.weights.active && newFilters.weights.selected.length > 0) {
+      params.weight = newFilters.weights.selected.join(',');
+    }
+
+    // Apply sorting
+    if (newFilters.sort && newFilters.sort !== 'relevance') {
+      params.sort = newFilters.sort;
+    }
+
+    // Fetch filtered products
+    setLoading(true);
+    try {
+      const response = await productService.getProducts(params);
+      setProducts(response);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to fetch filtered products:', err);
+      setError('Falha ao filtrar produtos. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Handle sort changes
+  const handleSortChange = useCallback(async (newSort: string) => {
+    console.log('Sort change:', newSort);
+
+    // Create params object for API call
+    const params: any = {};
+
+    // Apply sorting if it's not the default
+    if (newSort && newSort !== 'relevance') {
+      params.sort = newSort;
+    }
+
+    // Fetch sorted products
+    setLoading(true);
+    try {
+      const response = await productService.getProducts(params);
+      setProducts(response);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to sort products:', err);
+      setError('Falha ao ordenar produtos. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   // Handle add to cart
   const handleAddToCart = async (productId: number, quantity: number) => {

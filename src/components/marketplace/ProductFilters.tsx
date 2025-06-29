@@ -3,11 +3,6 @@ import { X, SlidersHorizontal, ChevronDown, ChevronUp, RotateCcw } from 'lucide-
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Define filter types
-interface PriceRange {
-  min: number;
-  max: number;
-}
-
 interface FilterOption {
   id: string;
   label: string;
@@ -26,9 +21,27 @@ interface SortOption {
   label: string;
 }
 
+// Centralized filter state
+interface FilterState {
+  priceRange: {
+    active: boolean;
+    min: number;
+    max: number;
+  };
+  productTypes: {
+    active: boolean;
+    selected: string[];
+  };
+  weights: {
+    active: boolean;
+    selected: string[];
+  };
+  sort: string;
+}
+
 interface ProductFiltersProps {
   className?: string;
-  onFilterChange?: (filters: any) => void;
+  onFilterChange?: (filters: FilterState) => void;
   onSortChange?: (sort: string) => void;
   isMobile?: boolean;
   isOpen?: boolean;
@@ -43,10 +56,30 @@ const ProductFilters = ({
   isOpen = false,
   onClose
 }: ProductFiltersProps) => {
-  // Price range state
-  const [priceRange, setPriceRange] = useState<PriceRange>({ min: 1000, max: 50000 });
-  const [currentMin, setCurrentMin] = useState<number>(priceRange.min);
-  const [currentMax, setCurrentMax] = useState<number>(priceRange.max);
+  // Initialize centralized filter state
+  const initialFilterState: FilterState = {
+    priceRange: {
+      active: false,
+      min: 1000,
+      max: 50000
+    },
+    productTypes: {
+      active: false,
+      selected: []
+    },
+    weights: {
+      active: false,
+      selected: []
+    },
+    sort: 'relevance'
+  };
+
+  // Centralized filter state
+  const [filters, setFilters] = useState<FilterState>(initialFilterState);
+
+  // Temporary states for inputs
+  const [currentMin, setCurrentMin] = useState<number>(filters.priceRange.min);
+  const [currentMax, setCurrentMax] = useState<number>(filters.priceRange.max);
 
   // Filter sections state
   const [filterSections, setFilterSections] = useState<FilterSection[]>([
@@ -76,20 +109,13 @@ const ProductFilters = ({
     }
   ]);
 
-  // Selected filters state
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
-
   // Sort options
   const sortOptions: SortOption[] = [
     { value: 'relevance', label: 'Relevância' },
     { value: 'price-asc', label: 'Preço: Menor para Maior' },
     { value: 'price-desc', label: 'Preço: Maior para Menor' },
-    { value: 'newest', label: 'Novidades' },
     { value: 'bestselling', label: 'Mais Vendidos' }
   ];
-
-  // Current sort state
-  const [currentSort, setCurrentSort] = useState<string>(sortOptions[0].value);
 
   // Toggle filter section expanded state
   const toggleSection = (sectionId: string) => {
@@ -104,23 +130,28 @@ const ProductFilters = ({
 
   // Handle checkbox change
   const handleCheckboxChange = (sectionId: string, optionId: string, checked: boolean) => {
-    setSelectedFilters(prev => {
-      const sectionFilters = [...(prev[sectionId] || [])];
+    setFilters(prev => {
+      // Determine which section is being updated
+      const sectionKey = sectionId === 'product-type' ? 'productTypes' : 'weights';
+      const selected = [...prev[sectionKey].selected];
 
       if (checked) {
-        if (!sectionFilters.includes(optionId)) {
-          sectionFilters.push(optionId);
+        if (!selected.includes(optionId)) {
+          selected.push(optionId);
         }
       } else {
-        const index = sectionFilters.indexOf(optionId);
+        const index = selected.indexOf(optionId);
         if (index !== -1) {
-          sectionFilters.splice(index, 1);
+          selected.splice(index, 1);
         }
       }
 
       return {
         ...prev,
-        [sectionId]: sectionFilters
+        [sectionKey]: {
+          active: selected.length > 0,
+          selected
+        }
       };
     });
   };
@@ -140,12 +171,23 @@ const ProductFilters = ({
     const validMin = Math.min(currentMin, currentMax);
     const validMax = Math.max(currentMin, currentMax);
 
-    setPriceRange({ min: validMin, max: validMax });
+    setFilters(prev => ({
+      ...prev,
+      priceRange: {
+        active: true,
+        min: validMin,
+        max: validMax
+      }
+    }));
   };
 
   // Handle sort change
   const handleSortChange = (value: string) => {
-    setCurrentSort(value);
+    setFilters(prev => ({
+      ...prev,
+      sort: value
+    }));
+
     if (onSortChange) {
       onSortChange(value);
     }
@@ -153,23 +195,17 @@ const ProductFilters = ({
 
   // Reset all filters
   const resetFilters = () => {
-    setPriceRange({ min: 1000, max: 50000 });
-    setCurrentMin(1000);
-    setCurrentMax(50000);
-    setSelectedFilters({});
-    setCurrentSort(sortOptions[0].value);
+    setFilters(initialFilterState);
+    setCurrentMin(initialFilterState.priceRange.min);
+    setCurrentMax(initialFilterState.priceRange.max);
   };
 
   // Notify parent component when filters change
   useEffect(() => {
     if (onFilterChange) {
-      onFilterChange({
-        priceRange,
-        selectedFilters,
-        sort: currentSort
-      });
+      onFilterChange(filters);
     }
-  }, [priceRange, selectedFilters, currentSort, onFilterChange]);
+  }, [filters, onFilterChange]);
 
   // Prevent body scrolling when drawer is open
   useEffect(() => {
@@ -188,15 +224,9 @@ const ProductFilters = ({
   const countActiveFilters = (): number => {
     let count = 0;
 
-    // Count selected checkboxes
-    Object.values(selectedFilters).forEach(options => {
-      count += options.length;
-    });
-
-    // Count price range if it's not the default
-    if (priceRange.min !== 1000 || priceRange.max !== 50000) {
-      count += 1;
-    }
+    if (filters.priceRange.active) count++;
+    if (filters.productTypes.active) count += filters.productTypes.selected.length;
+    if (filters.weights.active) count += filters.weights.selected.length;
 
     return count;
   };
@@ -297,7 +327,11 @@ const ProductFilters = ({
                               <label key={option.id} className="flex items-center text-white/90 hover:text-white cursor-pointer">
                                 <input
                                   type="checkbox"
-                                  checked={selectedFilters[section.id]?.includes(option.id) || false}
+                                  checked={
+                                    section.id === 'product-type'
+                                      ? filters.productTypes.selected.includes(option.id)
+                                      : filters.weights.selected.includes(option.id)
+                                  }
                                   onChange={(e) => handleCheckboxChange(section.id, option.id, e.target.checked)}
                                   className="mr-2 h-4 w-4 rounded border-gem-purple/50 text-gem-purple focus:ring-gem-purple/50 focus:ring-offset-black-800"
                                 />
@@ -316,7 +350,7 @@ const ProductFilters = ({
                 <div className="mb-6">
                   <h4 className="font-medium text-white mb-3">Ordenar Por</h4>
                   <select
-                    value={currentSort}
+                    value={filters.sort}
                     onChange={(e) => handleSortChange(e.target.value)}
                     className="w-full p-2 bg-black-900 border border-gem-purple/30 rounded-md focus:outline-none focus:ring-1 focus:ring-gem-purple text-white"
                   >
@@ -426,7 +460,11 @@ const ProductFilters = ({
                     <label key={option.id} className="flex items-center text-white/90 hover:text-white cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={selectedFilters[section.id]?.includes(option.id) || false}
+                        checked={
+                          section.id === 'product-type'
+                            ? filters.productTypes.selected.includes(option.id)
+                            : filters.weights.selected.includes(option.id)
+                        }
                         onChange={(e) => handleCheckboxChange(section.id, option.id, e.target.checked)}
                         className="mr-2 h-4 w-4 rounded border-gem-purple/50 text-gem-purple focus:ring-gem-purple/50 focus:ring-offset-black-800"
                       />
@@ -445,7 +483,7 @@ const ProductFilters = ({
       <div>
         <h4 className="font-medium text-white mb-3">Ordenar Por</h4>
         <select
-          value={currentSort}
+          value={filters.sort}
           onChange={(e) => handleSortChange(e.target.value)}
           className="w-full p-2 bg-black-900 border border-gem-purple/30 rounded-md focus:outline-none focus:ring-1 focus:ring-gem-purple text-white"
         >
