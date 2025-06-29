@@ -10,15 +10,15 @@ const Register = () => {
   const navigate = useNavigate();
   const { register: registerUser, loading, error } = useAuth();
   const [formData, setFormData] = useState<RegisterRequest>({
-    username: '',
     email: '',
     password: '',
-    password_confirm: '',
+    password_confirm: ''
   });
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -84,21 +84,6 @@ const Register = () => {
             )}
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">
-                  Nome de usuário
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
-                  required
-                />
-              </div>
-
               <div className="mb-6">
                 <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
                   Email

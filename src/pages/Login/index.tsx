@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login, loading, error } = useAuth();
   const [formData, setFormData] = useState<LoginRequest>({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -58,14 +58,14 @@ const Login = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
-                <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">
-                  Nome de usuário
+                <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
+                  Email
                 </label>
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required

@@ -8,8 +8,8 @@ interface AuthContextType {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
-  login: (credentials: { username: string; password: string }) => Promise<boolean>;
-  register: (userData: { username: string; email: string; password: string; password_confirm?: string }) => Promise<boolean>;
+  login: (credentials: { email: string; password: string }) => Promise<boolean>;
+  register: (userData: { email: string; password: string; password_confirm: string }) => Promise<boolean>;
   logout: () => void;
   updateProfile: (profileData: Partial<UserProfile>) => Promise<boolean>;
   changePassword: (oldPassword: string, newPassword: string) => Promise<boolean>;
@@ -21,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const auth = useAuthHook();
-  
+
   return (
     <AuthContext.Provider value={auth}>
       {children}

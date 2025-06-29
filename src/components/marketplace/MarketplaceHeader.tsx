@@ -152,7 +152,7 @@ const MarketplaceHeader = () => {
                   whileHover={{ scale: 1.05 }}
                 >
                   <User size={20} />
-                  <span className="hidden sm:inline">{user?.username}</span>
+                  <span className="hidden sm:inline">{user?.first_name}</span>
                   <ChevronDown size={16} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </motion.button>
 

@@ -23,7 +23,7 @@ const authService = {
   },
 
   /**
-   * Login a user with username and password
+   * Login a user with email and password
    * @param credentials User login credentials
    * @returns Promise resolving to the user profile
    */

@@ -6,7 +6,7 @@
  * Login request payload
  */
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -26,13 +26,9 @@ export interface UserProfileData {
  * Registration request payload
  */
 export interface RegisterRequest {
-  username: string;
   email: string;
   password: string;
-  password2: string;
-  first_name: string;
-  last_name: string;
-  profile: UserProfileData;
+  password_confirm: string;
 }
 
 /**
@@ -40,7 +36,6 @@ export interface RegisterRequest {
  */
 export interface RegisterResponse {
   id: number;
-  username: string;
   email: string;
   first_name: string;
   last_name: string;
@@ -79,7 +74,6 @@ export interface RefreshTokenRequest {
  */
 export interface UserProfile {
   id: number;
-  username: string;
   email: string;
   first_name: string;
   last_name: string;
