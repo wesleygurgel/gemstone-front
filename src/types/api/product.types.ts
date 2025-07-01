@@ -50,6 +50,7 @@ export interface ProductListItem {
   name: string;
   slug: string;
   price: string;
+  price_discount?: string;
   available: boolean;
   category: number;
   category_name: string;
@@ -70,6 +71,7 @@ export interface Product {
   slug: string;
   description: string;
   price: string;
+  price_discount?: string;
   stock: number;
   available: boolean;
   category: number;
@@ -87,6 +89,7 @@ export interface ProductCreate {
   name: string;
   description: string;
   price: number;
+  price_discount?: number;
   stock: number;
   available: boolean;
   category: number;
@@ -102,6 +105,7 @@ export interface ProductCreateResponse {
   slug: string;
   description: string;
   price: string;
+  price_discount?: string;
   stock: number;
   available: boolean;
   category: number;
@@ -118,6 +122,7 @@ export interface ProductUpdate {
   name?: string;
   description?: string;
   price?: number;
+  price_discount?: number;
   stock?: number;
   available?: boolean;
   category?: number;
