@@ -107,6 +107,13 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
             </div>
           )}
 
+          {/* Discount badge */}
+          {discountPercentage && (
+            <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-red-600 px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg transform -rotate-12 flex items-center justify-center" style={{ marginTop: product.featured ? '28px' : '0' }}>
+              <span className="animate-pulse">-{discountPercentage}%</span>
+            </div>
+          )}
+
           {/* Wishlist button */}
           <button
             onClick={handleAddToWishlist}
@@ -174,17 +181,17 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
 
           {/* Price */}
           {product.price_discount ? (
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-semibold text-white">{formatPrice(product.price_discount)}</span>
-              <span className="text-sm line-through text-white/50">{formatPrice(product.price)}</span>
-              {discountPercentage && (
-                <span className="bg-red-500/20 text-red-500 px-1 py-0.5 rounded text-xs font-medium">
-                  -{discountPercentage}%
-                </span>
-              )}
+            <div className="mt-2">
+              {/* Discounted price with original price */}
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <span className="text-xl font-bold bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">{formatPrice(product.price_discount)}</span>
+                  <span className="text-xs line-through text-white/40 ml-2">{formatPrice(product.price)}</span>
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="text-lg font-semibold text-white">{formatPrice(product.price)}</div>
+            <div className="text-lg font-semibold text-white mt-2">{formatPrice(product.price)}</div>
           )}
         </div>
       </Link>

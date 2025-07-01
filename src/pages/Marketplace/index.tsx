@@ -18,7 +18,15 @@ const Marketplace = () => {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   // Get search parameters from URL
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Function to clear URL parameters
+  const handleClearUrlParams = useCallback(() => {
+    // Create a new URLSearchParams object without the category_id parameter
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete('category_id');
+    setSearchParams(newParams);
+  }, [searchParams, setSearchParams]);
 
   // Fetch products on component mount
   useEffect(() => {
@@ -164,6 +172,7 @@ const Marketplace = () => {
               initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
               onFilterChange={handleFilterChange}
               onSortChange={handleSortChange}
+              onClearUrlParams={handleClearUrlParams}
             />
           </div>
 
@@ -202,6 +211,7 @@ const Marketplace = () => {
         initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
         onFilterChange={handleFilterChange}
         onSortChange={handleSortChange}
+        onClearUrlParams={handleClearUrlParams}
       />
     </MarketplaceLayout>
   );

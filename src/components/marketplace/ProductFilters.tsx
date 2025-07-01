@@ -54,6 +54,7 @@ interface ProductFiltersProps {
   isOpen?: boolean;
   onClose?: () => void;
   initialCategoryId?: number | null;
+  onClearUrlParams?: () => void;
 }
 
 const ProductFilters = ({
@@ -63,7 +64,8 @@ const ProductFilters = ({
   isMobile = false,
   isOpen = false,
   onClose,
-  initialCategoryId = null
+  initialCategoryId = null,
+  onClearUrlParams
 }: ProductFiltersProps) => {
   // Initialize centralized filter state
   const initialFilterState: FilterState = {
@@ -237,6 +239,11 @@ const ProductFilters = ({
         selectedName: null
       }
     }));
+
+    // Clear URL parameters if the function is provided
+    if (onClearUrlParams) {
+      onClearUrlParams();
+    }
   };
 
   // Reset all filters
@@ -244,6 +251,11 @@ const ProductFilters = ({
     setFilters(initialFilterState);
     setCurrentMin(initialFilterState.priceRange.min);
     setCurrentMax(initialFilterState.priceRange.max);
+
+    // Clear URL parameters if the function is provided
+    if (onClearUrlParams) {
+      onClearUrlParams();
+    }
   };
 
   // Fetch categories on component mount
@@ -296,6 +308,18 @@ const ProductFilters = ({
       }
     }
   }, [categories, initialCategoryId]);
+
+  // Update filters when initialCategoryId changes
+  useEffect(() => {
+    setFilters(prev => ({
+      ...prev,
+      categories: {
+        active: initialCategoryId !== null,
+        selectedId: initialCategoryId,
+        selectedName: prev.categories.selectedName
+      }
+    }));
+  }, [initialCategoryId]);
 
   // Prevent body scrolling when drawer is open
   useEffect(() => {
