@@ -28,16 +28,20 @@ const authService = {
    * @returns Promise resolving to the user profile
    */
   login: async (credentials: LoginRequest): Promise<UserProfile> => {
-    // First, get the JWT tokens
-    const tokenResponse = await api.post<TokenResponse>('/token/', credentials);
-    const { access, refresh } = tokenResponse.data;
+    try {
+      // First, get the JWT tokens
+      const tokenResponse = await api.post<TokenResponse>('/token/', credentials);
+      const { access, refresh } = tokenResponse.data;
 
-    // Store tokens
-    storeTokens(access, refresh);
+      // Store tokens
+      storeTokens(access, refresh);
 
-    // Then, get the user profile
-    const profileResponse = await api.get<UserProfile>('/accounts/me/profile/');
-    return profileResponse.data;
+      // Then, get the user profile
+      const profileResponse = await api.get<UserProfile>('/accounts/me/profile/');
+      return profileResponse.data;
+    } catch (error) {
+      throw error; // Re-throw to be handled by the caller
+    }
   },
 
   /**

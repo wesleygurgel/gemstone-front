@@ -28,6 +28,8 @@ const Login = () => {
     if (success) {
       navigate('/marketplace');
     }
+    // If login fails, we stay on the page and the error will be displayed
+    // No need to do anything else as the error state is already set by the login function
   };
 
   return (

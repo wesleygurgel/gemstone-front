@@ -99,10 +99,13 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+      const originalRequest = error.config;
 
-    // If error is 401 and we haven't tried to refresh token yet
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Skip token refresh for login endpoint
+    const isLoginRequest = originalRequest.url?.includes('/token/') && !originalRequest.url?.includes('/token/refresh/');
+
+    // If error is 401 and we haven't tried to refresh token yet and it's not a login request
+    if (error.response?.status === 401 && !originalRequest._retry && !isLoginRequest) {
       originalRequest._retry = true;
 
       try {
@@ -116,8 +119,10 @@ api.interceptors.response.use(
         // Refresh token failed, redirect to login
         clearTokens();
 
-        // Redirect to login page (can be implemented with React Router)
-        window.location.href = '/login';
+        // Only redirect to login if not already on login page
+        if (!window.location.pathname.includes('/login')) {
+          window.location.href = '/login';
+        }
 
         return Promise.reject(refreshError);
       }
@@ -125,9 +130,6 @@ api.interceptors.response.use(
 
     // For other errors, use our error handler
     const handledError = handleApiError(error);
-
-    // Log error for debugging
-    console.error('API Error:', handledError.type, handledError.message);
 
     return Promise.reject(handledError);
   }
