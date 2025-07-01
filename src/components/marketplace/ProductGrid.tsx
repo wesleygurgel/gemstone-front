@@ -8,7 +8,6 @@ interface ProductGridProps {
   products?: ProductListItem[];
   loading?: boolean;
   error?: string | null;
-  onAddToCart?: (productId: number, quantity: number) => void;
   onAddToWishlist?: (productId: number) => void;
   className?: string;
 }
@@ -17,7 +16,6 @@ const ProductGrid = ({
   products = [],
   loading = false,
   error = null,
-  onAddToCart,
   onAddToWishlist,
   className = ''
 }: ProductGridProps) => {
@@ -88,7 +86,6 @@ const ProductGrid = ({
         <motion.div key={product.id} variants={item}>
           <ProductCard 
             product={product} 
-            onAddToCart={onAddToCart}
             onAddToWishlist={onAddToWishlist}
           />
         </motion.div>

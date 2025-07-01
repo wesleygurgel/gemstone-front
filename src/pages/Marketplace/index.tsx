@@ -137,16 +137,6 @@ const Marketplace = () => {
     }
   }, []);
 
-  // Handle add to cart
-  const handleAddToCart = async (productId: number, quantity: number) => {
-    try {
-      await cartService.addItem({ product: productId, quantity });
-      // You could add a toast notification here
-    } catch (error) {
-      console.error('Failed to add item to cart:', error);
-      // Handle error (show toast, etc.)
-    }
-  };
 
   // Handle add to wishlist
   const handleAddToWishlist = (productId: number) => {
@@ -196,7 +186,6 @@ const Marketplace = () => {
               products={products}
               loading={loading}
               error={error}
-              onAddToCart={handleAddToCart}
               onAddToWishlist={handleAddToWishlist}
             />
           </div>

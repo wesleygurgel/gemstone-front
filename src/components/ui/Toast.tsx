@@ -46,9 +46,9 @@ const Toast: React.FC<ToastProps> = ({ id, message, type, onClose }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 50 }}
       transition={{ duration: 0.3 }}
       className={`${bgColor} text-white rounded-md shadow-lg border-l-4 ${borderColor} min-w-[300px] max-w-md backdrop-blur-sm bg-opacity-90`}
     >

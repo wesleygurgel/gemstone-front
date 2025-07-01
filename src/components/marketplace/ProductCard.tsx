@@ -9,12 +9,11 @@ import { useToast } from '@/context/ToastContext';
 
 interface ProductCardProps {
   product: ProductListItem;
-  onAddToCart?: (productId: number, quantity: number) => void;
   onAddToWishlist?: (productId: number) => void;
   className?: string;
 }
 
-const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: ProductCardProps) => {
+const ProductCard = ({ product, onAddToWishlist, className = '' }: ProductCardProps) => {
   const { addItem, openCart } = useCart();
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
@@ -47,6 +46,7 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
   const discountPercentage = product.price_discount ? calculateDiscountPercentage() : null;
 
   const handleAddToCart = async (e: React.MouseEvent) => {
+    console.log('handleAddToCart');
     e.preventDefault();
     e.stopPropagation();
 
@@ -62,11 +62,7 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
     setIsAddingToCart(true);
 
     try {
-      // Call the onAddToCart prop for backward compatibility
-      if (onAddToCart) {
-        await onAddToCart(product.id, 1);
-      }
-
+      console.log('Adding to cart...');
       // Use the addItem function from the cart context
       const success = await addItem(product.id, 1);
 
@@ -74,10 +70,12 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
         setIsAddedToCart(true);
         // Show success toast
         showToast(`${product.name} adicionado ao carrinho`, 'success');
+
+        // Open the cart drawer to show the user their item was added
+        // openCart();
+
         setTimeout(() => {
           setIsAddedToCart(false);
-          // Optionally open the cart drawer after adding an item
-          // openCart();
         }, 2000);
       }
     } catch (error) {

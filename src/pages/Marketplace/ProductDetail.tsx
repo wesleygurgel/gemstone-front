@@ -3,12 +3,16 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ChevronRight, ShoppingCart, Heart, Clock, TruckIcon, ShieldCheck, AlertCircle } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
-import { productService, cartService } from '@/services';
+import { productService } from '@/services';
+import { useCart } from '@/context/CartContext';
+import { useToast } from '@/context/ToastContext';
 import { Product, ProductListItem } from '@/types/api';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addItem } = useCart();
+  const { showToast } = useToast();
 
   // State for product
   const [product, setProduct] = useState<Product | null>(null);
@@ -93,11 +97,18 @@ const ProductDetail = () => {
     setIsAddingToCart(true);
 
     try {
-      await cartService.addItem({ product: product.id, quantity: 1 });
-      setIsAddedToCart(true);
-      setTimeout(() => setIsAddedToCart(false), 2000);
+      // Use the addItem function from the cart context
+      const success = await addItem(product.id, 1);
+
+      if (success) {
+        setIsAddedToCart(true);
+        // Show success toast
+        showToast(`${product.name} adicionado ao carrinho`, 'success');
+        setTimeout(() => setIsAddedToCart(false), 2000);
+      }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
+      showToast('Erro ao adicionar item ao carrinho', 'error');
     } finally {
       setIsAddingToCart(false);
     }
@@ -110,10 +121,18 @@ const ProductDetail = () => {
     setIsAddingToCart(true);
 
     try {
-      await cartService.addItem({ product: product.id, quantity: 1 });
-      navigate('/checkout');
+      // Use the addItem function from the cart context
+      const success = await addItem(product.id, 1);
+
+      if (success) {
+        navigate('/checkout');
+      } else {
+        showToast('Erro ao adicionar item ao carrinho', 'error');
+        setIsAddingToCart(false);
+      }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
+      showToast('Erro ao adicionar item ao carrinho', 'error');
       setIsAddingToCart(false);
     }
   };
