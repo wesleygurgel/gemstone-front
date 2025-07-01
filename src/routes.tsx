@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Marketplace from './pages/Marketplace';
 import ProductDetail from './pages/Marketplace/ProductDetail';
+import Profile from './pages/Marketplace/Profile';
 import GuestRoute from './components/auth/GuestRoute';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/marketplace/product/:id',
     element: <ProductDetail />,
+  },
+  {
+    path: '/marketplace/profile',
+    element: <ProtectedRoute><Profile /></ProtectedRoute>,
   },
   // Future marketplace routes
   // { path: '/carrinho', element: <ProtectedRoute><Cart /></ProtectedRoute> },

@@ -37,7 +37,7 @@ const authService = {
       storeTokens(access, refresh);
 
       // Then, get the user profile
-      const profileResponse = await api.get<UserProfile>('/accounts/me/profile/');
+      const profileResponse = await api.get<UserProfile>('/accounts/me/');
       return profileResponse.data;
     } catch (error) {
       throw error; // Re-throw to be handled by the caller
@@ -66,7 +66,7 @@ const authService = {
    * @returns Promise resolving to the user profile
    */
   getCurrentUser: async (): Promise<UserProfile> => {
-    const response = await api.get<UserProfile>('/accounts/me/profile/');
+    const response = await api.get<UserProfile>('/accounts/me/');
     return response.data;
   },
 
@@ -75,8 +75,13 @@ const authService = {
    * @param profileData Updated profile data
    * @returns Promise resolving to the updated profile data
    */
-  updateProfile: async (profileData: ProfileUpdateRequest): Promise<ProfileUpdateRequest> => {
-    const response = await api.patch<ProfileUpdateRequest>('/accounts/me/profile/', profileData);
+  updateProfile: async (profileData: Partial<UserProfile>): Promise<UserProfile> => {
+    // If the data is for the profile, nest it under the profile property
+    const userData: Partial<UserProfile> = profileData.profile 
+      ? profileData 
+      : { profile: profileData as any };
+
+    const response = await api.patch<UserProfile>('/accounts/me/', userData);
     return response.data;
   },
 

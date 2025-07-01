@@ -20,6 +20,7 @@ export interface UserProfileData {
   state: string;
   country: string;
   postal_code: string;
+  created_at: string;
 }
 
 /**
