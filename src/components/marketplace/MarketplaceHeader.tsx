@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { User, LogOut, ChevronDown, ShoppingCart, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
+import CartDrawer from './CartDrawer';
 
 const MarketplaceHeader = () => {
   const { user, isAuthenticated, logout } = useAuth();
+  const { toggleCart, totalItems } = useCart();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -38,6 +41,9 @@ const MarketplaceHeader = () => {
 
   return (
     <header className="bg-black-900 text-white">
+      {/* Cart Drawer */}
+      <CartDrawer />
+
       {/* Hero section with header */}
       <div className="bg-black-900 text-white relative overflow-hidden">
         {/* Modern subtle particle background */}
@@ -139,9 +145,18 @@ const MarketplaceHeader = () => {
             </div>
 
             {/* Cart */}
-            <Link to="/marketplace/cart" className="p-2 text-white/80 hover:text-gem-pink transition-colors">
+            <button 
+              onClick={toggleCart} 
+              className="p-2 text-white/80 hover:text-gem-pink transition-colors relative"
+              aria-label="Open cart"
+            >
               <ShoppingCart size={20} />
-            </Link>
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gem-pink text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
 
             {/* User Account */}
             {isAuthenticated ? (

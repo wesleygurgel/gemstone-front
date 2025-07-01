@@ -5,9 +5,11 @@ import { AddToCartRequest, AddToCartResponse, Cart, CartItem, UpdateCartItemRequ
  * Service for cart-related API operations
  */
 class CartService extends ApiService<Cart> {
+  private cartId: number | null = null;
+
   constructor() {
     // Pass the endpoint to the parent class
-    super('/carts/cart');
+    super('/orders/carts');
   }
 
   /**
@@ -15,7 +17,12 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to the user's cart
    */
   getCurrentCart = async (): Promise<Cart> => {
-    return this.customGet<Cart>('current/');
+    const carts = await this.getAll();
+    if (carts && carts.length > 0) {
+      this.cartId = carts[0].id;
+      return carts[0];
+    }
+    return {} as Cart;
   };
 
   /**
@@ -24,7 +31,10 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to the added cart item
    */
   addItem = async (data: AddToCartRequest): Promise<AddToCartResponse> => {
-    return this.customPost<AddToCartRequest, AddToCartResponse>('items/', data);
+    if (!this.cartId) {
+      await this.getCurrentCart();
+    }
+    return this.customPost<AddToCartRequest, AddToCartResponse>(`${this.cartId}/add_item/`, data);
   };
 
   /**
@@ -34,7 +44,13 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to the updated cart item
    */
   updateItem = async (itemId: number, data: UpdateCartItemRequest): Promise<CartItem> => {
-    return this.customPost<UpdateCartItemRequest, CartItem>(`items/${itemId}/`, data);
+    if (!this.cartId) {
+      await this.getCurrentCart();
+    }
+    return this.customPost<{ item_id: number, quantity: number }, CartItem>(
+      `${this.cartId}/update_item/`, 
+      { item_id: itemId, quantity: data.quantity }
+    );
   };
 
   /**
@@ -43,7 +59,10 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to void
    */
   removeItem = async (itemId: number): Promise<void> => {
-    await this.customPost(`items/${itemId}/remove/`);
+    if (!this.cartId) {
+      await this.getCurrentCart();
+    }
+    await this.customPost(`${this.cartId}/remove_item/`, { item_id: itemId });
   };
 
   /**
@@ -51,7 +70,15 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to the empty cart
    */
   clearCart = async (): Promise<Cart> => {
-    return this.customPost<void, Cart>('clear/');
+    if (!this.cartId) {
+      await this.getCurrentCart();
+    }
+    // If there's no specific endpoint for clearing the cart, we can remove items one by one
+    const cart = await this.getCurrentCart();
+    for (const item of cart.items || []) {
+      await this.removeItem(item.id);
+    }
+    return this.getCurrentCart();
   };
 }
 

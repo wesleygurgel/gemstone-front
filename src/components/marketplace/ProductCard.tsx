@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { ProductListItem } from '@/types/api';
+import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 
 interface ProductCardProps {
   product: ProductListItem;
@@ -12,6 +14,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: ProductCardProps) => {
+  const { addItem, openCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const [isHovered, setIsHovered] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -46,14 +50,32 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
 
     if (!product.available || isAddingToCart) return;
 
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // Redirect to login page or show login modal
+      alert('Please log in to add items to your cart');
+      return;
+    }
+
     setIsAddingToCart(true);
 
     try {
+      // Call the onAddToCart prop for backward compatibility
       if (onAddToCart) {
         await onAddToCart(product.id, 1);
       }
-      setIsAddedToCart(true);
-      setTimeout(() => setIsAddedToCart(false), 2000);
+
+      // Use the addItem function from the cart context
+      const success = await addItem(product.id, 1);
+
+      if (success) {
+        setIsAddedToCart(true);
+        setTimeout(() => {
+          setIsAddedToCart(false);
+          // Optionally open the cart drawer after adding an item
+          // openCart();
+        }, 2000);
+      }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
     } finally {
