@@ -13,6 +13,7 @@ interface AuthContextType {
   logout: () => void;
   updateProfile: (profileData: Partial<UserProfile>) => Promise<boolean>;
   changePassword: (oldPassword: string, newPassword: string) => Promise<boolean>;
+  clearError: () => void;
 }
 
 // Create the context with a default value

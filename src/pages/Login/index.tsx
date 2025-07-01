@@ -8,7 +8,7 @@ import MainLayout from '@/components/layout/MainLayout';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();
+  const { login, loading, error, clearError } = useAuth();
   const [formData, setFormData] = useState<LoginRequest>({
     email: '',
     password: '',
@@ -101,7 +101,11 @@ const Login = () => {
             <div className="mt-6 text-center">
               <p className="text-white/70">
                 Não tem uma conta?{' '}
-                <Link to="/register" className="text-gem-purple hover:text-gem-pink font-medium">
+                <Link 
+                  to="/register" 
+                  className="text-gem-purple hover:text-gem-pink font-medium"
+                  onClick={clearError}
+                >
                   Registre-se
                 </Link>
               </p>

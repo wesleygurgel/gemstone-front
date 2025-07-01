@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
@@ -8,13 +8,20 @@ import MainLayout from '@/components/layout/MainLayout';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register: registerUser, loading, error } = useAuth();
+  const { register: registerUser, loading, error, clearError } = useAuth();
   const [formData, setFormData] = useState<RegisterRequest>({
     email: '',
     password: '',
     password_confirm: ''
   });
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [validations, setValidations] = useState({
+    length: false,
+    notNumeric: false,
+    notCommon: true, // Assume true until we check against common passwords
+    notSimilarToEmail: true, // Assume true until we check against email
+    passwordsMatch: false
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,14 +37,80 @@ const Register = () => {
     }
   };
 
+  // Check if password is common
+  const isCommonPassword = (password: string): boolean => {
+    const commonPasswords = [
+      '123456', 'password', '12345678', 'qwerty', '123456789', 
+      '12345', '1234', '111111', '1234567', 'dragon', 
+      '123123', 'baseball', 'abc123', 'football', 'monkey', 
+      'letmein', '696969', 'shadow', 'master', '666666', 
+      'qwertyuiop', '123321', 'mustang', '1234567890', 'michael', 
+      '654321', 'superman', '1qaz2wsx', '7777777', 'fuckyou', 
+      '121212', '000000', 'qazwsx', '123qwe', 'killer', 
+      'trustno1', 'jordan', 'jennifer', 'hunter', 'buster', 
+      'soccer', 'harley', 'batman', 'andrew', 'tigger', 
+      'sunshine', 'iloveyou', 'fuckme', '2000', 'charlie',
+      'teste123', 'teste', 'admin', 'admin123'
+    ];
+    return commonPasswords.includes(password.toLowerCase());
+  };
+
+  // Check if password is similar to email
+  const isSimilarToEmail = (password: string, email: string): boolean => {
+    if (!email) return false;
+
+    const emailParts = email.split('@')[0].toLowerCase();
+    const passwordLower = password.toLowerCase();
+
+    // Check if password contains email username or vice versa
+    return emailParts.includes(passwordLower) || passwordLower.includes(emailParts);
+  };
+
+  // Check if password is entirely numeric
+  const isEntirelyNumeric = (password: string): boolean => {
+    return /^\d+$/.test(password);
+  };
+
+  // Validate password against all rules
+  const validatePassword = (password: string, email: string, confirmPassword: string) => {
+    setValidations({
+      length: password.length >= 8,
+      notNumeric: !isEntirelyNumeric(password),
+      notCommon: !isCommonPassword(password),
+      notSimilarToEmail: !isSimilarToEmail(password, email),
+      passwordsMatch: password === confirmPassword
+    });
+  };
+
+  // Validate password whenever form data changes
+  useEffect(() => {
+    validatePassword(formData.password, formData.email, formData.password_confirm);
+  }, [formData.password, formData.email, formData.password_confirm]);
+
   const validateForm = (): boolean => {
-    if (formData.password !== formData.password_confirm) {
-      setPasswordError('As senhas não coincidem');
+    // Check all validations
+    if (!validations.length) {
+      setPasswordError('A senha deve ter pelo menos 8 caracteres');
       return false;
     }
 
-    if (formData.password.length < 8) {
-      setPasswordError('A senha deve ter pelo menos 8 caracteres');
+    if (!validations.notNumeric) {
+      setPasswordError('A senha não pode ser inteiramente numérica');
+      return false;
+    }
+
+    if (!validations.notCommon) {
+      setPasswordError('A senha é muito comum e fácil de adivinhar');
+      return false;
+    }
+
+    if (!validations.notSimilarToEmail) {
+      setPasswordError('A senha não pode ser similar ao seu email');
+      return false;
+    }
+
+    if (!validations.passwordsMatch) {
+      setPasswordError('As senhas não coincidem');
       return false;
     }
 
@@ -113,7 +186,20 @@ const Register = () => {
                   required
                   minLength={8}
                 />
-                <p className="mt-1 text-sm text-white/50">Mínimo de 8 caracteres</p>
+                <div className="mt-2 space-y-1">
+                  <p className={`text-sm ${validations.length ? 'text-green-400' : 'text-white/50'}`}>
+                    {validations.length ? '✓' : '○'} Mínimo de 8 caracteres
+                  </p>
+                  <p className={`text-sm ${validations.notNumeric ? 'text-green-400' : 'text-white/50'}`}>
+                    {validations.notNumeric ? '✓' : '○'} Não pode ser inteiramente numérica
+                  </p>
+                  <p className={`text-sm ${validations.notCommon ? 'text-green-400' : 'text-white/50'}`}>
+                    {validations.notCommon ? '✓' : '○'} Não pode ser uma senha comum
+                  </p>
+                  <p className={`text-sm ${validations.notSimilarToEmail ? 'text-green-400' : 'text-white/50'}`}>
+                    {validations.notSimilarToEmail ? '✓' : '○'} Não pode ser similar ao seu email
+                  </p>
+                </div>
               </div>
 
               <div className="mb-6">
@@ -129,6 +215,9 @@ const Register = () => {
                   className="w-full px-4 py-3 rounded-lg bg-black-900 border border-gem-purple/30 text-white focus:ring-2 focus:ring-gem-purple focus:border-transparent"
                   required
                 />
+                <p className={`mt-1 text-sm ${validations.passwordsMatch && formData.password_confirm ? 'text-green-400' : 'text-white/50'}`}>
+                  {validations.passwordsMatch && formData.password_confirm ? '✓' : '○'} As senhas devem coincidir
+                </p>
                 {passwordError && (
                   <p className="mt-1 text-sm text-red-400">{passwordError}</p>
                 )}
@@ -146,7 +235,11 @@ const Register = () => {
             <div className="mt-6 text-center">
               <p className="text-white/70">
                 Já tem uma conta?{' '}
-                <Link to="/login" className="text-gem-purple hover:text-gem-pink font-medium">
+                <Link 
+                  to="/login" 
+                  className="text-gem-purple hover:text-gem-pink font-medium"
+                  onClick={clearError}
+                >
                   Faça login
                 </Link>
               </p>

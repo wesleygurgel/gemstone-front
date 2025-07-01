@@ -27,8 +27,13 @@ export const useAuth = () => {
       setUser(userData);
       setError(null);
     } catch (err) {
-      const handledError = handleApiError(err);
-      setError(getErrorMessage(handledError));
+      // Check if the error is already a HandledApiError
+      const errorObj = err as any;
+      const errorMessage = errorObj.type && errorObj.message 
+        ? getErrorMessage(errorObj) // It's already a HandledApiError
+        : getErrorMessage(handleApiError(err)); // It needs to be handled
+
+      setError(errorMessage);
       setUser(null);
     } finally {
       setLoading(false);
@@ -50,8 +55,13 @@ export const useAuth = () => {
       setError(null);
       return true;
     } catch (err) {
-      const handledError = handleApiError(err);
-      setError(getErrorMessage(handledError));
+      // Check if the error is already a HandledApiError
+      const errorObj = err as any;
+      const errorMessage = errorObj.type && errorObj.message 
+        ? getErrorMessage(errorObj) // It's already a HandledApiError
+        : getErrorMessage(handleApiError(err)); // It needs to be handled
+
+      setError(errorMessage);
       return false;
     } finally {
       setLoading(false);
@@ -101,8 +111,13 @@ export const useAuth = () => {
       setError(null);
       return true;
     } catch (err) {
-      const handledError = handleApiError(err);
-      setError(getErrorMessage(handledError));
+      // Check if the error is already a HandledApiError
+      const errorObj = err as any;
+      const errorMessage = errorObj.type && errorObj.message 
+        ? getErrorMessage(errorObj) // It's already a HandledApiError
+        : getErrorMessage(handleApiError(err)); // It needs to be handled
+
+      setError(errorMessage);
       return false;
     } finally {
       setLoading(false);
@@ -119,12 +134,24 @@ export const useAuth = () => {
       setError(null);
       return true;
     } catch (err) {
-      const handledError = handleApiError(err);
-      setError(getErrorMessage(handledError));
+      // Check if the error is already a HandledApiError
+      const errorObj = err as any;
+      const errorMessage = errorObj.type && errorObj.message 
+        ? getErrorMessage(errorObj) // It's already a HandledApiError
+        : getErrorMessage(handleApiError(err)); // It needs to be handled
+
+      setError(errorMessage);
       return false;
     } finally {
       setLoading(false);
     }
+  };
+
+  /**
+   * Clear any error messages
+   */
+  const clearError = (): void => {
+    setError(null);
   };
 
   return {
@@ -138,5 +165,6 @@ export const useAuth = () => {
     updateProfile,
     changePassword,
     loadUser,
+    clearError,
   };
 };
