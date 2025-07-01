@@ -53,6 +53,7 @@ interface ProductFiltersProps {
   isMobile?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
+  initialCategoryId?: number | null;
 }
 
 const ProductFilters = ({
@@ -61,7 +62,8 @@ const ProductFilters = ({
   onSortChange,
   isMobile = false,
   isOpen = false,
-  onClose
+  onClose,
+  initialCategoryId = null
 }: ProductFiltersProps) => {
   // Initialize centralized filter state
   const initialFilterState: FilterState = {
@@ -79,15 +81,18 @@ const ProductFilters = ({
       selected: []
     },
     categories: {
-      active: false,
-      selectedId: null,
-      selectedName: null
+      active: initialCategoryId !== null,
+      selectedId: initialCategoryId,
+      selectedName: null // This will be updated when categories are fetched
     },
     sort: 'relevance'
   };
 
   // Centralized filter state
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
+
+  // Flag to prevent initial onFilterChange call
+  const [isInitialMount, setIsInitialMount] = useState(true);
 
   // Temporary states for inputs
   const [currentMin, setCurrentMin] = useState<number>(filters.priceRange.min);
@@ -270,10 +275,27 @@ const ProductFilters = ({
 
   // Notify parent component when filters change
   useEffect(() => {
-    if (onFilterChange) {
+    if (onFilterChange && !isInitialMount) {
       onFilterChange(filters);
     }
-  }, [filters, onFilterChange]);
+    setIsInitialMount(false);
+  }, [filters, onFilterChange, isInitialMount]);
+
+  // Update category name when categories are fetched
+  useEffect(() => {
+    if (initialCategoryId && categories.length > 0) {
+      const category = categories.find(c => c.id === initialCategoryId);
+      if (category) {
+        setFilters(prev => ({
+          ...prev,
+          categories: {
+            ...prev.categories,
+            selectedName: category.name
+          }
+        }));
+      }
+    }
+  }, [categories, initialCategoryId]);
 
   // Prevent body scrolling when drawer is open
   useEffect(() => {

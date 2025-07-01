@@ -4,6 +4,7 @@ import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Marketplace from './pages/Marketplace';
+import ProductDetail from './pages/Marketplace/ProductDetail';
 import GuestRoute from './components/auth/GuestRoute';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -25,8 +26,11 @@ const router = createBrowserRouter([
     path: '/marketplace',
     element: <Marketplace />,
   },
+  {
+    path: '/marketplace/product/:id',
+    element: <ProductDetail />,
+  },
   // Future marketplace routes
-  // { path: '/produto/:id', element: <ProtectedRoute><ProductDetail /></ProtectedRoute> },
   // { path: '/carrinho', element: <ProtectedRoute><Cart /></ProtectedRoute> },
   // { path: '/checkout', element: <ProtectedRoute><Checkout /></ProtectedRoute> },
   {

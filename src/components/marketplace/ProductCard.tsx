@@ -18,19 +18,36 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
   const [isInWishlist, setIsInWishlist] = useState(false);
 
   // Format price with Brazilian currency
-  const formattedPrice = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(parseFloat(product.price));
+  const formatPrice = (price: string) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(parseFloat(price));
+  };
+
+  // Calculate discount percentage if price_discount exists
+  const calculateDiscountPercentage = () => {
+    if (!product.price_discount) return null;
+
+    const originalPrice = parseFloat(product.price);
+    const discountPrice = parseFloat(product.price_discount);
+
+    if (originalPrice <= 0 || discountPrice >= originalPrice) return null;
+
+    const discountPercentage = ((originalPrice - discountPrice) / originalPrice) * 100;
+    return Math.round(discountPercentage);
+  };
+
+  const discountPercentage = product.price_discount ? calculateDiscountPercentage() : null;
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (!product.available || isAddingToCart) return;
-    
+
     setIsAddingToCart(true);
-    
+
     try {
       if (onAddToCart) {
         await onAddToCart(product.id, 1);
@@ -47,11 +64,11 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
   const handleAddToWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (onAddToWishlist) {
       onAddToWishlist(product.id);
     }
-    
+
     setIsInWishlist(!isInWishlist);
   };
 
@@ -65,7 +82,7 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <Link to={`/marketplace/product/${product.slug}`} className="block">
+      <Link to={`/marketplace/product/${product.id}`} className="block">
         <div className="relative overflow-hidden aspect-square">
           {/* Product image */}
           {product.main_image ? (
@@ -82,14 +99,14 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
               <span className="text-white/50">Sem imagem</span>
             </div>
           )}
-          
+
           {/* Featured badge */}
           {product.featured && (
             <div className="absolute top-2 left-2 bg-gradient-to-r from-gem-pink to-gem-purple px-2 py-1 rounded text-xs font-medium text-white">
               Destaque
             </div>
           )}
-          
+
           {/* Wishlist button */}
           <button
             onClick={handleAddToWishlist}
@@ -102,7 +119,7 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
           >
             <Heart size={18} fill={isInWishlist ? "currentColor" : "none"} />
           </button>
-          
+
           {/* Add to cart button - appears on hover */}
           <motion.div
             className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black-900/90 to-black-900/0 p-3"
@@ -147,16 +164,28 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
             </button>
           </motion.div>
         </div>
-        
+
         <div className="p-4">
           {/* Category */}
           <div className="text-gem-purple text-xs mb-1">{product.category_name}</div>
-          
+
           {/* Product name */}
           <h3 className="font-medium text-white mb-2 line-clamp-2 h-12">{product.name}</h3>
-          
+
           {/* Price */}
-          <div className="text-lg font-semibold text-white">{formattedPrice}</div>
+          {product.price_discount ? (
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-semibold text-white">{formatPrice(product.price_discount)}</span>
+              <span className="text-sm line-through text-white/50">{formatPrice(product.price)}</span>
+              {discountPercentage && (
+                <span className="bg-red-500/20 text-red-500 px-1 py-0.5 rounded text-xs font-medium">
+                  -{discountPercentage}%
+                </span>
+              )}
+            </div>
+          ) : (
+            <div className="text-lg font-semibold text-white">{formatPrice(product.price)}</div>
+          )}
         </div>
       </Link>
     </motion.div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Menu } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import ProductFilters from '@/components/marketplace/ProductFilters';
 import ProductGrid from '@/components/marketplace/ProductGrid';
@@ -16,12 +17,27 @@ const Marketplace = () => {
   // State for mobile drawer
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
+  // Get search parameters from URL
+  const [searchParams] = useSearchParams();
+
   // Fetch products on component mount
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await productService.getProducts();
+
+        // Check if category_id is present in the URL
+        const categoryId = searchParams.get('category_id');
+
+        // Create params object for API call
+        const params: any = {};
+
+        // Apply category filter if present in URL
+        if (categoryId) {
+          params.category_id = categoryId;
+        }
+
+        const response = await productService.getProducts(params);
         console.log('API Response:', response);
         // The productService.getProducts() now returns the array of products directly
         console.log('Products from API:', response);
@@ -38,7 +54,7 @@ const Marketplace = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [searchParams]);
 
   // Handle filter changes
   const handleFilterChange = useCallback(async (newFilters: any) => {
@@ -145,6 +161,7 @@ const Marketplace = () => {
           <div className="hidden md:block w-64 flex-shrink-0">
             {/* Filters */}
             <ProductFilters 
+              initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
               onFilterChange={handleFilterChange}
               onSortChange={handleSortChange}
             />
@@ -182,6 +199,7 @@ const Marketplace = () => {
         isMobile={true}
         isOpen={isFilterDrawerOpen}
         onClose={() => {setIsFilterDrawerOpen(false)}}
+        initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
         onFilterChange={handleFilterChange}
         onSortChange={handleSortChange}
       />

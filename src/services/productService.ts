@@ -57,6 +57,15 @@ class ProductService extends ApiService<Product, ProductCreate, ProductUpdate> {
   };
 
   /**
+   * Get a product by slug
+   * @param slug The product slug
+   * @returns Promise resolving to the product
+   */
+  getProductBySlug = async (slug: string): Promise<Product> => {
+    return this.customGet<Product>(`by-slug/${slug}/`);
+  };
+
+  /**
    * Create a new product (admin only)
    * @param data The product data
    * @returns Promise resolving to the created product
