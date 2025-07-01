@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import { useToast } from '@/context/ToastContext';
 
 const CartDrawer: React.FC = () => {
   const { 
@@ -15,6 +16,7 @@ const CartDrawer: React.FC = () => {
     removeItem,
     loading
   } = useCart();
+  const { showToast } = useToast();
 
   // Animation variants for the drawer
   const drawerVariants = {
@@ -58,12 +60,39 @@ const CartDrawer: React.FC = () => {
   // Handle quantity change
   const handleQuantityChange = async (itemId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-    await updateItem(itemId, newQuantity);
+
+    try {
+      const success = await updateItem(itemId, newQuantity);
+
+      if (success) {
+        // Find the item to get its name
+        const item = cart?.items.find(item => item.id === itemId);
+        if (item) {
+          showToast(`Quantidade de ${item.product_details.name} atualizada para ${newQuantity}`, 'info');
+        }
+      }
+    } catch (error) {
+      console.error('Failed to update item quantity:', error);
+      showToast('Erro ao atualizar quantidade', 'error');
+    }
   };
 
   // Handle remove item
   const handleRemoveItem = async (itemId: number) => {
-    await removeItem(itemId);
+    try {
+      // Find the item to get its name before removing
+      const item = cart?.items.find(item => item.id === itemId);
+      const itemName = item?.product_details.name || 'Item';
+
+      const success = await removeItem(itemId);
+
+      if (success) {
+        showToast(`${itemName} removido do carrinho`, 'success');
+      }
+    } catch (error) {
+      console.error('Failed to remove item:', error);
+      showToast('Erro ao remover item do carrinho', 'error');
+    }
   };
 
   return (

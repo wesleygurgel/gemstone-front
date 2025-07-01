@@ -5,6 +5,7 @@ import { ShoppingCart, Heart } from 'lucide-react';
 import { ProductListItem } from '@/types/api';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 
 interface ProductCardProps {
   product: ProductListItem;
@@ -16,6 +17,7 @@ interface ProductCardProps {
 const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: ProductCardProps) => {
   const { addItem, openCart } = useCart();
   const { isAuthenticated } = useAuth();
+  const { showToast } = useToast();
   const [isHovered, setIsHovered] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -52,8 +54,8 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
 
     // Check if user is authenticated
     if (!isAuthenticated) {
-      // Redirect to login page or show login modal
-      alert('Please log in to add items to your cart');
+      // Show toast notification for unauthenticated user
+      showToast('Faça login para adicionar itens ao carrinho', 'warning');
       return;
     }
 
@@ -70,6 +72,8 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
 
       if (success) {
         setIsAddedToCart(true);
+        // Show success toast
+        showToast(`${product.name} adicionado ao carrinho`, 'success');
         setTimeout(() => {
           setIsAddedToCart(false);
           // Optionally open the cart drawer after adding an item
@@ -78,6 +82,8 @@ const ProductCard = ({ product, onAddToCart, onAddToWishlist, className = '' }: 
       }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
+      // Show error toast
+      showToast('Erro ao adicionar item ao carrinho', 'error');
     } finally {
       setIsAddingToCart(false);
     }
