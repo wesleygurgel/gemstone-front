@@ -121,7 +121,9 @@ const CartDrawer: React.FC = () => {
             <div className="p-4 border-b border-gem-purple/20 flex justify-between items-center bg-black-800 text-white">
               <h2 className="text-xl font-semibold bg-gradient-to-r from-gem-pink to-gem-purple bg-clip-text text-transparent">Seu Carrinho</h2>
               <div className="flex items-center">
-                <span className="mr-4 text-white/80">{totalItems} itens</span>
+                <span className="mr-4 px-2 py-1 bg-black-700 border border-gem-purple/30 rounded-md font-medium bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">
+                  {totalItems === 1 ? '1 Item' : `${totalItems} Itens`}
+                </span>
                 <button 
                   onClick={closeCart}
                   className="p-1 rounded-full hover:bg-black-700 hover:text-gem-pink transition-colors"
@@ -167,15 +169,15 @@ const CartDrawer: React.FC = () => {
 
                       {/* Product details */}
                       <div className="ml-3 flex-1">
-                        <div className="flex justify-between">
+                        <div>
                           <h3 className="text-sm font-medium text-white">{item.product_details.name}</h3>
-                          <p className="text-sm font-medium bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">
-                            R$ {parseFloat(item.total_price).toFixed(2)}
-                          </p>
                         </div>
 
                         <p className="text-sm text-white/60 mt-1">
                           R$ {parseFloat(item.product_details.price_discount || item.product_details.price).toFixed(2)} cada
+                        </p>
+                        <p className="text-sm font-medium bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent mt-1">
+                          R$ {parseFloat(item.total_price).toFixed(2)}
                         </p>
 
                         {/* Quantity controls and remove button */}
