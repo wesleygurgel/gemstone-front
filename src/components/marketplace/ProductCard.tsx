@@ -46,7 +46,6 @@ const ProductCard = ({ product, onAddToWishlist, className = '' }: ProductCardPr
   const discountPercentage = product.price_discount ? calculateDiscountPercentage() : null;
 
   const handleAddToCart = async (e: React.MouseEvent) => {
-    console.log('handleAddToCart');
     e.preventDefault();
     e.stopPropagation();
 
@@ -62,7 +61,6 @@ const ProductCard = ({ product, onAddToWishlist, className = '' }: ProductCardPr
     setIsAddingToCart(true);
 
     try {
-      console.log('Adding to cart...');
       // Use the addItem function from the cart context
       const success = await addItem(product.id, 1);
 
@@ -79,7 +77,6 @@ const ProductCard = ({ product, onAddToWishlist, className = '' }: ProductCardPr
         }, 2000);
       }
     } catch (error) {
-      console.error('Failed to add product to cart:', error);
       // Show error toast
       showToast('Erro ao adicionar item ao carrinho', 'error');
     } finally {

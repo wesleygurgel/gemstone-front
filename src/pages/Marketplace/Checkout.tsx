@@ -18,6 +18,7 @@ const Checkout: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Confirmation
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState<CreateOrderRequest>({
@@ -46,11 +47,11 @@ const Checkout: React.FC = () => {
 
   // Redirect if cart is empty
   useEffect(() => {
-    if (!cartLoading && (!cart || !cart.items || cart.items.length === 0)) {
+    if (!cartLoading && (!cart || !cart.items || cart.items.length === 0) && !isCheckingOut) {
       showToast('Seu carrinho está vazio', 'error');
       navigate('/marketplace');
     }
-  }, [cart, cartLoading, navigate, showToast]);
+  }, [cart, cartLoading, navigate, showToast, isCheckingOut]);
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -84,18 +85,37 @@ const Checkout: React.FC = () => {
     } else if (step === 2) {
       // Create order
       try {
+        setIsCheckingOut(true); // Set checking out to true before creating order
         setLoading(true);
+
         const order = await orderService.createOrder(formData);
-        await clearCart();
+
+        // Store the order ID before clearing the cart
+        const orderId = order.id;
+
         showToast('Pedido realizado com sucesso!', 'success');
         setStep(3);
-        // Navigate to order details after a delay
+
+        // Clear the cart after setting the next step
+        await clearCart();
+
+        // Navigate to order details after a delay using the stored orderId
+        // Create a local copy of orderId to ensure it's captured in the closure
+        const orderIdForNavigation = orderId;
+
         setTimeout(() => {
-          navigate(`/marketplace/orders/${order.id}`);
+          // Check if orderId is valid before navigating
+          if (!orderIdForNavigation) {
+            // Navigate to orders list instead of a specific order
+            navigate('/marketplace/orders');
+            return;
+          }
+
+          navigate(`/marketplace/orders/${orderIdForNavigation}`);
         }, 3000);
       } catch (error) {
-        console.error('Failed to create order:', error);
         showToast('Erro ao criar pedido. Por favor, tente novamente.', 'error');
+        setIsCheckingOut(false); // Reset in case of error
       } finally {
         setLoading(false);
       }

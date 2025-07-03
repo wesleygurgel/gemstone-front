@@ -47,7 +47,6 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar', onCategorySel
         setCategories(data);
         setError(null);
       } catch (err) {
-        console.error('Failed to fetch categories:', err);
         setError('Falha ao carregar categorias. Por favor, tente novamente.');
         // Fallback to mock data for demonstration
         setCategories([
@@ -105,7 +104,6 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar', onCategorySel
           onCategorySelect(categoryData);
         }
       } catch (error) {
-        console.error('Failed to fetch products by category:', error);
       }
     }
   };

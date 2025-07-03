@@ -72,7 +72,6 @@ const CartDrawer: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Failed to update item quantity:', error);
       showToast('Erro ao atualizar quantidade', 'error');
     }
   };
@@ -90,7 +89,6 @@ const CartDrawer: React.FC = () => {
         showToast(`${itemName} removido do carrinho`, 'success');
       }
     } catch (error) {
-      console.error('Failed to remove item:', error);
       showToast('Erro ao remover item do carrinho', 'error');
     }
   };

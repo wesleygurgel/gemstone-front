@@ -55,7 +55,6 @@ const ProductDetail = () => {
         const filteredRelated = related.filter(item => item.id !== productData.id).slice(0, 4);
         setRelatedProducts(filteredRelated);
       } catch (err) {
-        console.error('Failed to fetch product:', err);
         setError('Falha ao carregar o produto. Por favor, tente novamente.');
         setProduct(null);
       } finally {
@@ -107,7 +106,6 @@ const ProductDetail = () => {
         setTimeout(() => setIsAddedToCart(false), 2000);
       }
     } catch (error) {
-      console.error('Failed to add product to cart:', error);
       showToast('Erro ao adicionar item ao carrinho', 'error');
     } finally {
       setIsAddingToCart(false);
@@ -131,7 +129,6 @@ const ProductDetail = () => {
         setIsAddingToCart(false);
       }
     } catch (error) {
-      console.error('Failed to add product to cart:', error);
       showToast('Erro ao adicionar item ao carrinho', 'error');
       setIsAddingToCart(false);
     }
@@ -142,7 +139,6 @@ const ProductDetail = () => {
     if (!product) return;
 
     // Implement wishlist functionality
-    console.log('Add to wishlist:', product.id);
     setIsInWishlist(!isInWishlist);
   };
 

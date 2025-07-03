@@ -46,14 +46,9 @@ const Marketplace = () => {
         }
 
         const response = await productService.getProducts(params);
-        console.log('API Response:', response);
-        // The productService.getProducts() now returns the array of products directly
-        console.log('Products from API:', response);
         setProducts(response);
-        console.log('Products state after setting:', response);
         setError(null);
       } catch (err) {
-        console.error('Failed to fetch products:', err);
         setError('Falha ao carregar produtos. Por favor, tente novamente.');
         setProducts([]);
       } finally {
@@ -66,8 +61,6 @@ const Marketplace = () => {
 
   // Handle filter changes
   const handleFilterChange = useCallback(async (newFilters: any) => {
-    console.log('Filter change:', newFilters);
-
     // Create params object for API call
     const params: any = {};
 
@@ -104,7 +97,6 @@ const Marketplace = () => {
       setProducts(response);
       setError(null);
     } catch (err) {
-      console.error('Failed to fetch filtered products:', err);
       setError('Falha ao filtrar produtos. Por favor, tente novamente.');
     } finally {
       setLoading(false);
@@ -113,8 +105,6 @@ const Marketplace = () => {
 
   // Handle sort changes
   const handleSortChange = useCallback(async (newSort: string) => {
-    console.log('Sort change:', newSort);
-
     // Create params object for API call
     const params: any = {};
 
@@ -130,7 +120,6 @@ const Marketplace = () => {
       setProducts(response);
       setError(null);
     } catch (err) {
-      console.error('Failed to sort products:', err);
       setError('Falha ao ordenar produtos. Por favor, tente novamente.');
     } finally {
       setLoading(false);
@@ -141,7 +130,6 @@ const Marketplace = () => {
   // Handle add to wishlist
   const handleAddToWishlist = (productId: number) => {
     // Implement wishlist functionality
-    console.log('Add to wishlist:', productId);
   };
 
   // @ts-ignore
@@ -181,7 +169,6 @@ const Marketplace = () => {
             </div>
 
             {/* Product grid */}
-            {console.log('Before rendering ProductGrid - products:', products)}
             <ProductGrid 
               products={products}
               loading={loading}

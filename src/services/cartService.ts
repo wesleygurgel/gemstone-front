@@ -31,7 +31,6 @@ class CartService extends ApiService<Cart> {
    * @returns Promise resolving to the added cart item
    */
   addItem = async (data: AddToCartRequest): Promise<AddToCartResponse> => {
-    console.log('addItem Cart...')
     if (!this.cartId) {
       await this.getCurrentCart();
     }

@@ -35,7 +35,6 @@ const Profile = () => {
 
   // Initialize form with user data when available
   useEffect(() => {
-    console.log('user: ', user)
     if (user && user.profile) {
       setProfileData({
         first_name: user.first_name || '',
@@ -91,7 +90,6 @@ const Profile = () => {
         showToast('Erro ao atualizar perfil. Tente novamente.', 'error');
       }
     } catch (error) {
-      console.error('Failed to update profile:', error);
       showToast('Erro ao atualizar perfil. Tente novamente.', 'error');
     } finally {
       setLoading(false);

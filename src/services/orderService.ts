@@ -23,7 +23,12 @@ class OrderService extends ApiService<OrderDetail, CreateOrderRequest> {
    * @returns Promise resolving to the created order
    */
   createOrder = async (data: CreateOrderRequest): Promise<CreateOrderResponse> => {
-    return this.create(data);
+    try {
+      const response = await this.create(data);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   };
 
   /**

@@ -53,8 +53,12 @@ export class ApiService<T, C = Partial<T>, U = Partial<T>> {
    * @returns Promise resolving to the created resource
    */
   create = async (data: C): Promise<T> => {
-    const response = await api.post<T>(this.endpoint + '/', data);
-    return response.data;
+    try {
+      const response = await api.post<T>(this.endpoint + '/', data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   /**
