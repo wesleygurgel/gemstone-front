@@ -240,6 +240,7 @@ const CartDrawer: React.FC = () => {
 
                 <Link 
                   to="/checkout"
+                  onClick={closeCart}
                   className="w-full py-3 bg-gradient-to-r from-gem-purple to-gem-blue text-white rounded-md font-medium text-center block hover:shadow-neon-purple transition-all duration-300"
                 >
                   Finalizar Compra
