@@ -89,6 +89,15 @@ const OrderDetail: React.FC = () => {
     }).format(date);
   };
 
+  // Format currency
+  const formatCurrency = (value: string | number) => {
+    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    return numValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   // Get status badge class
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
@@ -222,11 +231,11 @@ const OrderDetail: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeClass(order.status)}`}>
+                <span className={`inline-flex items-center justify-center min-w-[120px] px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusBadgeClass(order.status)}`}>
                   Status: {getStatusLabel(order.status)}
                 </span>
 
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
+                <span className={`inline-flex items-center justify-center min-w-[120px] px-2.5 py-1 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
                   Pagamento: {getPaymentStatusLabel(order.payment_status)}
                 </span>
               </div>
@@ -307,7 +316,7 @@ const OrderDetail: React.FC = () => {
                             <div className="ml-4 flex-1">
                               <div className="flex justify-between">
                                 <h3 className="text-white font-medium">{item.product_details.name}</h3>
-                                <span className="text-white font-medium">R$ {parseFloat(item.total_price).toFixed(2)}</span>
+                                <span className="text-white font-medium">R$ {formatCurrency(item.total_price)}</span>
                               </div>
 
                               <div className="mt-1 flex justify-between text-sm">
@@ -315,7 +324,7 @@ const OrderDetail: React.FC = () => {
                                   Quantidade: {item.quantity}
                                 </div>
                                 <div className="text-white/60">
-                                  R$ {parseFloat(item.price).toFixed(2)} cada
+                                  R$ {formatCurrency(item.price)} cada
                                 </div>
                               </div>
                             </div>
@@ -329,8 +338,8 @@ const OrderDetail: React.FC = () => {
                 <div className="p-4 border-t border-gem-purple/20 bg-black-700">
                   <div className="flex justify-between font-medium">
                     <span className="text-white">Total</span>
-                    <span className="bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">
-                      R$ {parseFloat(order.total_price).toFixed(2)}
+                    <span className="bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent text-lg font-bold">
+                      R$ {formatCurrency(order.total_price)}
                     </span>
                   </div>
                 </div>
@@ -368,7 +377,7 @@ const OrderDetail: React.FC = () => {
                           Pagamento {getPaymentStatusLabel(order.payment_status).toLowerCase()}
                         </h3>
                         <p className="text-white/60 text-sm">
-                          {order.payment_status === 'completed' ? formatDate(order.updated_at) : 'Aguardando processamento'}
+                          {order.payment_status === 'paid' ? formatDate(order.updated_at) : 'Aguardando processamento'}
                         </p>
                       </div>
                     </div>
@@ -467,7 +476,7 @@ const OrderDetail: React.FC = () => {
 
                   <div>
                     <span className="text-white/60">Status:</span>
-                    <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
+                    <span className={`ml-2 inline-flex items-center justify-center min-w-[110px] px-2.5 py-1 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
                       {getPaymentStatusLabel(order.payment_status)}
                     </span>
                   </div>

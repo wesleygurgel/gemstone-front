@@ -23,7 +23,7 @@ export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | '
 /**
  * Payment status
  */
-export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'refunded';
+export type PaymentStatus = 'pending' | 'processing' | 'paid' | 'failed' | 'refunded';
 
 /**
  * Payment method

@@ -66,7 +66,18 @@ const OrderList: React.FC = () => {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     }).format(date);
+  };
+
+  // Format currency
+  const formatCurrency = (value: string | number) => {
+    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    return numValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   // Get status badge class
@@ -130,8 +141,8 @@ const OrderList: React.FC = () => {
         return 'Pendente';
       case 'processing':
         return 'Processando';
-      case 'completed':
-        return 'Concluído';
+      case 'paid':
+        return 'Pago';
       case 'failed':
         return 'Falhou';
       case 'refunded':
@@ -306,17 +317,17 @@ const OrderList: React.FC = () => {
                         <span className="text-white/80">{formatDate(order.created_at)}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeClass(order.status)}`}>
+                        <span className={`inline-flex items-center justify-center min-w-[110px] px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusBadgeClass(order.status)}`}>
                           {getStatusLabel(order.status)}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
+                        <span className={`inline-flex items-center justify-center min-w-[110px] px-2.5 py-1 rounded-full text-xs font-medium border ${getPaymentStatusBadgeClass(order.payment_status)}`}>
                           {getPaymentStatusLabel(order.payment_status)}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-white font-medium">R$ {parseFloat(order.total_price).toFixed(2)}</span>
+                        <span className="text-white font-medium">R$ {formatCurrency(order.total_price)}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
                         <Link
