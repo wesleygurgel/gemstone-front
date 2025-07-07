@@ -9,6 +9,7 @@ import Profile from './pages/Marketplace/Profile';
 import Checkout from './pages/Marketplace/Checkout';
 import OrderList from './pages/Marketplace/OrderList';
 import OrderDetail from './pages/Marketplace/OrderDetail';
+import Favorites from './pages/Marketplace/Favorites';
 import GuestRoute from './components/auth/GuestRoute';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/marketplace/orders/:id',
     element: <ProtectedRoute><OrderDetail /></ProtectedRoute>,
+  },
+  {
+    path: '/marketplace/favorites',
+    element: <ProtectedRoute><Favorites /></ProtectedRoute>,
   },
   {
     path: '*',

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, LogOut, ChevronDown, ShoppingCart, Search } from 'lucide-react';
+import { User, LogOut, ChevronDown, ShoppingCart, Search, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -100,17 +100,17 @@ const MarketplaceHeader = () => {
           </Link>
 
           {/* Center Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/marketplace/categories" className="font-medium text-white/80 hover:text-gem-pink transition-colors">
-              Categorias
-            </Link>
-            <Link to="/marketplace/new" className="font-medium text-white/80 hover:text-gem-purple transition-colors">
-              Lançamentos
-            </Link>
-            <Link to="/marketplace/deals" className="font-medium text-white/80 hover:text-gem-blue transition-colors">
-              Ofertas
-            </Link>
-          </nav>
+          {/*<nav className="hidden md:flex items-center space-x-6">*/}
+          {/*  <Link to="/marketplace/categories" className="font-medium text-white/80 hover:text-gem-pink transition-colors">*/}
+          {/*    Categorias*/}
+          {/*  </Link>*/}
+          {/*  <Link to="/marketplace/new" className="font-medium text-white/80 hover:text-gem-purple transition-colors">*/}
+          {/*    Lançamentos*/}
+          {/*  </Link>*/}
+          {/*  <Link to="/marketplace/deals" className="font-medium text-white/80 hover:text-gem-blue transition-colors">*/}
+          {/*    Ofertas*/}
+          {/*  </Link>*/}
+          {/*</nav>*/}
 
           {/* Right Side - Search, Cart, User */}
           <div className="flex items-center space-x-4">
@@ -182,6 +182,10 @@ const MarketplaceHeader = () => {
                     </Link>
                     <Link to="/marketplace/orders" className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-purple transition-colors">
                       Meus Pedidos
+                    </Link>
+                    <Link to="/marketplace/favorites" className="flex items-center px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-pink transition-colors">
+                      <Heart size={16} className="mr-2" />
+                      Favoritos
                     </Link>
                     <button
                       onClick={logout}

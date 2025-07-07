@@ -5,14 +5,18 @@ import { ChevronRight, ShoppingCart, Heart, Clock, TruckIcon, ShieldCheck, Alert
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import { productService } from '@/services';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
+import { useWishlist } from '@/context/WishlistContext';
 import { Product, ProductListItem } from '@/types/api';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
+  const { isItemInWishlist, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist();
 
   // State for product
   const [product, setProduct] = useState<Product | null>(null);
@@ -27,6 +31,7 @@ const ProductDetail = () => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
 
   // State for selected image
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -65,6 +70,22 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
+
+  // Check if product is in wishlist when component mounts
+  useEffect(() => {
+    const checkWishlistStatus = async () => {
+      if (isAuthenticated && id) {
+        try {
+          const isInWishlist = await isItemInWishlist(parseInt(id));
+          setIsInWishlist(isInWishlist);
+        } catch (error) {
+          console.error('Error checking wishlist status:', error);
+        }
+      }
+    };
+
+    checkWishlistStatus();
+  }, [id, isAuthenticated, isItemInWishlist]);
 
   // Format price with Brazilian currency
   const formatPrice = (price: string) => {
@@ -135,11 +156,42 @@ const ProductDetail = () => {
   };
 
   // Handle add to wishlist
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = async () => {
     if (!product) return;
 
-    // Implement wishlist functionality
-    setIsInWishlist(!isInWishlist);
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // Show toast notification for unauthenticated user
+      showToast('Faça login para adicionar itens aos favoritos', 'warning');
+      return;
+    }
+
+    if (isAddingToWishlist) return;
+
+    setIsAddingToWishlist(true);
+
+    try {
+      if (isInWishlist) {
+        // Remove from wishlist
+        const success = await removeFromWishlist(product.id);
+        if (success) {
+          setIsInWishlist(false);
+          showToast(`${product.name} removido dos favoritos`, 'success');
+        }
+      } else {
+        // Add to wishlist
+        const success = await addToWishlist(product.id);
+        if (success) {
+          setIsInWishlist(true);
+          showToast(`${product.name} adicionado aos favoritos`, 'success');
+        }
+      }
+    } catch (error) {
+      console.error('Error updating wishlist:', error);
+      showToast('Erro ao atualizar favoritos', 'error');
+    } finally {
+      setIsAddingToWishlist(false);
+    }
   };
 
   // Loading state
@@ -376,14 +428,24 @@ const ProductDetail = () => {
 
                 <button
                   onClick={handleAddToWishlist}
+                  disabled={isAddingToWishlist}
                   className={`p-3 rounded-md ${
-                    isInWishlist 
-                      ? 'bg-gem-pink/20 text-gem-pink' 
-                      : 'bg-black-700 text-white/70 hover:text-gem-pink hover:bg-black-600'
+                    isAddingToWishlist
+                      ? 'bg-black-700 text-white/50'
+                      : isInWishlist 
+                        ? 'bg-gem-pink/20 text-gem-pink' 
+                        : 'bg-black-700 text-white/70 hover:text-gem-pink hover:bg-black-600'
                   } transition-colors`}
                   aria-label={isInWishlist ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                 >
-                  <Heart size={20} fill={isInWishlist ? "currentColor" : "none"} />
+                  {isAddingToWishlist ? (
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : (
+                    <Heart size={20} fill={isInWishlist ? "currentColor" : "none"} />
+                  )}
                 </button>
               </div>
             </div>
