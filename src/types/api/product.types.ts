@@ -55,6 +55,8 @@ export interface ProductListItem {
   category: number;
   category_name: string;
   featured: boolean;
+  view_count: number;
+  sales_count: number;
   main_image?: {
     id: number;
     image: string;
@@ -77,6 +79,8 @@ export interface Product {
   category: number;
   category_name: string;
   featured: boolean;
+  view_count: number;
+  sales_count: number;
   images: ProductImage[];
   created_at: string;
   updated_at: string;

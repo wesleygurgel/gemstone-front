@@ -53,7 +53,12 @@ const Marketplace = () => {
         }
 
         const response = await productService.getProducts(params);
-        setProducts(response);
+
+        // Apply default sorting (relevance - by view_count) to the initial products
+        const sortedProducts = [...response];
+        sortedProducts.sort((a, b) => b.view_count - a.view_count);
+
+        setProducts(sortedProducts);
         setError(null);
       } catch (err) {
         setError('Falha ao carregar produtos. Por favor, tente novamente.');
@@ -92,16 +97,41 @@ const Marketplace = () => {
       params.category_id = newFilters.categories.selectedId;
     }
 
-    // Apply sorting
-    if (newFilters.sort && newFilters.sort !== 'relevance') {
-      params.sort = newFilters.sort;
-    }
+    // Note: We don't apply sorting parameter to the API call anymore
+    // as sorting is now handled locally
 
     // Fetch filtered products
     setLoading(true);
     try {
       const response = await productService.getProducts(params);
-      setProducts(response);
+
+      // Apply the current sort to the filtered products
+      let sortedProducts = [...response];
+
+      // Apply sorting based on the filter's sort value
+      switch (newFilters.sort) {
+        case 'relevance':
+          // Sort by view_count (highest first)
+          sortedProducts.sort((a, b) => b.view_count - a.view_count);
+          break;
+        case 'price-asc':
+          // Sort by price (lowest first)
+          sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+          break;
+        case 'price-desc':
+          // Sort by price (highest first)
+          sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+          break;
+        case 'bestselling':
+          // Sort by sales_count (highest first)
+          sortedProducts.sort((a, b) => b.sales_count - a.sales_count);
+          break;
+        default:
+          // Default to relevance
+          sortedProducts.sort((a, b) => b.view_count - a.view_count);
+      }
+
+      setProducts(sortedProducts);
       setError(null);
     } catch (err) {
       setError('Falha ao filtrar produtos. Por favor, tente novamente.');
@@ -110,28 +140,36 @@ const Marketplace = () => {
     }
   }, []);
 
-  // Handle sort changes
-  const handleSortChange = useCallback(async (newSort: string) => {
-    // Create params object for API call
-    const params: any = {};
+  // Handle sort changes - now done locally without API calls
+  const handleSortChange = useCallback((newSort: string) => {
+    // Sort the products locally based on the selected sort option
+    const sortedProducts = [...products];
 
-    // Apply sorting if it's not the default
-    if (newSort && newSort !== 'relevance') {
-      params.sort = newSort;
+    switch (newSort) {
+      case 'relevance':
+        // Sort by view_count (highest first)
+        sortedProducts.sort((a, b) => b.view_count - a.view_count);
+        break;
+      case 'price-asc':
+        // Sort by price (lowest first)
+        sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+      case 'price-desc':
+        // Sort by price (highest first)
+        sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
+      case 'bestselling':
+        // Sort by sales_count (highest first)
+        sortedProducts.sort((a, b) => b.sales_count - a.sales_count);
+        break;
+      default:
+        // Default to relevance
+        sortedProducts.sort((a, b) => b.view_count - a.view_count);
     }
 
-    // Fetch sorted products
-    setLoading(true);
-    try {
-      const response = await productService.getProducts(params);
-      setProducts(response);
-      setError(null);
-    } catch (err) {
-      setError('Falha ao ordenar produtos. Por favor, tente novamente.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    // Update the products state with the sorted products
+    setProducts(sortedProducts);
+  }, [products]);
 
 
   // Handle add to wishlist
