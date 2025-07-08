@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         },
     ],
     {
-        basename: isProduction ? "/gemstone-front" : "/"
+        basename: isProduction ? "/gemstone-front/" : "/"
     });
 
 export default router;
