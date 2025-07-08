@@ -6,6 +6,7 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    company: '',
     message: '',
   });
 
@@ -47,6 +48,7 @@ const ContactForm = () => {
       setFormData({
         name: '',
         email: '',
+        company: '',
         message: '',
       });
 

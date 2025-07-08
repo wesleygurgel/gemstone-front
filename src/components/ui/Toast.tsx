@@ -4,13 +4,12 @@ import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 import { ToastType } from '@/context/ToastContext';
 
 interface ToastProps {
-  id: string;
   message: string;
   type: ToastType;
   onClose: () => void;
 }
 
-const Toast: React.FC<ToastProps> = ({ id, message, type, onClose }) => {
+const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   // Define colors and icons based on toast type
   const getToastStyles = () => {
     switch (type) {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { ChevronRight, ChevronDown, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { categoryService, productService } from '@/services';
@@ -18,7 +17,6 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar', onCategorySel
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | string | null>(null);
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null);
-  const location = useLocation();
 
   // Mock subcategories for demonstration (in a real app, these would come from the API)
   const subcategories: Record<number, { id: number; name: string; slug: string }[]> = {
@@ -98,10 +96,10 @@ const CategoryNavigation = ({ className = '', variant = 'sidebar', onCategorySel
         const categoryData = await categoryService.getProductsByCategory(categoryId);
         // Check if the response is a category object with a products array
         if (categoryData && typeof categoryData === 'object' && 'products' in categoryData) {
-          onCategorySelect(categoryData.products);
+          onCategorySelect(categoryData.products as ProductListItem[]);
         } else {
           // If it's already an array of products, pass it directly
-          onCategorySelect(categoryData);
+          onCategorySelect(categoryData as ProductListItem[]);
         }
       } catch (error) {
       }

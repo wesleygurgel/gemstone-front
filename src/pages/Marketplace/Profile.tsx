@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { User, Mail, Phone, MapPin, Calendar, Edit, Save, X } from 'lucide-react';
+import { User, Mail, MapPin, Calendar, Edit, Save, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import Breadcrumb from '@/components/marketplace/Breadcrumb';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
-import { UserProfile, UserProfileData } from '@/types/api/auth.types';
+import { UserProfileData } from '@/types/api/auth.types';
 
 const Profile = () => {
   const navigate = useNavigate();

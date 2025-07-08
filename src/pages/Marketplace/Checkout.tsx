@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { CreditCard, Truck, CheckCircle, AlertCircle } from 'lucide-react';
+import { CreditCard, Truck, CheckCircle } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import Breadcrumb from '@/components/marketplace/Breadcrumb';
 import { useCart } from '@/context/CartContext';

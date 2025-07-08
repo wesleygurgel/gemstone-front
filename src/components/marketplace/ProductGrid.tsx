@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ProductListItem } from '@/types/api';
 import ProductCard from './ProductCard';
@@ -8,7 +7,6 @@ interface ProductGridProps {
   products?: ProductListItem[];
   loading?: boolean;
   error?: string | null;
-  onAddToWishlist?: (productId: number) => void;
   className?: string;
 }
 
@@ -16,7 +14,6 @@ const ProductGrid = ({
   products = [],
   loading = false,
   error = null,
-  onAddToWishlist,
   className = ''
 }: ProductGridProps) => {
   // If there's an error, display error message
@@ -82,8 +79,7 @@ const ProductGrid = ({
       {products.map((product) => (
         <motion.div key={product.id} variants={item}>
           <ProductCard 
-            product={product} 
-            onAddToWishlist={onAddToWishlist}
+            product={product}
           />
         </motion.div>
       ))}

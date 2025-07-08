@@ -4,8 +4,7 @@ import {
   RegisterRequest, 
   RegisterResponse, 
   TokenResponse, 
-  UserProfile, 
-  ProfileUpdateRequest 
+  UserProfile
 } from '../types/api';
 
 /**

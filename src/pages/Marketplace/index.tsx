@@ -5,17 +5,10 @@ import { useSearchParams } from 'react-router-dom';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import ProductFilters from '@/components/marketplace/ProductFilters';
 import ProductGrid from '@/components/marketplace/ProductGrid';
-import { productService, cartService } from '@/services';
-import { useAuth } from '@/context/AuthContext';
-import { useToast } from '@/context/ToastContext';
-import { useWishlist } from '@/context/WishlistContext';
+import { productService } from '@/services';
 import { ProductListItem } from '@/types/api';
 
 const Marketplace = () => {
-  const { isAuthenticated } = useAuth();
-  const { showToast } = useToast();
-  const { isItemInWishlist, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist();
-
   // State for products
   const [products, setProducts] = useState<ProductListItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -172,37 +165,6 @@ const Marketplace = () => {
   }, [products]);
 
 
-  // Handle add to wishlist
-  const handleAddToWishlist = async (productId: number) => {
-    // Check if user is authenticated
-    if (!isAuthenticated) {
-      showToast('Faça login para adicionar itens aos favoritos', 'warning');
-      return;
-    }
-
-    try {
-      // Check if product is already in wishlist
-      const isInWishlist = await isItemInWishlist(productId);
-
-      if (isInWishlist) {
-        // Remove from wishlist
-        const success = await removeFromWishlist(productId);
-        if (success) {
-          showToast('Produto removido dos favoritos', 'success');
-        }
-      } else {
-        // Add to wishlist
-        const success = await addToWishlist(productId);
-        if (success) {
-          showToast('Produto adicionado aos favoritos', 'success');
-        }
-      }
-    } catch (error) {
-      console.error('Error updating wishlist:', error);
-      showToast('Erro ao atualizar favoritos', 'error');
-    }
-  };
-
   // @ts-ignore
   // @ts-ignore
   return (
@@ -244,7 +206,6 @@ const Marketplace = () => {
               products={products}
               loading={loading}
               error={error}
-              onAddToWishlist={handleAddToWishlist}
             />
           </div>
         </div>

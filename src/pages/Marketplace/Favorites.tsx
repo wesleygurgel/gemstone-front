@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Heart, AlertCircle } from 'lucide-react';
@@ -6,25 +6,11 @@ import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import Breadcrumb from '@/components/marketplace/Breadcrumb';
 import ProductCard from '@/components/marketplace/ProductCard';
 import { useWishlist } from '@/context/WishlistContext';
-import { useToast } from '@/context/ToastContext';
 import { motion } from 'framer-motion';
 
 const Favorites: React.FC = () => {
-  const { wishlist, loading, error, totalItems, removeItem, loadWishlist } = useWishlist();
-  const { showToast } = useToast();
+  const { wishlist, loading, error, totalItems, loadWishlist } = useWishlist();
 
-  // Handle remove from wishlist
-  const handleRemoveFromWishlist = async (productId: number) => {
-    try {
-      const success = await removeItem(productId);
-      if (success) {
-        showToast('Produto removido dos favoritos', 'success');
-      }
-    } catch (error) {
-      console.error('Error removing from wishlist:', error);
-      showToast('Erro ao remover produto dos favoritos', 'error');
-    }
-  };
 
   // Animation variants
   const container = {
@@ -37,7 +23,7 @@ const Favorites: React.FC = () => {
     }
   };
 
-  const item = {
+  const itemVariant = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
   };
@@ -115,7 +101,7 @@ const Favorites: React.FC = () => {
               animate="show"
             >
               {wishlist?.items.map((item) => (
-                <motion.div key={item.id} variants={item}>
+                <motion.div key={item.id} variants={itemVariant}>
                   <ProductCard 
                     product={{
                       id: item.product.id,
@@ -127,9 +113,10 @@ const Favorites: React.FC = () => {
                       category: item.product.category,
                       category_name: item.product.category_name || '',
                       featured: item.product.featured,
-                      main_image: item.product.main_image || null
+                      main_image: item.product.main_image || undefined,
+                      view_count: 0,
+                      sales_count: 0
                     }}
-                    onAddToWishlist={handleRemoveFromWishlist}
                   />
                 </motion.div>
               ))}

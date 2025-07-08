@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import wishlistService from '../services/wishlistService';
-import { Wishlist, WishlistItem } from '../types/api/wishlist.types';
+import { Wishlist } from '../types/api/wishlist.types';
 import { handleApiError, getErrorMessage } from '../utils/errorHandler';
 import { useAuth } from '../context/AuthContext';
 
@@ -102,13 +102,13 @@ export const useWishlist = () => {
     try {
       setLoading(true);
       const isInWishlist = await isItemInWishlist(productId);
-      
+
       if (isInWishlist) {
         await wishlistService.removeFromWishlist(productId);
       } else {
         await wishlistService.addToWishlist(productId);
       }
-      
+
       await loadWishlist(); // Reload the wishlist to get the updated state
       setError(null);
       return true;

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Package, ChevronRight, Filter, Search, AlertCircle } from 'lucide-react';
+import { Package, ChevronRight, Filter, AlertCircle } from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import Breadcrumb from '@/components/marketplace/Breadcrumb';
-import { useToast } from '@/context/ToastContext';
 import orderService from '@/services/orderService';
 import { OrderDetail, OrderStatus, PaymentStatus } from '@/types/api';
 
 const OrderList: React.FC = () => {
-  const { showToast } = useToast();
 
   // State
   const [orders, setOrders] = useState<OrderDetail[]>([]);
@@ -105,7 +103,7 @@ const OrderList: React.FC = () => {
         return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
       case 'processing':
         return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      case 'completed':
+      case 'paid':
         return 'bg-green-500/20 text-green-300 border-green-500/30';
       case 'failed':
         return 'bg-red-500/20 text-red-300 border-red-500/30';
@@ -226,7 +224,7 @@ const OrderList: React.FC = () => {
                     <option value="">Todos</option>
                     <option value="pending">Pendente</option>
                     <option value="processing">Processando</option>
-                    <option value="completed">Concluído</option>
+                    <option value="paid">Pago</option>
                     <option value="failed">Falhou</option>
                     <option value="refunded">Reembolsado</option>
                   </select>

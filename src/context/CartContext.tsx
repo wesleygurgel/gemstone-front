@@ -1,6 +1,6 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useCart as useCartHook } from '@/hooks/useCart';
-import { Cart, CartItem } from '@/types/api';
+import { Cart } from '@/types/api';
 
 // Define the shape of the context
 interface CartContextType {

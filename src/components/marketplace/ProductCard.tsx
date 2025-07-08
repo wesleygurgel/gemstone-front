@@ -10,12 +10,11 @@ import { useWishlist } from '@/context/WishlistContext';
 
 interface ProductCardProps {
   product: ProductListItem;
-  onAddToWishlist?: (productId: number) => void;
   className?: string;
 }
 
-const ProductCard = ({ product, onAddToWishlist, className = '' }: ProductCardProps) => {
-  const { addItem, openCart } = useCart();
+const ProductCard = ({ product, className = '' }: ProductCardProps) => {
+  const { addItem } = useCart();
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
   const { isItemInWishlist, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist();

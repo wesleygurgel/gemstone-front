@@ -25,7 +25,6 @@ const ProductDetail = () => {
 
   // State for related products
   const [relatedProducts, setRelatedProducts] = useState<ProductListItem[]>([]);
-  const [loadingRelated, setLoadingRelated] = useState(true);
 
   // State for cart actions
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -52,7 +51,6 @@ const ProductDetail = () => {
         setSelectedImageIndex(mainImageIndex >= 0 ? mainImageIndex : 0);
 
         // Fetch related products from the same category
-        setLoadingRelated(true);
         const related = await productService.getProducts({ 
           category_id: productData.category
         });
@@ -64,7 +62,6 @@ const ProductDetail = () => {
         setProduct(null);
       } finally {
         setLoading(false);
-        setLoadingRelated(false);
       }
     };
 
@@ -355,7 +352,7 @@ const ProductDetail = () => {
               <div className="mt-2 text-white/70 text-sm">
                 <p>Em até 12x sem juros</p>
                 <p className="text-green-500">
-                  10% de desconto no PIX ou Boleto ({formatPrice(parseFloat(product.price_discount || product.price) * 0.9)})
+                  10% de desconto no PIX ou Boleto ({formatPrice(String(parseFloat(product.price_discount || product.price) * 0.9))})
                 </p>
               </div>
             </div>

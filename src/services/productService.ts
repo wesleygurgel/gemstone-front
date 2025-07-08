@@ -107,7 +107,7 @@ class CategoryService extends ApiService<Category, CategoryCreate> {
    * @returns Promise resolving to the created category
    */
   createCategory = async (data: CategoryCreate): Promise<CategoryResponse> => {
-    return this.create(data);
+    return this.create(data) as unknown as CategoryResponse;
   };
 }
 

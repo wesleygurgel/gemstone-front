@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import cartService from '../services/cartService';
-import { AddToCartRequest, Cart, CartItem, UpdateCartItemRequest } from '../types/api';
+import { Cart } from '../types/api';
 import { handleApiError, getErrorMessage } from '../utils/errorHandler';
 import { useAuth } from '../context/AuthContext';
 

@@ -82,6 +82,11 @@ export interface Product {
   view_count: number;
   sales_count: number;
   images: ProductImage[];
+  main_image?: {
+    id: number;
+    image: string;
+    alt_text: string;
+  };
   created_at: string;
   updated_at: string;
 }

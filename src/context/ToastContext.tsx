@@ -53,7 +53,6 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
           {toasts.map((toast) => (
             <Toast
               key={toast.id}
-              id={toast.id}
               message={toast.message}
               type={toast.type}
               onClose={() => hideToast(toast.id)}
