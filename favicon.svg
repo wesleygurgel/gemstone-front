@@ -1,0 +1,13 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gemGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D1497E" /> <!-- gem-pink -->
+      <stop offset="25%" stop-color="#A674E3" /> <!-- gem-purple -->
+      <stop offset="50%" stop-color="#7676F0" /> <!-- gem-violet -->
+      <stop offset="75%" stop-color="#4F9EF4" /> <!-- gem-blue -->
+      <stop offset="100%" stop-color="#3BC8F5" /> <!-- gem-cyan -->
+    </linearGradient>
+  </defs>
+  <path d="M16 2L29.856 10V26L16 34L2.144 26V10L16 2Z" fill="url(#gemGradient)"/>
+  <path d="M16 10L23.712 14V22L16 26L8.288 22V14L16 10Z" fill="white" fill-opacity="0.2"/>
+</svg>
