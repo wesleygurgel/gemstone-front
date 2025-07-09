@@ -13,7 +13,7 @@ import Favorites from './pages/Marketplace/Favorites';
 import GuestRoute from './components/auth/GuestRoute';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
-const isProduction = import.meta.env.MODE === 'production';
+const isDevelopment = import.meta.env.MODE === 'development';
 
 // Structured for future expansion with marketplace routes
 const router = createBrowserRouter([
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         },
     ],
     {
-        basename: isProduction ? "/gemstone-front/" : "/"
+        basename: isDevelopment ? "/gemstone-front/" : "/"
     });
 
 export default router;
