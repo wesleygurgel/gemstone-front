@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FileText, Shield, Users, Globe, Download } from 'lucide-react';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const complianceItems = [
   {
@@ -95,7 +96,7 @@ const Compliance = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Na Gemstone, a conformidade é inegociável. Atuamos segundo os mais altos padrões internacionais de ética, governança e responsabilidade.
+            Na {COMPANY_FULL_NAME}, a conformidade é inegociável. Atuamos segundo os mais altos padrões internacionais de ética, governança e responsabilidade.
           </motion.p>
         </div>
 

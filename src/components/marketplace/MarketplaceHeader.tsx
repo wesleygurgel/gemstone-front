@@ -6,6 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import CartDrawer from './CartDrawer';
 import logoSvg from '../../assets/images/logo-2.svg';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const MarketplaceHeader = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -91,11 +92,11 @@ const MarketplaceHeader = () => {
       <div className="container mx-auto px-4 border-t border-gem-purple/20">
         <div className="flex items-center justify-between py-4">
           {/* Logo/Brand */}
-          <Link to="/" className="relative flex items-center h-16 lg:h-20 overflow-visible">
+          <Link to="/" className="relative flex items-center h-12 lg:h-16 overflow-visible">
             <img 
               src={logoSvg} 
-              alt="Gemstone Logo" 
-              className="h-16 lg:h-20 transform scale-[2.8] lg:scale-[2.2] xl:scale-[3.2] origin-left"
+              alt={`${COMPANY_FULL_NAME} Logo`} 
+              className="h-12 lg:h-16 transform scale-[0.9] lg:scale-[1.1] xl:scale-[1.3] origin-left"
             />
           </Link>
 

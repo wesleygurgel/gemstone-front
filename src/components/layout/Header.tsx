@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import logoSvg from '../../assets/images/logo-2.svg';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,8 +19,8 @@ const Header = () => {
         <Link to="/" className="relative flex items-center h-16 lg:h-20 overflow-visible">
           <img 
             src={logoSvg} 
-            alt="Gemstone Logo" 
-            className="h-16 lg:h-20 transform scale-[2.8] lg:scale-[2.2] xl:scale-[3.2] origin-left"
+            alt={`${COMPANY_FULL_NAME} Logo`} 
+            className="h-16 lg:h-12 transform scale-[1.1] lg:scale-[1.0] xl:scale-[1.3] origin-left"
           />
         </Link>
 

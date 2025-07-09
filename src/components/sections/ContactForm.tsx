@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -104,7 +105,7 @@ const ContactForm = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              Entre em contato com a Gemstone
+              Entre em contato com a {COMPANY_FULL_NAME}
             </motion.h2>
             <motion.p 
               className="text-xl text-white/80 max-w-3xl mx-auto"
@@ -117,7 +118,7 @@ const ContactForm = () => {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -162,49 +163,13 @@ const ContactForm = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="h-full"
-            >
-              <a 
-                href="tel:+17863036211" 
-                className="bg-black-900/80 rounded-xl shadow-lg border border-gem-violet/30 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-neon-violet hover:translate-y-[-4px]"
-                aria-label="Ligar para Gemstone"
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-violet to-gem-blue rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
-                <div className="relative flex flex-col h-full">
-                  <div className="bg-gradient-to-r from-gem-violet to-gem-blue text-white p-6 flex items-center">
-                    <div className="w-14 h-14 bg-black-900 rounded-full flex items-center justify-center mr-4 shadow-md">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gem-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold">Telefone</h3>
-                  </div>
-                  <div className="p-6 flex-grow flex flex-col justify-center items-center text-center">
-                    <p className="text-white/90 text-xl font-medium">+1 (786) 303-6211</p>
-                    <p className="text-white/60 mt-2">Disponível em horário comercial</p>
-                  </div>
-                  <div className="p-4 bg-black-800/60 text-gem-violet text-center font-medium border-t border-gem-violet/20 group-hover:bg-black-800/80 transition-colors duration-300">
-                    Ligar agora
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="h-full"
             >
               <a 
                 href="mailto:contact@gemstonemiami.com" 
                 className="bg-black-900/80 rounded-xl shadow-lg border border-gem-cyan/30 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:shadow-neon-cyan hover:translate-y-[-4px]"
-                aria-label="Enviar email para Gemstone"
+                aria-label={`Enviar email para ${COMPANY_FULL_NAME}`}
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-gem-blue to-gem-cyan rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
                 <div className="relative flex flex-col h-full">
@@ -248,8 +213,8 @@ const ContactForm = () => {
                 allowFullScreen={true} 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Gemstone Location"
-                aria-label="Google Maps showing Gemstone's location"
+                title={`${COMPANY_FULL_NAME} Location`}
+                aria-label={`Google Maps showing ${COMPANY_FULL_NAME}'s location`}
                 className="grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
               ></iframe>
             </div>

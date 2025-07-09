@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Briefcase, Package, Search, FileCheck, HelpCircle, CheckCircle } from 'lucide-react';
+import { Briefcase, Package, Search, FileCheck, HelpCircle, CheckCircle, ShoppingBag } from 'lucide-react';
 
 const services = [
   {
@@ -61,6 +61,18 @@ const services = [
       'Suporte para certificações internacionais'
     ],
     color: 'gem-cyan'
+  },
+  {
+    icon: <ShoppingBag size={24} />,
+    title: 'Venda de Ouro e Pedras Preciosas',
+    subtitle: '',
+    description: 'Comercialização de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água marinha com certificação de origem e qualidade.',
+    benefits: [
+      'Produtos com certificação de origem',
+      'Garantia de autenticidade e qualidade',
+      'Preços competitivos no mercado internacional'
+    ],
+    color: 'gem-pink'
   }
 ];
 

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import logoSvg from '../../assets/images/logo-2.svg';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,9 +16,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-gem-pink via-gem-purple to-gem-cyan bg-clip-text text-transparent relative">
-              <span className="absolute -inset-1 blur-sm bg-gradient-to-r from-gem-pink to-gem-cyan opacity-30 rounded-lg"></span>
-              <span className="relative">Gemstone</span>
+            <Link to="/" className="relative flex items-center h-16 m-0 overflow-visible">
+              <img 
+                src={logoSvg} 
+                alt={`${COMPANY_FULL_NAME} Logo`} 
+                className="h-12 transform scale-[1.1] origin-left"
+              />
             </Link>
             <p className="mt-4 text-white/80">
               Excelência em trading de metais preciosos com integridade e responsabilidade.
@@ -109,7 +114,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gem-violet/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-white/70">
-            &copy; {currentYear} Gemstone. Todos os direitos reservados.
+            &copy; {currentYear} {COMPANY_FULL_NAME}. Todos os direitos reservados.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-gem-purple hover:text-gem-pink transition-colors hover:shadow-neon-purple" aria-label="LinkedIn">

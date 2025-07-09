@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import heroImage from '../../assets/images/hero.webp';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const Hero = () => {
   return (
@@ -46,7 +47,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#contact" className="btn bg-gradient-to-r from-gem-pink to-gem-purple text-white hover:shadow-neon-pink transition-all duration-300">
-                Fale com a Gemstone
+                Fale com a {COMPANY_FULL_NAME}
               </a>
               <a href="#about" className="btn btn-outline border-gem-violet text-white hover:bg-gem-violet/10 hover:border-gem-cyan transition-all duration-300">
                 Saiba Mais

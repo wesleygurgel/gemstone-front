@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Globe, Shield, Award, Check } from 'lucide-react';
+import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const values = [
   {
@@ -58,7 +59,7 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
           >
-            Sobre a Gemstone
+            Sobre a {COMPANY_FULL_NAME}
           </motion.h2>
           <motion.p 
             className="text-xl text-white/90 max-w-3xl mx-auto font-medium"
@@ -67,7 +68,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Uma trading internacional de metais preciosos com foco na comercialização ética de ouro e diamantes
+            Especialistas em mineração, exportação e importação de ouro e pedras preciosas ao redor do mundo
           </motion.p>
         </div>
 
@@ -83,10 +84,10 @@ const About = () => {
             <div className="relative">
               <h3 className="text-2xl font-semibold text-white mb-4 border-b border-gem-pink/30 pb-2">Quem Somos</h3>
               <p className="text-white/90 mb-4">
-                A Gemstone é uma trading internacional de metais preciosos com foco na comercialização ética de ouro e diamantes. Nascemos com o propósito de elevar os padrões do setor, oferecendo uma operação confiável, transparente e 100% alinhada às exigências regulatórias globais.
+                A {COMPANY_FULL_NAME} é atuante na área de mineração de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água marinha, especialista e com vasta experiência prática na exportação e importação de todo esse minerio ao redor do mundo.
               </p>
               <p className="text-white/90">
-                Com sede nos Estados Unidos e presença ativa em mercados estratégicos como Emirados Árabes, América Latina e África, operamos com eficiência e responsabilidade, conectando exportadores, refinarias e compradores institucionais.
+                Com sede em Miami - Estados Unidos e escritórios em Dubai, Roma, África & Brasil, operamos com eficiência e responsabilidade, conectando exportadores, refinarias e compradores institucionais.
               </p>
             </div>
           </motion.div>

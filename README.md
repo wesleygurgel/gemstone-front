@@ -1,10 +1,10 @@
 # Gemstone - Site Institucional
 
-Site institucional da Gemstone, uma trading internacional de metais preciosos com foco na comercialização ética de ouro e diamantes.
+Site institucional da Gemstone, empresa atuante na área de mineração de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água marinha, especialista em exportação e importação de minerios ao redor do mundo.
 
 ## Sobre a Empresa
 
-A Gemstone é uma empresa internacional com sede em Miami, especializada na importação e comercialização ética de ouro e diamantes. Operamos com os mais altos padrões de compliance, oferecendo soluções seguras, eficientes e personalizadas para exportadores, refinarias e parceiros institucionais ao redor do mundo.
+A Gemstone é atuante na área de mineração de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água marinha, especialista e com vasta experiência prática na exportação e importação de todo esse minerio ao redor do mundo. Com sede em Miami - Estados Unidos e escritórios em Dubai, Roma, África & Brasil, operamos com os mais altos padrões de compliance, oferecendo soluções seguras, eficientes e personalizadas para parceiros institucionais ao redor do mundo.
 
 ## Tecnologias Utilizadas
 
