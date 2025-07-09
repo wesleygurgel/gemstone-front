@@ -95,10 +95,6 @@ const Footer = () => {
                 <span className="text-gem-cyan mr-2">✉</span>
                 contact@gemstonemiami.com
               </li>
-              <li className="text-white/90 flex items-center">
-                <span className="text-gem-violet mr-2">✆</span>
-                +1 (786) 303-6211
-              </li>
               <li className="text-white/90 flex items-start">
                 <span className="text-gem-pink mr-2 mt-1">⌖</span>
                 <span>
