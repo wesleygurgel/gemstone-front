@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import CartDrawer from './CartDrawer';
+import logoSvg from '../../assets/images/logo-2.svg';
 
 const MarketplaceHeader = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -78,7 +79,7 @@ const MarketplaceHeader = () => {
             transition={{ duration: 0.5 }}
             className="flex flex-col items-center text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">Marketplace Gemstone</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">Marketplace</h1>
             <p className="text-xl max-w-2xl text-white/90">
               Descubra nossa seleção exclusiva de metais preciosos e pedras com certificação e procedência garantida.
             </p>
@@ -90,13 +91,12 @@ const MarketplaceHeader = () => {
       <div className="container mx-auto px-4 border-t border-gem-purple/20">
         <div className="flex items-center justify-between py-4">
           {/* Logo/Brand */}
-          <Link to="/" className="flex items-center">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <span className="text-2xl font-bold bg-gradient-to-r from-gem-pink to-gem-purple bg-clip-text text-transparent">Gemstone</span>
-            </motion.div>
+          <Link to="/" className="relative flex items-center h-16 lg:h-20 overflow-visible">
+            <img 
+              src={logoSvg} 
+              alt="Gemstone Logo" 
+              className="h-16 lg:h-20 transform scale-[2.8] lg:scale-[2.2] xl:scale-[3.2] origin-left"
+            />
           </Link>
 
           {/* Center Navigation */}

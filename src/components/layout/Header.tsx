@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import logoSvg from '../../assets/images/logo-2.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,13 +15,16 @@ const Header = () => {
     <header className="py-4 bg-black-900 shadow-lg border-b border-gem-violet/20">
       <div className="container flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-gem-pink via-gem-purple to-gem-cyan bg-clip-text text-transparent relative">
-          <span className="absolute -inset-1 blur-sm bg-gradient-to-r from-gem-pink to-gem-cyan opacity-30 rounded-lg"></span>
-          <span className="relative">Gemstone</span>
+        <Link to="/" className="relative flex items-center h-16 lg:h-20 overflow-visible">
+          <img 
+            src={logoSvg} 
+            alt="Gemstone Logo" 
+            className="h-16 lg:h-20 transform scale-[2.8] lg:scale-[2.2] xl:scale-[3.2] origin-left"
+          />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-8">
           <Link to="/" className="font-medium text-white hover:text-gem-cyan transition-colors">
             Início
           </Link>
@@ -57,7 +61,7 @@ const Header = () => {
         </nav>
 
         {/* Contact Icon Button */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <motion.a 
             href="#contact" 
             className="flex items-center justify-center w-10 h-10 rounded-full bg-gem-purple/10 text-gem-purple hover:bg-gem-purple/20 hover:shadow-neon-purple transition-all duration-300"
@@ -71,7 +75,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white"
+          className="lg:hidden text-white"
           onClick={toggleMenu}
           aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
         >
@@ -81,7 +85,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-black-900 shadow-lg z-50 border-b border-gem-violet/20">
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-black-900 shadow-lg z-50 border-b border-gem-violet/20">
           <div className="container py-4 flex flex-col space-y-4">
             <Link 
               to="/" 
