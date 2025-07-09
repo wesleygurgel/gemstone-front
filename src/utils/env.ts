@@ -8,7 +8,7 @@
 /**
  * API URL for backend requests
  */
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://gemstone-back-production.up.railway.app/api/v1';
 
 /**
  * Check if authentication features are enabled
