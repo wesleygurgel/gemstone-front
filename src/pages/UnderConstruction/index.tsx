@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import MainLayout from '@/components/layout/MainLayout';
+import UnderConstructionLayout from '@/components/layout/UnderConstructionLayout';
 import { motion } from 'framer-motion';
 
 const UnderConstruction = () => {
   return (
-    <MainLayout>
+    <UnderConstructionLayout>
       <Helmet>
         <title>Site em Construção | Gemstone</title>
         <meta name="description" content="Nosso site está em construção. Em breve estaremos de volta com novidades." />
@@ -105,7 +105,7 @@ const UnderConstruction = () => {
           </div>
         </div>
       </section>
-    </MainLayout>
+    </UnderConstructionLayout>
   );
 };
 
