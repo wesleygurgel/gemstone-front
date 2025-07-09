@@ -60,7 +60,7 @@ const ContactForm = () => {
     } catch (error) {
       setFormStatus({
         type: 'error',
-        message: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.',
+        message: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente!.',
       });
     }
   };
