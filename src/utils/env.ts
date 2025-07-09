@@ -8,7 +8,7 @@
 /**
  * API URL for backend requests
  */
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://gemstone-back-production.up.railway.app/api/v1';
 
 /**
  * Check if authentication features are enabled
@@ -23,7 +23,12 @@ export const IS_ANALYTICS_ENABLED = import.meta.env.VITE_ENABLE_ANALYTICS === 't
 /**
  * Application name
  */
-export const APP_NAME = import.meta.env.VITE_APP_NAME || 'Gemstone';
+export const APP_NAME = import.meta.env.VITE_APP_NAME || 'GEMSTONE U.S.A. Diamond\'s & Gold LLC';
+
+/**
+ * Company full name
+ */
+export const COMPANY_FULL_NAME = 'GEMSTONE U.S.A. Diamond\'s & Gold LLC';
 
 /**
  * Application version
@@ -48,6 +53,7 @@ export const getEnv = () => ({
   IS_AUTH_ENABLED,
   IS_ANALYTICS_ENABLED,
   APP_NAME,
+  COMPANY_FULL_NAME,
   APP_VERSION,
   IS_DEV,
   IS_PROD,

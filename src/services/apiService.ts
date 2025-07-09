@@ -1,5 +1,4 @@
 import api from '../utils/api';
-import { PaginatedResponse } from '../types/api';
 
 /**
  * Generic API service for CRUD operations
@@ -22,19 +21,19 @@ export class ApiService<T, C = Partial<T>, U = Partial<T>> {
     this.endpoint = endpoint.startsWith('/') 
       ? endpoint 
       : `/${endpoint}`;
-    
+
     this.endpoint = this.endpoint.endsWith('/') 
       ? this.endpoint.slice(0, -1) 
       : this.endpoint;
   }
 
   /**
-   * Get all resources (paginated)
+   * Get all resources
    * @param params Query parameters
-   * @returns Promise resolving to a paginated response
+   * @returns Promise resolving to an array of resources
    */
-  getAll = async (params?: Record<string, any>): Promise<PaginatedResponse<T>> => {
-    const response = await api.get<PaginatedResponse<T>>(this.endpoint, { params });
+  getAll = async (params?: Record<string, any>): Promise<T[]> => {
+    const response = await api.get<T[]>(this.endpoint, { params });
     return response.data;
   };
 
@@ -54,8 +53,12 @@ export class ApiService<T, C = Partial<T>, U = Partial<T>> {
    * @returns Promise resolving to the created resource
    */
   create = async (data: C): Promise<T> => {
-    const response = await api.post<T>(this.endpoint + '/', data);
-    return response.data;
+    try {
+      const response = await api.post<T>(this.endpoint + '/', data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   /**
@@ -99,7 +102,7 @@ export class ApiService<T, C = Partial<T>, U = Partial<T>> {
     const fullPath = path.startsWith('/') 
       ? `${this.endpoint}${path}` 
       : `${this.endpoint}/${path}`;
-    
+
     const response = await api.get<R>(fullPath, { params });
     return response.data;
   };
@@ -114,7 +117,7 @@ export class ApiService<T, C = Partial<T>, U = Partial<T>> {
     const fullPath = path.startsWith('/') 
       ? `${this.endpoint}${path}` 
       : `${this.endpoint}/${path}`;
-    
+
     const response = await api.post<R>(fullPath, data);
     return response.data;
   };

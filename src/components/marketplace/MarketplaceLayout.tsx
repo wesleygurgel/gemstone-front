@@ -9,9 +9,11 @@ interface MarketplaceLayoutProps {
 
 const MarketplaceLayout = ({ children }: MarketplaceLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black-900">
       <MarketplaceHeader />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow bg-gradient-to-b from-black-900 to-black-800">
+        {children}
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

@@ -16,7 +16,7 @@ const ScrollToTop = () => {
   // Set up scroll event listener
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
-    
+
     // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
@@ -36,10 +36,10 @@ const ScrollToTop = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-3 bg-gold-500 text-white rounded-full shadow-lg hover:bg-gold-600 transition-all duration-300 z-50 cursor-pointer"
+          className="fixed bottom-6 right-6 p-3 bg-gradient-to-r from-gem-violet to-gem-blue text-white rounded-full shadow-lg hover:shadow-neon-violet transition-all duration-300 z-50 cursor-pointer group"
           aria-label="Voltar ao topo"
         >
-          <ChevronUp size={24} />
+          <ChevronUp size={24} className="group-hover:-translate-y-1 transition-transform duration-300" />
         </button>
       )}
     </>

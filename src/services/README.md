@@ -78,7 +78,7 @@ const { login, user, loading, error } = useAuth();
 
 // Login
 const handleLogin = async () => {
-  const success = await login({ username: 'user', password: 'pass' });
+  const success = await login({ email: 'user@example.com', password: 'pass' });
   if (success) {
     // Navigate to dashboard
   }

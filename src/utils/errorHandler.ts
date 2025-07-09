@@ -10,11 +10,11 @@ export const handleApiError = (error: unknown): HandledApiError => {
   // Handle Axios errors
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<ApiError>;
-    
+
     if (axiosError.response) {
       // Server responded with error status
       const { status, data } = axiosError.response;
-      
+
       switch (status) {
         case 400:
           // Handle validation errors
@@ -26,6 +26,14 @@ export const handleApiError = (error: unknown): HandledApiError => {
           };
         case 401:
           // Handle authentication errors
+          if (data?.detail === "No active account found with the given credentials") {
+            return { 
+              type: 'AUTH_ERROR', 
+              message: 'Credenciais incorretas. Por favor, verifique seu email e senha.',
+              originalError: error
+            };
+          }
+
           return { 
             type: 'AUTH_ERROR', 
             message: 'Authentication required',
@@ -71,7 +79,7 @@ export const handleApiError = (error: unknown): HandledApiError => {
       };
     }
   }
-  
+
   // Handle other errors
   return { 
     type: 'REQUEST_ERROR', 
@@ -96,22 +104,27 @@ export const getErrorMessage = (error: HandledApiError): string => {
         }
       }
       return 'Please check your input and try again';
-    
+
     case 'AUTH_ERROR':
+      // If it's our custom message for invalid credentials, return it directly
+      if (error.message === 'Credenciais incorretas. Por favor, verifique seu email e senha.') {
+        return error.message;
+      }
+
       return 'Please log in to continue';
-    
+
     case 'PERMISSION_ERROR':
       return 'You do not have permission to perform this action';
-    
+
     case 'NOT_FOUND':
       return 'The requested resource was not found';
-    
+
     case 'SERVER_ERROR':
       return 'A server error occurred. Please try again later';
-    
+
     case 'NETWORK_ERROR':
       return 'Unable to connect to the server. Please check your internet connection';
-    
+
     default:
       return error.message || 'An unexpected error occurred';
   }

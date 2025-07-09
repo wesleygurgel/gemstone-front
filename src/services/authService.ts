@@ -1,5 +1,11 @@
 import api, { storeTokens, clearTokens } from '../utils/api';
-import { LoginRequest, RegisterRequest, TokenResponse, UserProfile } from '../types/api';
+import { 
+  LoginRequest, 
+  RegisterRequest, 
+  RegisterResponse, 
+  TokenResponse, 
+  UserProfile
+} from '../types/api';
 
 /**
  * Authentication service for handling user authentication operations
@@ -10,27 +16,31 @@ const authService = {
    * @param userData User registration data
    * @returns Promise resolving to the registration response
    */
-  register: async (userData: RegisterRequest): Promise<UserProfile> => {
-    const response = await api.post<UserProfile>('/accounts/register/', userData);
+  register: async (userData: RegisterRequest): Promise<RegisterResponse> => {
+    const response = await api.post<RegisterResponse>('/accounts/register/', userData);
     return response.data;
   },
 
   /**
-   * Login a user with username and password
+   * Login a user with email and password
    * @param credentials User login credentials
    * @returns Promise resolving to the user profile
    */
   login: async (credentials: LoginRequest): Promise<UserProfile> => {
-    // First, get the JWT tokens
-    const tokenResponse = await api.post<TokenResponse>('/token/', credentials);
-    const { access, refresh } = tokenResponse.data;
-    
-    // Store tokens
-    storeTokens(access, refresh);
-    
-    // Then, get the user profile
-    const profileResponse = await api.get<UserProfile>('/accounts/me/profile/');
-    return profileResponse.data;
+    try {
+      // First, get the JWT tokens
+      const tokenResponse = await api.post<TokenResponse>('/token/', credentials);
+      const { access, refresh } = tokenResponse.data;
+
+      // Store tokens
+      storeTokens(access, refresh);
+
+      // Then, get the user profile
+      const profileResponse = await api.get<UserProfile>('/accounts/me/');
+      return profileResponse.data;
+    } catch (error) {
+      throw error; // Re-throw to be handled by the caller
+    }
   },
 
   /**
@@ -55,17 +65,32 @@ const authService = {
    * @returns Promise resolving to the user profile
    */
   getCurrentUser: async (): Promise<UserProfile> => {
-    const response = await api.get<UserProfile>('/accounts/me/profile/');
+    const response = await api.get<UserProfile>('/accounts/me/');
     return response.data;
   },
 
   /**
    * Update the current user's profile
    * @param profileData Updated profile data
-   * @returns Promise resolving to the updated user profile
+   * @returns Promise resolving to the updated profile data
    */
   updateProfile: async (profileData: Partial<UserProfile>): Promise<UserProfile> => {
-    const response = await api.patch<UserProfile>('/accounts/me/profile/', profileData);
+    // If the data is for the profile, nest it under the profile property
+    const userData: Partial<UserProfile> = profileData.profile 
+      ? profileData 
+      : { profile: profileData as any };
+
+    const response = await api.patch<UserProfile>('/accounts/me/', userData);
+    return response.data;
+  },
+
+  /**
+   * Update the current user's account information
+   * @param userData Updated user data
+   * @returns Promise resolving to the updated user profile
+   */
+  updateAccount: async (userData: Partial<UserProfile>): Promise<UserProfile> => {
+    const response = await api.patch<UserProfile>('/accounts/me/', userData);
     return response.data;
   },
 
