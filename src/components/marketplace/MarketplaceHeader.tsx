@@ -4,137 +4,109 @@ import { User, LogOut, ChevronDown, ShoppingCart, Search, Heart } from 'lucide-r
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useTranslation } from 'react-i18next';
 import CartDrawer from './CartDrawer';
 import logoSvg from '../../assets/images/logo-2.svg';
 import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const MarketplaceHeader = () => {
+  const { t } = useTranslation('marketplace');
   const { user, isAuthenticated, logout } = useAuth();
   const { toggleCart, totalItems } = useCart();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
-
-  // Close dropdown when clicking outside
+  // Fechar menus externos
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node))
         setIsDropdownOpen(false);
-      }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node) && isSearchOpen) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node) && isSearchOpen)
         setIsSearchOpen(false);
-      }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isSearchOpen]);
 
   return (
     <header className="bg-black-900 text-white">
-      {/* Cart Drawer */}
       <CartDrawer />
 
-      {/* Hero section with header */}
+      {/* Hero */}
       <div className="bg-black-900 text-white relative overflow-hidden">
-        {/* Modern subtle particle background */}
+        {/* partículas sutis */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Top left particles */}
           <div className="absolute top-10 left-10 w-1 h-1 rounded-full bg-gem-pink/30"></div>
           <div className="absolute top-20 left-30 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
           <div className="absolute top-40 left-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
           <div className="absolute top-60 left-40 w-1 h-1 rounded-full bg-gem-blue/30"></div>
           <div className="absolute top-80 left-60 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
-
-          {/* Bottom right particles */}
           <div className="absolute bottom-10 right-10 w-1.5 h-1.5 rounded-full bg-gem-cyan/30"></div>
           <div className="absolute bottom-30 right-30 w-1 h-1 rounded-full bg-gem-blue/25"></div>
           <div className="absolute bottom-50 right-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
           <div className="absolute bottom-70 right-40 w-1 h-1 rounded-full bg-gem-purple/30"></div>
           <div className="absolute bottom-90 right-60 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
-
-          {/* Center particles */}
           <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-gem-purple/30"></div>
           <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
           <div className="absolute top-2/5 right-1/3 w-2 h-2 rounded-full bg-gem-blue/20"></div>
-
-          {/* Subtle gradient overlay */}
           <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 bg-gradient-to-br from-gem-pink/5 to-gem-cyan/5 blur-2xl opacity-30"></div>
         </div>
 
         <div className="container mx-auto py-12 px-4 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="flex flex-col items-center text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">Marketplace</h1>
-            <p className="text-xl max-w-2xl text-white/90">
-              Descubra nossa seleção exclusiva de metais preciosos e pedras com certificação e procedência garantida.
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">
+              {t('header.title')}
+            </h1>
+            <p className="text-xl max-w-2xl text-white/90">{t('header.subtitle')}</p>
           </motion.div>
         </div>
       </div>
 
-      {/* Navigation bar */}
+      {/* Navbar */}
       <div className="container mx-auto px-4 border-t border-gem-purple/20">
         <div className="flex items-center justify-between py-4">
-          {/* Logo/Brand */}
+          {/* Logo */}
           <Link to="/" className="relative flex items-center h-12 lg:h-16 overflow-visible">
-            <img 
-              src={logoSvg} 
-              alt={`${COMPANY_FULL_NAME} Logo`} 
+            <img
+              src={logoSvg}
+              alt={`${COMPANY_FULL_NAME} Logo`}
               className="h-12 lg:h-16 transform scale-[0.9] lg:scale-[1.1] xl:scale-[1.3] origin-left"
             />
           </Link>
 
-          {/* Center Navigation */}
-          {/*<nav className="hidden md:flex items-center space-x-6">*/}
-          {/*  <Link to="/marketplace/categories" className="font-medium text-white/80 hover:text-gem-pink transition-colors">*/}
-          {/*    Categorias*/}
-          {/*  </Link>*/}
-          {/*  <Link to="/marketplace/new" className="font-medium text-white/80 hover:text-gem-purple transition-colors">*/}
-          {/*    Lançamentos*/}
-          {/*  </Link>*/}
-          {/*  <Link to="/marketplace/deals" className="font-medium text-white/80 hover:text-gem-blue transition-colors">*/}
-          {/*    Ofertas*/}
-          {/*  </Link>*/}
-          {/*</nav>*/}
-
-          {/* Right Side - Search, Cart, User */}
+          {/* Lado direito */}
           <div className="flex items-center space-x-4">
-            {/* Search */}
+            {/* Busca */}
             <div className="relative" ref={searchRef}>
-              <button 
+              <button
                 onClick={toggleSearch}
                 className="p-2 text-white/80 hover:text-gem-cyan transition-colors"
-                aria-label="Search"
+                aria-label={t('header.searchPlaceholder')}
               >
                 <Search size={20} />
               </button>
 
               {isSearchOpen && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="absolute right-0 mt-2 w-72 bg-black-800 rounded-md shadow-lg p-2 z-50 border border-gem-blue/30"
                 >
                   <div className="flex items-center">
-                    <input 
-                      type="text" 
-                      placeholder="Buscar produtos..." 
+                    <input
+                      type="text"
+                      placeholder={t('header.searchPlaceholder')}
                       className="w-full p-2 bg-black-900 border border-gem-purple/30 rounded-md focus:outline-none focus:ring-2 focus:ring-gem-purple text-white placeholder-white/50"
                     />
                     <button className="ml-2 p-2 bg-gradient-to-r from-gem-purple to-gem-blue text-white rounded-md hover:shadow-neon-purple transition-all duration-300">
@@ -145,11 +117,11 @@ const MarketplaceHeader = () => {
               )}
             </div>
 
-            {/* Cart */}
-            <button 
-              onClick={toggleCart} 
+            {/* Carrinho */}
+            <button
+              onClick={toggleCart}
               className="p-2 text-white/80 hover:text-gem-pink transition-colors relative"
-              aria-label="Open cart"
+              aria-label={t('cart.title')}
             >
               <ShoppingCart size={20} />
               {totalItems > 0 && (
@@ -159,56 +131,63 @@ const MarketplaceHeader = () => {
               )}
             </button>
 
-            {/* User Account */}
+            {/* Usuário */}
             {isAuthenticated ? (
               <div className="relative" ref={dropdownRef}>
-                <motion.button 
+                <motion.button
                   onClick={toggleDropdown}
                   className="flex items-center space-x-2 font-medium text-white/80 hover:text-gem-violet transition-colors"
                   whileHover={{ scale: 1.05 }}
                 >
                   <User size={20} />
                   <span className="hidden sm:inline">{user?.first_name}</span>
-                  <ChevronDown size={16} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  />
                 </motion.button>
 
                 {isDropdownOpen && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="absolute right-0 mt-2 w-48 bg-black-800 rounded-md shadow-lg py-1 z-50 border border-gem-violet/30"
                   >
-                    <Link to="/marketplace/profile" className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-pink transition-colors">
-                      Meu Perfil
+                    <Link
+                      to="/marketplace/profile"
+                      className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-pink transition-colors"
+                    >
+                      {t('header.myProfile')}
                     </Link>
-                    <Link to="/marketplace/orders" className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-purple transition-colors">
-                      Meus Pedidos
+                    <Link
+                      to="/marketplace/orders"
+                      className="block px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-purple transition-colors"
+                    >
+                      {t('header.myOrders')}
                     </Link>
-                    <Link to="/marketplace/favorites" className="flex items-center px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-pink transition-colors">
+                    <Link
+                      to="/marketplace/favorites"
+                      className="flex items-center px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-pink transition-colors"
+                    >
                       <Heart size={16} className="mr-2" />
-                      Favoritos
+                      {t('header.favorites')}
                     </Link>
                     <button
                       onClick={logout}
                       className="flex items-center w-full px-4 py-2 text-sm text-white/80 hover:bg-black-700 hover:text-gem-blue transition-colors"
                     >
                       <LogOut size={16} className="mr-2" />
-                      <span>Sair</span>
+                      <span>{t('header.logout')}</span>
                     </button>
                   </motion.div>
                 )}
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <Link to="/login" className="font-medium text-white/80 hover:text-gem-cyan transition-colors">
-                    Login
-                  </Link>
-                </motion.div>
-              </div>
+              <motion.div whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
+                <Link to="/login" className="font-medium text-white/80 hover:text-gem-cyan transition-colors">
+                  {t('header.login')}
+                </Link>
+              </motion.div>
             )}
           </div>
         </div>

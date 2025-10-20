@@ -1,0 +1,286 @@
+{
+  "header": {
+    "title": "Marketplace",
+    "subtitle": "Descubre nuestra selección exclusiva de metales preciosos y gemas con certificación y procedencia garantizadas.",
+    "searchPlaceholder": "Buscar productos...",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "myProfile": "Mi Perfil",
+    "myOrders": "Mis Pedidos",
+    "favorites": "Favoritos"
+  },
+  "filters": {
+    "title": "Filtros",
+    "apply": "Aplicar",
+    "clear": "Limpiar Filtros",
+    "category": "Categorías",
+    "priceRange": "Rango de Precio",
+    "min": "Mínimo",
+    "max": "Máximo",
+    "sort": "Ordenar Por",
+    "sortOptions": {
+      "relevance": "Relevancia",
+      "priceAsc": "Precio: Menor a Mayor",
+      "priceDesc": "Precio: Mayor a Menor",
+      "bestselling": "Más Vendidos"
+    },
+    "sections": {
+      "productType": "Tipo de Producto",
+      "productTypeOptions": {
+        "barra": "Barra",
+        "joia": "Joya",
+        "bruto": "Bruto",
+        "certificado": "Certificado"
+      },
+      "weight": "Peso / Quilate",
+      "weightOptions": {
+        "1g": "1g",
+        "10g": "10g",
+        "50g": "50g",
+        "100g": "100g",
+        "1ct": "1ct",
+        "2ct": "2ct"
+      }
+    },
+    "clearOne": "Limpiar"
+  },
+  "categories": {
+    "metals": {
+      "title": "Metales",
+      "desc": "Oro, plata y otros metales preciosos"
+    },
+    "precious_stones": {
+      "title": "Piedras Preciosas",
+      "desc": "Diamantes, esmeraldas, rubíes y zafiros"
+    },
+    "jewels": {
+      "title": "Joyas",
+      "desc": "Joyas y accesorios exclusivos"
+    },
+    "exotics": {
+      "title": "Exóticos",
+      "desc": "Piezas raras y especiales"
+    }
+  },
+  "products": {
+    "addToCart": "Agregar",
+    "added": "Agregado",
+    "adding": "Agregando...",
+    "unavailable": "No disponible",
+    "featured": "Destacado",
+    "empty": "No se encontraron productos.",
+    "emptyHint": "Intenta ajustar los filtros o buscar con otro término."
+  },
+  "cart": {
+    "title": "Tu Carrito",
+    "empty": "Tu carrito está vacío",
+    "checkout": "Finalizar Compra",
+    "continue": "Continuar Comprando",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "total": "Total"
+  },
+  "breadcrumb": {
+    "home": "Inicio",
+    "marketplace": "Marketplace"
+  },
+  "common": {
+    "retry": "Intentar de nuevo"
+  },
+  "productDetail": {
+    "errors": {
+      "loadFailed": "Error al cargar el producto. Por favor, intenta de nuevo.",
+      "notFound": "Producto no encontrado"
+    },
+    "toasts": {
+      "addedToCart": "{{name}} agregado al carrito",
+      "addToCartError": "Error al agregar el artículo al carrito",
+      "loginForWishlist": "Inicia sesión para agregar artículos a favoritos",
+      "removedFromWishlist": "{{name}} eliminado de favoritos",
+      "addedToWishlist": "{{name}} agregado a favoritos",
+      "wishlistError": "Error al actualizar favoritos"
+    },
+    "actions": {
+      "backToStore": "Volver a la tienda",
+      "unavailable": "No disponible",
+      "processing": "Procesando...",
+      "buyNow": "Comprar ahora",
+      "adding": "Agregando...",
+      "added": "Agregado al carrito",
+      "addToCart": "Agregar al carrito"
+    },
+    "media": {
+      "noImage": "Sin imagen",
+      "image": "imagen"
+    },
+    "payment": {
+      "installments": "Hasta 12 cuotas sin interés",
+      "pixDiscount": "10% de descuento con PIX o Boleto ({{value}})"
+    },
+    "stock": {
+      "inStock": "En stock - {{count}} unidades disponibles",
+      "unavailable": "Producto no disponible"
+    },
+    "info": {
+      "shipping": {
+        "title": "Entrega",
+        "free": "Envío gratis para todo Brasil",
+        "express": "Entrega express disponible"
+      },
+      "warranty": {
+        "title": "Garantía",
+        "months": "12 meses de garantía",
+        "returns": "30 días para devolución"
+      }
+    },
+    "urgency": {
+      "limitedOffer": "¡Oferta por tiempo limitado!",
+      "stockLeft": "¡Solo quedan {{count}} unidades en stock!"
+    },
+    "description": {
+      "title": "Descripción del Producto"
+    },
+    "related": {
+      "title": "Productos Relacionados"
+    },
+    "wishlist": {
+      "addAria": "Agregar a favoritos",
+      "removeAria": "Eliminar de favoritos"
+    }
+  },
+  "favorites": {
+    "title": "Mis Favoritos",
+    "subtitle": "Productos que has agregado a tu lista de deseos",
+    "empty": {
+      "title": "Tu lista de favoritos está vacía",
+      "message": "Agrega productos a tu lista de favoritos para verlos aquí.",
+      "button": "Explorar Productos"
+    },
+    "error": {
+      "title": "Error al cargar favoritos",
+      "message": "No se pudieron cargar tus productos favoritos.",
+      "retry": "Intentar de Nuevo"
+    },
+    "list": {
+      "title": "Lista de Favoritos",
+      "items": "{{count}} artículo",
+      "items_plural": "{{count}} artículos"
+    }
+  },
+  "orders": {
+    "list": {
+      "title": "Mis Pedidos",
+      "subtitle": "Seguimiento del estado de tus pedidos",
+      "filters": {
+        "title": "Filtros",
+        "status": "Estado del Pedido",
+        "paymentStatus": "Estado del Pago",
+        "apply": "Aplicar",
+        "clear": "Limpiar"
+      },
+      "empty": {
+        "title": "No se encontraron pedidos",
+        "message": "Aún no has realizado ningún pedido o ningún pedido coincide con los filtros seleccionados.",
+        "button": "Explorar Productos"
+      },
+      "error": {
+        "title": "Error al cargar los pedidos",
+        "message": "No se pudieron cargar tus pedidos.",
+        "retry": "Intentar de Nuevo"
+      },
+      "columns": {
+        "order": "Pedido",
+        "date": "Fecha",
+        "status": "Estado",
+        "payment": "Pago",
+        "total": "Total",
+        "actions": "Acciones"
+      },
+      "details": "Detalles"
+    },
+    "detail": {
+      "title": "Detalles del Pedido",
+      "notFound": "Pedido no encontrado",
+      "notFoundMessage": "El pedido que buscas no existe o ha sido eliminado.",
+      "error": "Error al cargar los detalles del pedido. Por favor, intenta de nuevo.",
+      "back": "Volver a Mis Pedidos",
+      "retry": "Intentar de Nuevo",
+      "statuses": {
+        "pending": "Pendiente",
+        "processing": "Procesando",
+        "shipped": "Enviado",
+        "delivered": "Entregado",
+        "cancelled": "Cancelado"
+      },
+      "paymentStatuses": {
+        "pending": "Pendiente",
+        "processing": "Procesando",
+        "completed": "Completado",
+        "failed": "Fallido",
+        "refunded": "Reembolsado"
+      },
+      "paymentMethods": {
+        "credit_card": "Tarjeta de Crédito",
+        "debit_card": "Tarjeta de Débito",
+        "bank_transfer": "Transferencia Bancaria",
+        "paypal": "PayPal",
+        "other": "Otro"
+      },
+      "sections": {
+        "items": "Artículos del Pedido",
+        "statusTimeline": "Estado del Pedido",
+        "shipping": "Información de Envío",
+        "payment": "Información de Pago",
+        "actions": "Acciones"
+      },
+      "cancel": {
+        "button": "Cancelar Pedido",
+        "confirm": "¿Estás seguro de que deseas cancelar este pedido?",
+        "success": "Pedido cancelado con éxito",
+        "error": "Error al cancelar el pedido. Por favor, intenta de nuevo.",
+        "processing": "Cancelando..."
+      },
+      "labels": {
+        "total": "Total",
+        "quantity": "Cantidad",
+        "each": "c/u",
+        "method": "Método",
+        "status": "Estado"
+      }
+    }
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "metaDescription": "Gestiona tu información de perfil en el Gemstone Marketplace",
+    "breadcrumb": "Perfil",
+    "subtitle": "Gestiona tu información personal y tu dirección",
+    "loading": "Cargando perfil...",
+    "notAvailable": "N/D",
+    "notProvided": "No proporcionado",
+    "memberSince": "Miembro desde {{date}}",
+    "lastLogin": "Último acceso {{date}}",
+    "section": {
+      "contact": "Información de Contacto y Dirección"
+    },
+    "fields": {
+      "first_name": { "label": "Nombre", "placeholder": "Tu nombre" },
+      "last_name": { "label": "Apellido", "placeholder": "Tu apellido" },
+      "phone_number": { "label": "Teléfono", "placeholder": "(00) 00000-0000" },
+      "address": { "label": "Dirección", "placeholder": "Calle, número, apartamento" },
+      "city": { "label": "Ciudad", "placeholder": "Tu ciudad" },
+      "state": { "label": "Estado", "placeholder": "Tu estado" },
+      "country": { "label": "País", "placeholder": "Tu país" },
+      "postal_code": { "label": "Código Postal", "placeholder": "00000-000" }
+    },
+    "actions": {
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando..."
+    },
+    "toasts": {
+      "updateSuccess": "¡Perfil actualizado con éxito!",
+      "updateError": "Error al actualizar el perfil. Intenta de nuevo."
+    }
+  }
+}

@@ -19,7 +19,6 @@ const Header = () => {
     duration: 500,
   };
 
-  // Nossos links de navegação em um array para facilitar a manutenção
   const navLinks = [
     { to: "about", labelKey: "header.about", color: "purple" },
     { to: "services", labelKey: "header.services", color: "violet" },
@@ -27,17 +26,18 @@ const Header = () => {
     { to: "contact", labelKey: "header.contact", color: "pink" },
   ];
 
+  // Função para fechar o menu mobile ao clicar em um link
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    // Adicionado 'sticky top-0 z-50' para manter o header visível ao rolar
     <header className="py-4 bg-black-900 shadow-lg border-b border-gem-violet/20 sticky top-0 z-50">
       <div className="container flex items-center justify-between">
         <RouterLink to="/" className="relative flex items-center h-16 lg:h-20 overflow-visible flex-shrink-0">
           <img src={logoSvg} alt={`${COMPANY_FULL_NAME} Logo`} className="h-16 lg:h-12 transform scale-[1.1] lg:scale-[1.0] xl:scale-[1.3] origin-left" />
         </RouterLink>
 
-        {/* Desktop nav */}
+        {/* Desktop nav (Mantido da sua versão "agora") */}
         <div className="hidden lg:flex items-center justify-end flex-grow">
-          {/* 1. Links de Navegação Principal */}
           <nav className="flex items-center gap-4">
             <RouterLink to="/" className="font-medium text-white hover:text-gem-cyan transition-colors text-sm">
               {t('header.home')}
@@ -48,24 +48,15 @@ const Header = () => {
               </ScrollLink>
             ))}
           </nav>
-
-          {/* Divisor Visual (Opcional) */}
           <div className="w-px h-6 bg-white/20 mx-6"></div>
-
-          {/* 2. Ações e Itens Secundários */}
           <div className="flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <RouterLink
-                to="/marketplace"
-                className="font-medium bg-gradient-to-r from-gem-violet to-gem-blue text-white px-4 py-2 rounded-md hover:shadow-neon-violet transition-all duration-300 flex items-center text-sm"
-              >
+              <RouterLink to="/marketplace" className="font-medium bg-gradient-to-r from-gem-violet to-gem-blue text-white px-4 py-2 rounded-md hover:shadow-neon-violet transition-all duration-300 flex items-center text-sm min-w-[140px] justify-center">
                 {t('header.marketplace')}
                 <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="ml-1">→</motion.span>
               </RouterLink>
             </motion.div>
-            
             <LangSwitcher />
-
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <ScrollLink to="contact" {...scrollProps} className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-gem-purple/10 text-gem-purple hover:bg-gem-purple/20 hover:shadow-neon-purple transition-all duration-300" aria-label={t('header.contact')}>
                 <Mail size={20} />
@@ -80,10 +71,36 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* --- MENU MOBILE RESTAURADO E ATUALIZADO --- */}
       {isMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 bg-black-900 shadow-lg z-40 border-b border-gem-violet/20">
-          {/* Conteúdo do menu mobile aqui... */}
+          <div className="container py-4 flex flex-col gap-4">
+            <LangSwitcher className="self-end" />
+
+            <RouterLink to="/" className="font-medium text-white hover:text-gem-cyan transition-colors" onClick={closeMenu}>
+              {t('header.home')}
+            </RouterLink>
+
+            {navLinks.map(link => (
+              <ScrollLink key={link.to} to={link.to} {...scrollProps} className={`cursor-pointer font-medium text-white hover:text-gem-${link.color} transition-colors`} onClick={closeMenu}>
+                {t(link.labelKey)}
+              </ScrollLink>
+            ))}
+
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <RouterLink to="/marketplace" className="font-medium bg-gradient-to-r from-gem-violet to-gem-blue text-white px-4 py-2 rounded-md hover:shadow-neon-violet transition-all duration-300 flex items-center justify-center min-w-[180px]" onClick={closeMenu}>
+                {t('header.marketplace')}
+                <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="ml-1">→</motion.span>
+              </RouterLink>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <ScrollLink to="contact" {...scrollProps} onClick={closeMenu} className="flex items-center justify-center gap-2 bg-gem-purple/10 text-gem-purple hover:bg-gem-purple/20 hover:shadow-neon-purple transition-all duration-300 w-full py-3 rounded-md" aria-label={t('header.contact')}>
+                    <Mail size={20} />
+                    <span>{t('header.contact')}</span>
+                </ScrollLink>
+            </motion.div>
+          </div>
         </div>
       )}
     </header>

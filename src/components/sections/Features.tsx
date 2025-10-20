@@ -1,4 +1,3 @@
-// src/components/sections/About.tsx
 import { motion } from 'framer-motion';
 import { Globe, Shield, Award, Check } from 'lucide-react';
 import { COMPANY_FULL_NAME } from '../../utils/env';
@@ -7,36 +6,36 @@ import { useTranslation, Trans } from 'react-i18next';
 const About = () => {
   const { t } = useTranslation('common');
 
+  // A sua lógica de array original, mas com as descrições vindo de `t()`
   const values = [
     {
       icon: <Shield size={24} />,
       title: t('values.integrity'),
-      description: t('values.integrity.desc'),
+      description: t('values.integrity.desc'), // Traduzido
       color: 'gem-pink',
     },
     {
       icon: <Check size={24} />,
       title: t('values.responsibility'),
-      description: t('values.responsibility.desc'),
+      description: t('values.responsibility.desc'), // Traduzido
       color: 'gem-purple',
     },
     {
       icon: <Award size={24} />,
       title: t('values.excellence'),
-      description: t('values.excellence.desc'),
+      description: t('values.excellence.desc'), // Traduzido
       color: 'gem-violet',
     },
     {
       icon: <Globe size={24} />,
       title: t('values.compliance'),
-      description: t('values.compliance.desc'),
+      description: t('values.compliance.desc'), // Traduzido
       color: 'gem-blue',
     },
   ];
 
   return (
     <section id="about" className="py-20 bg-black-900 relative overflow-hidden">
-      {/* fundo decorativo omitido */}
       <div className="container relative z-10">
         <div className="text-center mb-16">
           <motion.h2
@@ -48,7 +47,6 @@ const About = () => {
           >
             <Trans i18nKey="about.title" values={{ company: COMPANY_FULL_NAME }} />
           </motion.h2>
-
           <motion.p
             className="text-xl text-white/90 max-w-3xl mx-auto font-medium"
             initial={{ opacity: 0, y: 20 }}

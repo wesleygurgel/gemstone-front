@@ -2,38 +2,13 @@ import { motion } from 'framer-motion';
 import { Briefcase, Package, Search, FileCheck, HelpCircle, ShoppingBag, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-// O array agora contém apenas dados estáticos (ícones, cores) e as CHAVES para as traduções.
 const servicesData = [
-  {
-    icon: <Briefcase size={24} />,
-    color: 'gem-pink',
-    baseKey: 'services.items.0' // Chave base para este serviço
-  },
-  {
-    icon: <Package size={24} />,
-    color: 'gem-purple',
-    baseKey: 'services.items.1'
-  },
-  {
-    icon: <Search size={24} />,
-    color: 'gem-violet',
-    baseKey: 'services.items.2'
-  },
-  {
-    icon: <FileCheck size={24} />,
-    color: 'gem-blue',
-    baseKey: 'services.items.3'
-  },
-  {
-    icon: <HelpCircle size={24} />,
-    color: 'gem-cyan',
-    baseKey: 'services.items.4'
-  },
-  {
-    icon: <ShoppingBag size={24} />,
-    color: 'gem-pink',
-    baseKey: 'services.items.5'
-  }
+  { icon: <Briefcase size={24} />, color: 'gem-pink', baseKey: 'services.items.0' },
+  { icon: <Package size={24} />, color: 'gem-purple', baseKey: 'services.items.1' },
+  { icon: <Search size={24} />, color: 'gem-violet', baseKey: 'services.items.2' },
+  { icon: <FileCheck size={24} />, color: 'gem-blue', baseKey: 'services.items.3' },
+  { icon: <HelpCircle size={24} />, color: 'gem-cyan', baseKey: 'services.items.4' },
+  { icon: <ShoppingBag size={24} />, color: 'gem-pink', baseKey: 'services.items.5' }
 ];
 
 const Services = () => {
@@ -41,9 +16,18 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 bg-black-900 relative overflow-hidden">
-      {/* Fundo decorativo (sem alterações) */}
+      {/* Fundo decorativo */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* ... partículas ... */}
+        <div className="absolute top-10 left-10 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-20 left-30 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-40 left-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute top-60 left-40 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-80 left-60 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+        <div className="absolute bottom-10 right-10 w-1.5 h-1.5 rounded-full bg-gem-cyan/30"></div>
+        <div className="absolute bottom-30 right-30 w-1 h-1 rounded-full bg-gem-blue/25"></div>
+        <div className="absolute bottom-50 right-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-70 right-40 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute bottom-90 right-60 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
       </div>
 
       <div className="container relative z-10">
@@ -68,7 +52,7 @@ const Services = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
             <motion.div
               key={index}
@@ -81,7 +65,7 @@ const Services = () => {
               <div className="relative flex flex-col h-full">
                 <div className="bg-black-800 p-6 relative">
                   <div className="flex items-center mb-2">
-                    <div className={`w-14 h-14 bg-${service.color}/10 rounded-full flex items-center justify-center mr-4 shadow-md relative group-hover:shadow-${service.color === 'gem-pink' ? 'neon-pink' : '...'} transition-all duration-300`}>
+                    <div className={`w-14 h-14 bg-${service.color}/10 rounded-full flex items-center justify-center mr-4 shadow-md relative group-hover:shadow-${service.color === 'gem-pink' ? 'neon-pink' : service.color === 'gem-purple' ? 'neon-purple' : service.color === 'gem-violet' ? 'neon-violet' : service.color === 'gem-blue' ? 'neon-blue' : 'neon-cyan'} transition-all duration-300`}>
                       <span className={`text-${service.color}`}>
                         {service.icon}
                       </span>
@@ -99,8 +83,8 @@ const Services = () => {
                   </div>
                 </div>
                 
-                {/* Divisor colorido (sem alterações) */}
-                {/* ... */}
+                {/* Divisor colorido */}
+                <div className={`h-1 bg-gradient-to-r from-${service.color} to-transparent`}></div>
 
                 <div className="p-6 flex-grow">
                   <p className="text-white/80 mb-6">{t(`${service.baseKey}.description`)}</p>

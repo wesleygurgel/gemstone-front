@@ -7,6 +7,7 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import { useWishlist } from '@/context/WishlistContext';
+import { useTranslation } from 'react-i18next';
 
 interface ProductCardProps {
   product: ProductListItem;
@@ -14,132 +15,103 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, className = '' }: ProductCardProps) => {
+  const { t } = useTranslation('marketplace');
   const { addItem } = useCart();
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
-  const { isItemInWishlist, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist();
+  const {
+    isItemInWishlist,
+    addItem: addToWishlist,
+    removeItem: removeFromWishlist,
+  } = useWishlist();
+
   const [isHovered, setIsHovered] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
 
-  // Format price with Brazilian currency
-  const formatPrice = (price: string) => {
-    return new Intl.NumberFormat('pt-BR', {
+  // formatação de preço
+  const formatPrice = (price: string) =>
+    new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'BRL'
+      currency: 'BRL',
     }).format(parseFloat(price));
-  };
 
-  // Calculate discount percentage if price_discount exists
-  const calculateDiscountPercentage = () => {
+  // porcentagem de desconto
+  const discountPercentage = (() => {
     if (!product.price_discount) return null;
+    const original = parseFloat(product.price);
+    const discount = parseFloat(product.price_discount);
+    if (original <= 0 || discount >= original) return null;
+    return Math.round(((original - discount) / original) * 100);
+  })();
 
-    const originalPrice = parseFloat(product.price);
-    const discountPrice = parseFloat(product.price_discount);
-
-    if (originalPrice <= 0 || discountPrice >= originalPrice) return null;
-
-    const discountPercentage = ((originalPrice - discountPrice) / originalPrice) * 100;
-    return Math.round(discountPercentage);
-  };
-
-  const discountPercentage = product.price_discount ? calculateDiscountPercentage() : null;
-
-  // Check if product is in wishlist when component mounts
+  // verificar favoritos
   useEffect(() => {
-    const checkWishlistStatus = async () => {
+    const checkWishlist = async () => {
       if (isAuthenticated) {
         try {
-          const isInWishlist = await isItemInWishlist(product.id);
-          setIsInWishlist(isInWishlist);
-        } catch (error) {
-          console.error('Error checking wishlist status:', error);
+          const isFav = await isItemInWishlist(product.id);
+          setIsInWishlist(isFav);
+        } catch {
+          console.error('Wishlist check error');
         }
       }
     };
-
-    checkWishlistStatus();
+    checkWishlist();
   }, [product.id, isAuthenticated, isItemInWishlist]);
 
+  // adicionar ao carrinho
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-
     if (!product.available || isAddingToCart) return;
-
-    // Check if user is authenticated
     if (!isAuthenticated) {
-      // Show toast notification for unauthenticated user
-      showToast('Faça login para adicionar itens ao carrinho', 'warning');
+      showToast(t('products.authRequiredCart'), 'warning');
       return;
     }
 
     setIsAddingToCart(true);
-
     try {
-      // Use the addItem function from the cart context
       const success = await addItem(product.id, 1);
-
       if (success) {
         setIsAddedToCart(true);
-        // Show success toast
-        showToast(`${product.name} adicionado ao carrinho`, 'success');
-
-        // Open the cart drawer to show the user their item was added
-        // openCart();
-
-        setTimeout(() => {
-          setIsAddedToCart(false);
-        }, 2000);
+        showToast(`${product.name} ${t('products.added')}`, 'success');
+        setTimeout(() => setIsAddedToCart(false), 2000);
       }
-    } catch (error) {
-      // Show error toast
-      showToast('Erro ao adicionar item ao carrinho', 'error');
+    } catch {
+      showToast(t('errors.filterFailed'), 'error');
     } finally {
       setIsAddingToCart(false);
     }
   };
 
+  // adicionar aos favoritos
   const handleAddToWishlist = async (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-
-    // Check if user is authenticated
     if (!isAuthenticated) {
-      // Show toast notification for unauthenticated user
-      showToast('Faça login para adicionar itens aos favoritos', 'warning');
+      showToast(t('products.authRequiredWishlist'), 'warning');
       return;
     }
-
     if (isAddingToWishlist) return;
 
     setIsAddingToWishlist(true);
-
     try {
       if (isInWishlist) {
-        // Remove from wishlist
         const success = await removeFromWishlist(product.id);
         if (success) {
           setIsInWishlist(false);
-          showToast(`${product.name} removido dos favoritos`, 'success');
+          showToast(`${product.name} ${t('products.removedFromWishlist')}`, 'success');
         }
       } else {
-        // Add to wishlist
         const success = await addToWishlist(product.id);
         if (success) {
           setIsInWishlist(true);
-          showToast(`${product.name} adicionado aos favoritos`, 'success');
+          showToast(`${product.name} ${t('products.addedToWishlist')}`, 'success');
         }
       }
-
-      // We don't need to call the parent component's callback here
-      // since we've already handled the wishlist update through the context
-      // This prevents duplicate API calls
-    } catch (error) {
-      console.error('Error updating wishlist:', error);
-      showToast('Erro ao atualizar favoritos', 'error');
+    } catch {
+      showToast(t('errors.filterFailed'), 'error');
     } finally {
       setIsAddingToWishlist(false);
     }
@@ -148,16 +120,17 @@ const ProductCard = ({ product, className = '' }: ProductCardProps) => {
   return (
     <motion.div
       className={`bg-black-800 rounded-lg overflow-hidden border border-gem-purple/20 transition-all duration-300 ${className}`}
-      whileHover={{ 
+      whileHover={{
         y: -5,
-        boxShadow: '0 10px 25px -5px rgba(124, 58, 237, 0.1), 0 8px 10px -6px rgba(124, 58, 237, 0.1)'
+        boxShadow:
+          '0 10px 25px -5px rgba(124,58,237,0.1), 0 8px 10px -6px rgba(124,58,237,0.1)',
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
       <Link to={`/marketplace/product/${product.id}`} className="block">
         <div className="relative overflow-hidden aspect-square">
-          {/* Product image */}
+          {/* imagem */}
           {product.main_image ? (
             <motion.img
               src={product.main_image.image}
@@ -169,48 +142,71 @@ const ProductCard = ({ product, className = '' }: ProductCardProps) => {
             />
           ) : (
             <div className="w-full h-full bg-black-700 flex items-center justify-center">
-              <span className="text-white/50">Sem imagem</span>
+              <span className="text-white/50">{t('products.noImage')}</span>
             </div>
           )}
 
-          {/* Featured badge */}
+          {/* destaque */}
           {product.featured && (
             <div className="absolute top-2 left-2 bg-gradient-to-r from-gem-pink to-gem-purple px-2 py-1 rounded text-xs font-medium text-white">
-              Destaque
+              {t('products.featured')}
             </div>
           )}
 
-          {/* Discount badge */}
+          {/* desconto */}
           {discountPercentage && (
-            <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-red-600 px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg transform -rotate-12 flex items-center justify-center" style={{ marginTop: product.featured ? '28px' : '0' }}>
+            <div
+              className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-red-600 px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg transform -rotate-12 flex items-center justify-center"
+              style={{ marginTop: product.featured ? '28px' : '0' }}
+            >
               <span className="animate-pulse">-{discountPercentage}%</span>
             </div>
           )}
 
-          {/* Wishlist button */}
+          {/* botão favoritos */}
           <button
             onClick={handleAddToWishlist}
             disabled={isAddingToWishlist}
             className={`absolute top-2 right-2 p-2 rounded-full ${
               isAddingToWishlist
                 ? 'bg-black-900/70 text-white/50'
-                : isInWishlist 
-                  ? 'bg-gem-pink/20 text-gem-pink' 
-                  : 'bg-black-900/50 text-white/70 hover:text-gem-pink'
+                : isInWishlist
+                ? 'bg-gem-pink/20 text-gem-pink'
+                : 'bg-black-900/50 text-white/70 hover:text-gem-pink'
             } transition-colors`}
-            aria-label={isInWishlist ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+            aria-label={
+              isInWishlist
+                ? t('products.aria.removeFromFavorites')
+                : t('products.aria.addToFavorites')
+            }
           >
             {isAddingToWishlist ? (
-              <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                className="animate-spin h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
             ) : (
-              <Heart size={18} fill={isInWishlist ? "currentColor" : "none"} />
+              <Heart size={18} fill={isInWishlist ? 'currentColor' : 'none'} />
             )}
           </button>
 
-          {/* Add to cart button - appears on hover */}
+          {/* botão carrinho */}
           <motion.div
             className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black-900/90 to-black-900/0 p-3"
             initial={{ opacity: 0, y: 20 }}
@@ -229,26 +225,53 @@ const ProductCard = ({ product, className = '' }: ProductCardProps) => {
               }`}
             >
               {!product.available ? (
-                'Indisponível'
+                t('products.unavailable')
               ) : isAddingToCart ? (
                 <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
-                  Adicionando...
+                  {t('products.adding')}
                 </span>
               ) : isAddedToCart ? (
                 <span className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
-                  Adicionado
+                  {t('products.added')}
                 </span>
               ) : (
                 <span className="flex items-center">
                   <ShoppingCart size={16} className="mr-1" />
-                  Adicionar
+                  {t('products.add')}
                 </span>
               )}
             </button>
@@ -256,25 +279,26 @@ const ProductCard = ({ product, className = '' }: ProductCardProps) => {
         </div>
 
         <div className="p-4">
-          {/* Category */}
           <div className="text-gem-purple text-xs mb-1">{product.category_name}</div>
-
-          {/* Product name */}
           <h3 className="font-medium text-white mb-2 line-clamp-2 h-12">{product.name}</h3>
 
-          {/* Price */}
           {product.price_discount ? (
             <div className="mt-2">
-              {/* Discounted price with original price */}
               <div className="flex flex-col">
                 <div className="flex items-center">
-                  <span className="text-xl font-bold bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">{formatPrice(product.price_discount)}</span>
-                  <span className="text-xs line-through text-white/40 ml-2">{formatPrice(product.price)}</span>
+                  <span className="text-xl font-bold bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">
+                    {formatPrice(product.price_discount)}
+                  </span>
+                  <span className="text-xs line-through text-white/40 ml-2">
+                    {formatPrice(product.price)}
+                  </span>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-lg font-semibold text-white mt-2">{formatPrice(product.price)}</div>
+            <div className="text-lg font-semibold text-white mt-2">
+              {formatPrice(product.price)}
+            </div>
           )}
         </div>
       </Link>

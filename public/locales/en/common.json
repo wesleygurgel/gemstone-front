@@ -13,11 +13,17 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
+  "hero": {
+    "title": "Ethical business.\nLegitimate gold.\nGlobal partnerships.",
+    "subtitle": "We are specialists in the import and export, trade of precious metals and gemstones with full transparency, security, and international compliance.",
+    "cta_main": "Speak with {company}",
+    "cta_secondary": "Learn More"
+  },
   "about": {
-    "title": "About {{company}}",
+    "title": "About {company}",
     "subtitle": "Specialists in mining, exporting, and importing gold and precious stones worldwide",
     "whoweare": "Who We Are",
-    "text1": "{{company}} operates in the mining of gold and precious stones such as diamonds, emeralds, tourmalines, ruby, and aquamarine, with extensive hands-on experience in exporting and importing all these minerals around the world.",
+  "text1": "{company} operates in the mining of gold and precious stones such as diamonds, emeralds, tourmalines, ruby, and aquamarine, with extensive hands-on experience in exporting and importing all these minerals around the world.",
     "text2": "Headquartered in Miami, United States, with offices in Dubai, Rome, Africa, and Brazil, we operate efficiently and responsibly, connecting exporters, refineries, and institutional buyers.",
     "missionvision": "Mission and Vision",
     "mission": "Mission:",
@@ -103,19 +109,12 @@
     },
     "cta": "Contact us for more information"
   },
-
-  "hero": {
-    "title": "Ethical business.\nLegitimate gold.\nGlobal partnerships.",
-    "subtitle": "We are specialists in the import and trade of precious metals with full transparency, security, and international compliance.",
-    "cta_main": "Speak with {{company}}",
-    "cta_secondary": "Learn More"
-  },
   "compliance": {
     "title": "Commitment to Legality, Responsibility, and Human Rights",
-    "subtitle": "At {{company}}, compliance is non-negotiable. We operate according to the highest international standards of ethics, governance, and responsibility.",
+  "subtitle": "At {company}, compliance is non-negotiable. We operate according to the highest international standards of ethics, governance, and responsibility.",
     "guidelines_title": "Our guidelines include:",
     "guidelines": [
-      "Adherence to OECD, LBMA, RJC standards and US legislation",
+      "Adherence to GIA, ICC, OECD standards and US legislation",
       "Strict policy against money laundering and terrorism financing",
       "Prohibition of involvement with conflict areas or human rights violations",
       "Code of Conduct for employees and business partners",
@@ -132,11 +131,11 @@
     "transparency_text": "We believe that transparency is fundamental to building trust. Therefore, we provide all necessary information about our processes, partnerships, and certifications."
   },
   "contact": {
-    "title": "Get in touch with {{company}}",
+  "title": "Get in touch with {company}",
     "subtitle": "Want to know more about our services or start a partnership? Fill out the form below or contact us through our official channels.",
     "address_title": "Address",
-    "address_line1": "417 NW 8th St, Downtown",
-    "address_line2": "Miami, FL 33136",
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
     "address_line3": "United States",
     "view_map": "View on Google Maps",
     "email_title": "Email",
@@ -156,5 +155,28 @@
       "status_error_fields": "Please fill in all required fields.",
       "status_error_general": "An error occurred while sending your message. Please try again."
     }
+  },
+  "footer": {
+    "tagline": "Excellence in precious metals trading with integrity and responsibility.",
+    "navigation_title": "Navigation",
+    "documents_title": "Documents",
+    "contact_title": "Contact",
+    "links": [
+      "Home",
+      "About Us",
+      "Services",
+      "Compliance",
+      "Contact"
+    ],
+    "legal": [
+      "Code of Conduct",
+      "Supply Chain Policy",
+      "Operational Procedures",
+      "Privacy Policy"
+    ],
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "United States",
+    "copyright": "© {year} {company}. All rights reserved."
   }
 }

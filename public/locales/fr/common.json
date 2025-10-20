@@ -1,23 +1,182 @@
 {
-  "meta.title": "Gemstone - Excellence dans le commerce des métaux précieux",
-  "meta.description": "Commerce international de métaux précieux avec intégrité et responsabilité. Spécialistes de l'importation et de l'exportation d'or.",
-  "about.title": "À propos de {{company}}",
-  "about.subtitle": "Spécialistes de l’extraction, de l’exportation et de l’importation d’or et de pierres précieuses dans le monde entier",
-  "about.whoweare": "Qui sommes-nous",
-  "about.text1": "{{company}} opère dans l’extraction de l’or et des pierres précieuses telles que les diamants, émeraudes, tourmalines, rubis et aigue-marine, avec une vaste expérience pratique de l’exportation et de l’importation de ces minerais à l’échelle mondiale.",
-  "about.text2": "Basée à Miami, États-Unis, avec des bureaux à Dubaï, Rome, en Afrique et au Brésil, nous opérons avec efficacité et responsabilité, reliant exportateurs, raffineries et acheteurs institutionnels.",
-  "about.missionvision": "Mission et Vision",
-  "about.mission": "Mission :",
-  "about.mission.text": "Garantir des opérations de commerce des métaux précieux sûres, transparentes et éthiques dans le monde.",
-  "about.vision": "Vision :",
-  "about.vision.text": "Devenir une référence internationale en excellence, conformité et innovation dans le secteur des métaux précieux.",
-  "about.values": "Nos valeurs",
-  "values.integrity": "Intégrité",
-  "values.integrity.desc": "Nous opérons selon les plus hauts standards éthiques et en toute transparence dans toutes nos transactions.",
-  "values.responsibility": "Responsabilité",
-  "values.responsibility.desc": "Nous nous engageons pour des pratiques durables et responsables sur l’ensemble de la chaîne d’approvisionnement.",
-  "values.excellence": "Excellence",
-  "values.excellence.desc": "Nous visons l’excellence dans chaque processus, en garantissant qualité et sécurité à chaque opération.",
-  "values.compliance": "Conformité",
-  "values.compliance.desc": "Nous respectons strictement les normes et réglementations internationales de l’industrie des métaux précieux."
+  "meta": {
+    "title": "Gemstone - Excellence dans le commerce des métaux précieux",
+    "description": "Commerce international de métaux précieux avec intégrité et responsabilité. Spécialistes de l'importation et de l'exportation d'or."
+  },
+  "header": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Services",
+    "compliance": "Conformité",
+    "contact": "Contact",
+    "marketplace": "Marketplace",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "hero": {
+    "title": "Affaires éthiques.\nOr légitime.\nPartenariats mondiaux.",
+    "subtitle": "Nous sommes spécialisés dans l'importation et l'exportation, le commerce de métaux et de pierres précieuses avec une transparence, une sécurité et une conformité internationale totales.",
+    "cta_main": "Parlez avec {company}",
+    "cta_secondary": "En savoir plus"
+  },
+  "about": {
+    "title": "À propos de {company}",
+    "subtitle": "Spécialistes de l'exploitation minière, de l'exportation et de l'importation d'or et de pierres précieuses dans le monde entier",
+    "whoweare": "Qui sommes-nous",
+    "text1": "{company} opère dans l'exploitation de l'or et des pierres précieuses telles que les diamants, les émeraudes, les tourmalines, les rubis et les aigues-marines, avec une vaste expérience pratique dans l'exportation et l'importation de tous ces minéraux dans le monde entier.",
+    "text2": "Avec son siège à Miami, aux États-Unis, et des bureaux à Dubaï, Rome, en Afrique et au Brésil, nous opérons avec efficacité et responsabilité, reliant les exportateurs, les raffineries et les acheteurs institutionnels.",
+    "missionvision": "Mission et Vision",
+    "mission": "Mission :",
+    "mission.text": "Garantir des opérations de commerce de métaux précieux sûres, transparentes et éthiques dans le monde entier.",
+    "vision": "Vision :",
+    "vision.text": "Être une référence internationale en matière d'excellence, de conformité réglementaire et d'innovation dans le secteur des métaux précieux.",
+    "values": "Nos Valeurs"
+  },
+  "values": {
+    "integrity": "Intégrité",
+    "integrity.desc": "Nous opérons selon les normes éthiques les plus élevées et avec transparence dans toutes nos transactions.",
+    "responsibility": "Responsabilité",
+    "responsibility.desc": "Nous nous engageons à des pratiques durables et responsables tout au long de la chaîne d'approvisionnement.",
+    "excellence": "Excellence",
+    "excellence.desc": "Nous visons l'excellence dans chaque processus, garantissant la qualité et la sécurité de chaque opération.",
+    "compliance": "Conformité",
+    "compliance.desc": "Nous respectons rigoureusement les normes et réglementations internationales du secteur des métaux précieux."
+  },
+  "services": {
+    "title": "Solutions complètes pour l'importation et le commerce de métaux précieux",
+    "subtitle": "Nous offrons des services spécialisés pour chaque étape du processus de commercialisation de l'or",
+    "items": {
+      "0": {
+        "title": "Transport Manuel – Dubaï",
+        "subtitle": "(Hand Carry)",
+        "description": "Procédures sûres et personnalisées pour l'importation d'or en bagage à main. Nous travaillons avec Transguard Security et des raffineries certifiées.",
+        "benefits": {
+          "0": "Sécurité garantie par Transguard",
+          "1": "Processus rapide et efficace",
+          "2": "Suivi en temps réel"
+        }
+      },
+      "1": {
+        "title": "Importation par Fret",
+        "subtitle": "(Cargo Carry)",
+        "description": "Coordination logistique pour l'envoi aérien avec documentation complète, inspection et dédouanement à Dubaï.",
+        "benefits": {
+          "0": "Documentation complète et précise",
+          "1": "Inspection et vérification rigoureuses",
+          "2": "Dédouanement facilité"
+        }
+      },
+      "2": {
+        "title": "Analyse et Raffinage",
+        "subtitle": "",
+        "description": "Analyse technique dans des raffineries partenaires, avec émission d'un rapport d'analyse (assay) avant la finalisation de l'achat.",
+        "benefits": {
+          "0": "Partenariats avec des raffineries certifiées",
+          "1": "Rapports techniques détaillés",
+          "2": "Garantie de pureté et de qualité"
+        }
+      },
+      "3": {
+        "title": "Conformité et Due Diligence",
+        "subtitle": "",
+        "description": "Suivi complet de la validation des documents et du KYC (Know Your Customer) des vendeurs et exportateurs.",
+        "benefits": {
+          "0": "Vérification rigoureuse des documents",
+          "1": "Processus KYC complet et sécurisé",
+          "2": "Conformité aux normes internationales"
+        }
+      },
+      "4": {
+        "title": "Conseil et Support",
+        "subtitle": "",
+        "description": "Soutien à la structuration des opérations d'exportation, conseils sur les licences, les taxes et les certifications internationales.",
+        "benefits": {
+          "0": "Conseil spécialisé dans le secteur",
+          "1": "Orientation sur les licences et les taxes",
+          "2": "Support pour les certifications internationales"
+        }
+      },
+      "5": {
+        "title": "Vente d'Or et de Pierres Précieuses",
+        "subtitle": "",
+        "description": "Commercialisation d'or et de pierres précieuses comme les diamants, les émeraudes, les tourmalines, les rubis et les aigues-marines avec certification d'origine et de qualité.",
+        "benefits": {
+          "0": "Produits avec certification d'origine",
+          "1": "Garantie d'authenticité et de qualité",
+          "2": "Prix compétitifs sur le marché international"
+        }
+      }
+    },
+    "cta": "Contactez-nous pour plus d'informations"
+  },
+  "compliance": {
+    "title": "Engagement envers la légalité, la responsabilité et les droits de l'homme",
+    "subtitle": "Chez {company}, la conformité n'est pas négociable. Nous agissons selon les normes internationales les plus élevées en matière d'éthique, de gouvernance et de responsabilité.",
+    "guidelines_title": "Nos directives incluent :",
+    "guidelines": [
+      "Adhésion aux normes de la GIA, de l'ICC, de l'OCDE et à la législation américaine",
+      "Politique stricte contre le blanchiment d'argent et le financement du terrorisme",
+      "Interdiction de toute implication dans des zones de conflit ou des violations des droits de l'homme",
+      "Code de conduite pour les collaborateurs et les partenaires commerciaux",
+      "Processus de Due Diligence rigoureux tout au long de la chaîne d'approvisionnement"
+    ],
+    "documents_title": "Téléchargez nos documents institutionnels :",
+    "documents": [
+      "Code de Conduite",
+      "Politique de la Chaîne d'Approvisionnement",
+      "Procédures Opérationnelles"
+    ],
+    "documents_footer": "Toutes nos procédures sont régulièrement auditées par des entités indépendantes pour garantir la conformité avec les normes internationales.",
+    "transparency_title": "Engagement envers la transparence",
+    "transparency_text": "Nous croyons que la transparence est fondamentale pour instaurer la confiance. C'est pourquoi nous mettons à disposition toutes les informations nécessaires sur nos processus, nos partenariats et nos certifications."
+  },
+  "contact": {
+    "title": "Contactez {company}",
+    "subtitle": "Vous voulez en savoir plus sur nos services ou démarrer un partenariat ? Remplissez le formulaire ci-dessous ou contactez-nous via les canaux officiels.",
+    "address_title": "Adresse",
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "États-Unis",
+    "view_map": "Voir sur Google Maps",
+    "email_title": "Email",
+    "email_response": "Nous répondrons dans les 24 heures",
+    "send_email": "Envoyer un email",
+    "form": {
+      "name_label": "Nom",
+      "name_placeholder": "Votre nom",
+      "email_label": "Email",
+      "email_placeholder": "votre.email@exemple.com",
+      "company_label": "Entreprise",
+      "company_placeholder": "Nom de votre entreprise",
+      "message_label": "Message",
+      "message_placeholder": "Comment pouvons-nous vous aider ?",
+      "submit_button": "Envoyer le Message",
+      "status_success": "Message envoyé avec succès ! Nous vous contacterons bientôt.",
+      "status_error_fields": "Veuillez remplir tous les champs obligatoires.",
+      "status_error_general": "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer."
+    }
+  },
+  "footer": {
+    "tagline": "Excellence dans le trading de métaux précieux avec intégrité et responsabilité.",
+    "navigation_title": "Navigation",
+    "documents_title": "Documents",
+    "contact_title": "Contact",
+    "links": [
+      "Accueil",
+      "À Propos",
+      "Services",
+      "Conformité & Éthique",
+      "Contact"
+    ],
+    "legal": [
+      "Code de Conduite",
+      "Politique de la Chaîne d'Approvisionnement",
+      "Procédures Opérationnelles",
+      "Politique de Confidentialité"
+    ],
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "États-Unis",
+    "copyright": "© {year} {company}. Tous droits réservés."
+  }
 }

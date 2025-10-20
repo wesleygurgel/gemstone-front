@@ -1,16 +1,31 @@
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+// 1. Importe as ferramentas de tradução
+import { useTranslation, Trans } from 'react-i18next';
 import heroImage from '../../assets/images/hero.webp';
 import { COMPANY_FULL_NAME } from '../../utils/env';
 
 const Hero = () => {
+  // 2. Inicialize o hook de tradução
   const { t } = useTranslation('common');
 
   return (
     <section className="bg-gradient-to-r from-black-900 to-black-800 text-white py-20 relative overflow-hidden">
-      {/* Fundo decorativo */}
+      {/* Fundo decorativo (sem alterações) */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* ... partículas e gradientes ... */}
+        <div className="absolute top-10 left-10 w-1 h-1 rounded-full bg-gem-pink/30"></div>
+        <div className="absolute top-20 left-30 w-1.5 h-1.5 rounded-full bg-gem-purple/25"></div>
+        <div className="absolute top-40 left-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute top-60 left-40 w-1 h-1 rounded-full bg-gem-blue/30"></div>
+        <div className="absolute top-80 left-60 w-1.5 h-1.5 rounded-full bg-gem-cyan/25"></div>
+        <div className="absolute bottom-10 right-10 w-1.5 h-1.5 rounded-full bg-gem-cyan/30"></div>
+        <div className="absolute bottom-30 right-30 w-1 h-1 rounded-full bg-gem-blue/25"></div>
+        <div className="absolute bottom-50 right-20 w-2 h-2 rounded-full bg-gem-violet/20"></div>
+        <div className="absolute bottom-70 right-40 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute bottom-90 right-60 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+        <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-gem-purple/30"></div>
+        <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 rounded-full bg-gem-pink/25"></div>
+        <div className="absolute top-2/5 right-1/3 w-2 h-2 rounded-full bg-gem-blue/20"></div>
+        <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 bg-gradient-to-br from-gem-pink/5 to-gem-cyan/5 blur-2xl opacity-30"></div>
       </div>
 
       <div className="container relative z-10">
@@ -21,21 +36,24 @@ const Hero = () => {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-cyan bg-clip-text text-transparent whitespace-pre-line">
+              {/* Traduz o título e respeita as quebras de linha (\n) do JSON */}
               {t('hero.title')}
             </h1>
             <p className="text-xl mb-8 text-white/90">
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#contact" className="btn bg-gradient-to-r from-gem-pink to-gem-purple text-white hover:shadow-neon-pink transition-all duration-300">
-                {t('hero.cta_main', { company: COMPANY_FULL_NAME })}
+              <a href="#contact" className="btn bg-gradient-to-r from-gem-pink to-gem-purple text-white hover:shadow-neon-pink transition-all duration-300 min-w-[260px] text-center">
+                {/* 3. Use <Trans> para o botão com a variável */}
+                <Trans i18nKey="hero.cta_main" values={{ company: COMPANY_FULL_NAME }} />
               </a>
-              <a href="#about" className="btn btn-outline border-gem-violet text-white hover:bg-gem-violet/10 hover:border-gem-cyan transition-all duration-300">
+              <a href="#about" className="btn btn-outline border-gem-violet text-white hover:bg-gem-violet/10 hover:border-gem-cyan transition-all duration-300 min-w-[150px] text-center">
                 {t('hero.cta_secondary')}
               </a>
             </div>
           </motion.div>
 
+          {/* Seção da imagem (sem alterações) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

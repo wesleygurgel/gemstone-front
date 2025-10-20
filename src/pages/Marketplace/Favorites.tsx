@@ -7,41 +7,42 @@ import Breadcrumb from '@/components/marketplace/Breadcrumb';
 import ProductCard from '@/components/marketplace/ProductCard';
 import { useWishlist } from '@/context/WishlistContext';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Favorites: React.FC = () => {
   const { wishlist, loading, error, totalItems, loadWishlist } = useWishlist();
+  const { t } = useTranslation('marketplace');
 
-
-  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+      transition: { staggerChildren: 0.1 },
+    },
   };
 
   const itemVariant = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   return (
     <MarketplaceLayout>
       <Helmet>
-        <title>Meus Favoritos - Gemstone</title>
-        <meta name="description" content="Seus produtos favoritos na Gemstone" />
+        <title>{t('favorites.meta.title', { defaultValue: 'My Favorites - Gemstone' })}</title>
+        <meta
+          name="description"
+          content={t('favorites.meta.description', { defaultValue: 'Your favorite products on Gemstone' })}
+        />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="mb-4">
-          <Breadcrumb 
+          <Breadcrumb
             items={[
-              { label: 'Marketplace', path: '/marketplace', isLast: false },
-              { label: 'Meus Favoritos', path: '/marketplace/favorites', isLast: true }
+              { label: t('breadcrumb.marketplace', { defaultValue: 'Marketplace' }), path: '/marketplace', isLast: false },
+              { label: t('favorites.title', { defaultValue: 'My Favorites' }), path: '/marketplace/favorites', isLast: true },
             ]}
           />
         </div>
@@ -49,19 +50,24 @@ const Favorites: React.FC = () => {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">
-            Meus Favoritos
+            {t('favorites.title', { defaultValue: 'My Favorites' })}
           </h1>
           <p className="text-white/70">
-            Produtos que você adicionou à sua lista de desejos
+            {t('favorites.subtitle', { defaultValue: 'Products you added to your wishlist' })}
           </p>
         </div>
 
         {/* Wishlist items */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-white">Lista de Favoritos</h2>
+            <h2 className="text-xl font-semibold text-white">
+              {t('favorites.list.title', { defaultValue: 'Favorites List' })}
+            </h2>
             <div className="text-white/70">
-              {totalItems} {totalItems === 1 ? 'item' : 'itens'}
+              {totalItems}{' '}
+              {totalItems === 1
+                ? t('favorites.list.single', { defaultValue: 'item' })
+                : t('favorites.list.plural', { defaultValue: 'items' })}
             </div>
           </div>
 
@@ -72,29 +78,39 @@ const Favorites: React.FC = () => {
           ) : error ? (
             <div className="flex flex-col items-center justify-center p-12 text-center bg-black-800 border border-gem-purple/20 rounded-lg">
               <AlertCircle size={48} className="text-gem-pink mb-4" />
-              <h3 className="text-xl font-medium text-white mb-2">Erro ao carregar favoritos</h3>
-              <p className="text-white/60 mb-6">Não foi possível carregar seus produtos favoritos.</p>
-              <button 
+              <h3 className="text-xl font-medium text-white mb-2">
+                {t('favorites.error.title', { defaultValue: 'Error loading favorites' })}
+              </h3>
+              <p className="text-white/60 mb-6">
+                {t('favorites.error.subtitle', { defaultValue: 'Could not load your favorite products.' })}
+              </p>
+              <button
                 onClick={() => loadWishlist()}
                 className="px-6 py-2 bg-gradient-to-r from-gem-purple to-gem-blue text-white rounded-md hover:shadow-neon-purple transition-all duration-300"
               >
-                Tentar Novamente
+                {t('favorites.error.retry', { defaultValue: 'Try Again' })}
               </button>
             </div>
           ) : wishlist?.items.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-12 text-center bg-black-800 border border-gem-purple/20 rounded-lg">
               <Heart size={48} className="text-gem-purple/30 mb-4" />
-              <h3 className="text-xl font-medium text-white mb-2">Sua lista de favoritos está vazia</h3>
-              <p className="text-white/60 mb-6">Adicione produtos à sua lista de favoritos para vê-los aqui.</p>
-              <Link 
+              <h3 className="text-xl font-medium text-white mb-2">
+                {t('favorites.empty.title', { defaultValue: 'Your favorites list is empty' })}
+              </h3>
+              <p className="text-white/60 mb-6">
+                {t('favorites.empty.subtitle', {
+                  defaultValue: 'Add products to your favorites list to see them here.',
+                })}
+              </p>
+              <Link
                 to="/marketplace"
                 className="px-6 py-2 bg-gradient-to-r from-gem-purple to-gem-blue text-white rounded-md hover:shadow-neon-purple transition-all duration-300"
               >
-                Explorar Produtos
+                {t('favorites.empty.explore', { defaultValue: 'Explore Products' })}
               </Link>
             </div>
           ) : (
-            <motion.div 
+            <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
               variants={container}
               initial="hidden"
@@ -102,7 +118,7 @@ const Favorites: React.FC = () => {
             >
               {wishlist?.items.map((item) => (
                 <motion.div key={item.id} variants={itemVariant}>
-                  <ProductCard 
+                  <ProductCard
                     product={{
                       id: item.product.id,
                       name: item.product.name,
@@ -115,7 +131,7 @@ const Favorites: React.FC = () => {
                       featured: item.product.featured,
                       main_image: item.product.main_image || undefined,
                       view_count: 0,
-                      sales_count: 0
+                      sales_count: 0,
                     }}
                   />
                 </motion.div>
