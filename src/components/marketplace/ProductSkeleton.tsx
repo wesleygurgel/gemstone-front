@@ -1,15 +1,23 @@
+import { useTranslation } from 'react-i18next';
 
 interface ProductSkeletonProps {
   className?: string;
 }
 
 const ProductSkeleton = ({ className = '' }: ProductSkeletonProps) => {
-  return (
-    <div className={`bg-black-800 rounded-lg overflow-hidden border border-gem-purple/10 ${className}`}>
-      {/* Image skeleton */}
-      <div className="aspect-square bg-black-700 animate-pulse"></div>
+  const { t } = useTranslation('marketplace');
 
-      <div className="p-4">
+  return (
+    <div
+      className={`bg-black-800 rounded-lg overflow-hidden border border-gem-purple/10 ${className}`}
+      role="status"
+      aria-busy="true"
+      aria-label={t('skeleton.loadingProduct')}
+    >
+      {/* Image skeleton */}
+      <div className="aspect-square bg-black-700 animate-pulse" aria-hidden="true"></div>
+
+      <div className="p-4" aria-hidden="true">
         {/* Category skeleton */}
         <div className="h-3 w-16 bg-black-700 animate-pulse rounded mb-2"></div>
 

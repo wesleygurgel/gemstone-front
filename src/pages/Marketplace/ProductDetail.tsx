@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ChevronRight, ShoppingCart, Heart, Clock, TruckIcon, ShieldCheck, AlertCircle } from 'lucide-react';
+import {
+  ChevronRight,
+  ShoppingCart,
+  Heart,
+  Clock,
+  Truck as TruckIcon,
+  ShieldCheck,
+  AlertCircle
+} from 'lucide-react';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import { productService } from '@/services';
 import { useCart } from '@/context/CartContext';
@@ -9,8 +17,10 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { Product, ProductListItem } from '@/types/api';
+import { useTranslation } from 'react-i18next';
 
 const ProductDetail = () => {
+  const { t } = useTranslation('marketplace');
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
@@ -51,14 +61,14 @@ const ProductDetail = () => {
         setSelectedImageIndex(mainImageIndex >= 0 ? mainImageIndex : 0);
 
         // Fetch related products from the same category
-        const related = await productService.getProducts({ 
+        const related = await productService.getProducts({
           category_id: productData.category
         });
         // Filter out the current product and limit to 4 related products
         const filteredRelated = related.filter(item => item.id !== productData.id).slice(0, 4);
         setRelatedProducts(filteredRelated);
       } catch (err) {
-        setError('Falha ao carregar o produto. Por favor, tente novamente.');
+        setError(t('productDetail.errors.loadFailed'));
         setProduct(null);
       } finally {
         setLoading(false);
@@ -66,17 +76,17 @@ const ProductDetail = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, t]);
 
   // Check if product is in wishlist when component mounts
   useEffect(() => {
     const checkWishlistStatus = async () => {
       if (isAuthenticated && id) {
         try {
-          const isInWishlist = await isItemInWishlist(parseInt(id));
-          setIsInWishlist(isInWishlist);
-        } catch (error) {
-          console.error('Error checking wishlist status:', error);
+          const inW = await isItemInWishlist(parseInt(id, 10));
+          setIsInWishlist(inW);
+        } catch {
+          // noop
         }
       }
     };
@@ -114,17 +124,15 @@ const ProductDetail = () => {
     setIsAddingToCart(true);
 
     try {
-      // Use the addItem function from the cart context
       const success = await addItem(product.id, 1);
 
       if (success) {
         setIsAddedToCart(true);
-        // Show success toast
-        showToast(`${product.name} adicionado ao carrinho`, 'success');
+        showToast(t('productDetail.toasts.addedToCart', { name: product.name }), 'success');
         setTimeout(() => setIsAddedToCart(false), 2000);
       }
-    } catch (error) {
-      showToast('Erro ao adicionar item ao carrinho', 'error');
+    } catch {
+      showToast(t('productDetail.toasts.addToCartError'), 'error');
     } finally {
       setIsAddingToCart(false);
     }
@@ -137,17 +145,16 @@ const ProductDetail = () => {
     setIsAddingToCart(true);
 
     try {
-      // Use the addItem function from the cart context
       const success = await addItem(product.id, 1);
 
       if (success) {
         navigate('/checkout');
       } else {
-        showToast('Erro ao adicionar item ao carrinho', 'error');
+        showToast(t('productDetail.toasts.addToCartError'), 'error');
         setIsAddingToCart(false);
       }
-    } catch (error) {
-      showToast('Erro ao adicionar item ao carrinho', 'error');
+    } catch {
+      showToast(t('productDetail.toasts.addToCartError'), 'error');
       setIsAddingToCart(false);
     }
   };
@@ -156,10 +163,8 @@ const ProductDetail = () => {
   const handleAddToWishlist = async () => {
     if (!product) return;
 
-    // Check if user is authenticated
     if (!isAuthenticated) {
-      // Show toast notification for unauthenticated user
-      showToast('Faça login para adicionar itens aos favoritos', 'warning');
+      showToast(t('productDetail.toasts.loginForWishlist'), 'warning');
       return;
     }
 
@@ -169,23 +174,20 @@ const ProductDetail = () => {
 
     try {
       if (isInWishlist) {
-        // Remove from wishlist
         const success = await removeFromWishlist(product.id);
         if (success) {
           setIsInWishlist(false);
-          showToast(`${product.name} removido dos favoritos`, 'success');
+          showToast(t('productDetail.toasts.removedFromWishlist', { name: product.name }), 'success');
         }
       } else {
-        // Add to wishlist
         const success = await addToWishlist(product.id);
         if (success) {
           setIsInWishlist(true);
-          showToast(`${product.name} adicionado aos favoritos`, 'success');
+          showToast(t('productDetail.toasts.addedToWishlist', { name: product.name }), 'success');
         }
       }
-    } catch (error) {
-      console.error('Error updating wishlist:', error);
-      showToast('Erro ao atualizar favoritos', 'error');
+    } catch {
+      showToast(t('productDetail.toasts.wishlistError'), 'error');
     } finally {
       setIsAddingToWishlist(false);
     }
@@ -231,19 +233,19 @@ const ProductDetail = () => {
       <MarketplaceLayout>
         <div className="container mx-auto px-4 py-8">
           <div className="bg-black-800/50 rounded-lg p-6 text-center">
-            <p className="text-red-500">{error || 'Produto não encontrado'}</p>
+            <p className="text-red-500">{error || t('productDetail.errors.notFound')}</p>
             <div className="mt-4 flex justify-center gap-4">
-              <button 
+              <button
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-gem-purple/20 text-gem-purple hover:bg-gem-purple/30 transition-colors rounded-md"
               >
-                Tentar novamente
+                {t('common.retry')}
               </button>
-              <Link 
+              <Link
                 to="/marketplace"
                 className="px-4 py-2 bg-black-700 text-white/70 hover:text-white transition-colors rounded-md"
               >
-                Voltar para a loja
+                {t('productDetail.actions.backToStore')}
               </Link>
             </div>
           </div>
@@ -262,12 +264,12 @@ const ProductDetail = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center text-sm mb-6 text-white/60">
-          <Link to="/" className="hover:text-gem-purple transition-colors">Home</Link>
+          <Link to="/" className="hover:text-gem-purple transition-colors">{t('breadcrumb.home')}</Link>
           <ChevronRight size={16} className="mx-2" />
-          <Link to="/marketplace" className="hover:text-gem-purple transition-colors">Marketplace</Link>
+          <Link to="/marketplace" className="hover:text-gem-purple transition-colors">{t('breadcrumb.marketplace')}</Link>
           <ChevronRight size={16} className="mx-2" />
-          <Link 
-            to={`/marketplace?category_id=${product.category}`} 
+          <Link
+            to={`/marketplace?category_id=${product.category}`}
             className="hover:text-gem-purple transition-colors"
           >
             {product.category_name}
@@ -282,14 +284,14 @@ const ProductDetail = () => {
             {/* Main image */}
             <div className="bg-black-800 rounded-lg overflow-hidden mb-4 aspect-square">
               {product.images && product.images.length > 0 ? (
-                <img 
-                  src={product.images[selectedImageIndex].image} 
+                <img
+                  src={product.images[selectedImageIndex].image}
                   alt={product.images[selectedImageIndex].alt_text || product.name}
                   className="w-full h-full object-contain"
                 />
               ) : (
                 <div className="w-full h-full bg-black-700 flex items-center justify-center">
-                  <span className="text-white/50">Sem imagem</span>
+                  <span className="text-white/50">{t('productDetail.media.noImage')}</span>
                 </div>
               )}
             </div>
@@ -302,14 +304,12 @@ const ProductDetail = () => {
                     key={image.id}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`w-20 h-20 rounded-md overflow-hidden flex-shrink-0 border-2 ${
-                      selectedImageIndex === index 
-                        ? 'border-gem-purple' 
-                        : 'border-transparent'
+                      selectedImageIndex === index ? 'border-gem-purple' : 'border-transparent'
                     }`}
                   >
-                    <img 
-                      src={image.image} 
-                      alt={image.alt_text || `${product.name} - imagem ${index + 1}`}
+                    <img
+                      src={image.image}
+                      alt={image.alt_text || `${product.name} - ${t('productDetail.media.image')} ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -350,9 +350,13 @@ const ProductDetail = () => {
 
               {/* Payment options */}
               <div className="mt-2 text-white/70 text-sm">
-                <p>Em até 12x sem juros</p>
+                <p>{t('productDetail.payment.installments')}</p>
                 <p className="text-green-500">
-                  10% de desconto no PIX ou Boleto ({formatPrice(String(parseFloat(product.price_discount || product.price) * 0.9))})
+                  {t('productDetail.payment.pixDiscount', {
+                    value: formatPrice(
+                      String(parseFloat(product.price_discount || product.price) * 0.9)
+                    )
+                  })}
                 </p>
               </div>
             </div>
@@ -362,12 +366,14 @@ const ProductDetail = () => {
               {product.available ? (
                 <div className="flex items-center text-green-500">
                   <ShieldCheck size={16} className="mr-1" />
-                  <span>Em estoque - {product.stock} unidades disponíveis</span>
+                  <span>
+                    {t('productDetail.stock.inStock', { count: product.stock })}
+                  </span>
                 </div>
               ) : (
                 <div className="flex items-center text-red-500">
                   <AlertCircle size={16} className="mr-1" />
-                  <span>Produto indisponível</span>
+                  <span>{t('productDetail.stock.unavailable')}</span>
                 </div>
               )}
             </div>
@@ -383,7 +389,11 @@ const ProductDetail = () => {
                     : 'bg-gradient-to-r from-gem-purple to-gem-blue text-white hover:shadow-neon-purple'
                 }`}
               >
-                {!product.available ? 'Indisponível' : isAddingToCart ? 'Processando...' : 'Comprar agora'}
+                {!product.available
+                  ? t('productDetail.actions.unavailable')
+                  : isAddingToCart
+                  ? t('productDetail.actions.processing')
+                  : t('productDetail.actions.buyNow')}
               </button>
 
               <div className="flex gap-3">
@@ -399,26 +409,26 @@ const ProductDetail = () => {
                   }`}
                 >
                   {!product.available ? (
-                    'Indisponível'
+                    t('productDetail.actions.unavailable')
                   ) : isAddingToCart ? (
                     <span className="flex items-center">
                       <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Adicionando...
+                      {t('productDetail.actions.adding')}
                     </span>
                   ) : isAddedToCart ? (
                     <span className="flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      Adicionado ao carrinho
+                      {t('productDetail.actions.added')}
                     </span>
                   ) : (
                     <span className="flex items-center">
                       <ShoppingCart size={16} className="mr-2" />
-                      Adicionar ao carrinho
+                      {t('productDetail.actions.addToCart')}
                     </span>
                   )}
                 </button>
@@ -429,11 +439,15 @@ const ProductDetail = () => {
                   className={`p-3 rounded-md ${
                     isAddingToWishlist
                       ? 'bg-black-700 text-white/50'
-                      : isInWishlist 
-                        ? 'bg-gem-pink/20 text-gem-pink' 
+                      : isInWishlist
+                        ? 'bg-gem-pink/20 text-gem-pink'
                         : 'bg-black-700 text-white/70 hover:text-gem-pink hover:bg-black-600'
                   } transition-colors`}
-                  aria-label={isInWishlist ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                  aria-label={
+                    isInWishlist
+                      ? t('productDetail.wishlist.removeAria')
+                      : t('productDetail.wishlist.addAria')
+                  }
                 >
                   {isAddingToWishlist ? (
                     <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -441,7 +455,7 @@ const ProductDetail = () => {
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                   ) : (
-                    <Heart size={20} fill={isInWishlist ? "currentColor" : "none"} />
+                    <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} />
                   )}
                 </button>
               </div>
@@ -452,18 +466,18 @@ const ProductDetail = () => {
               <div className="flex items-start gap-3 mb-3">
                 <TruckIcon size={20} className="text-gem-purple flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-medium text-white">Entrega</h3>
-                  <p className="text-white/70 text-sm">Frete grátis para todo o Brasil</p>
-                  <p className="text-white/70 text-sm">Entrega expressa disponível</p>
+                  <h3 className="font-medium text-white">{t('productDetail.info.shipping.title')}</h3>
+                  <p className="text-white/70 text-sm">{t('productDetail.info.shipping.free')}</p>
+                  <p className="text-white/70 text-sm">{t('productDetail.info.shipping.express')}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <ShieldCheck size={20} className="text-gem-purple flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-medium text-white">Garantia</h3>
-                  <p className="text-white/70 text-sm">12 meses de garantia</p>
-                  <p className="text-white/70 text-sm">30 dias para devolução</p>
+                  <h3 className="font-medium text-white">{t('productDetail.info.warranty.title')}</h3>
+                  <p className="text-white/70 text-sm">{t('productDetail.info.warranty.months')}</p>
+                  <p className="text-white/70 text-sm">{t('productDetail.info.warranty.returns')}</p>
                 </div>
               </div>
             </div>
@@ -472,16 +486,20 @@ const ProductDetail = () => {
             <div className="bg-black-800/50 rounded-lg p-4 mb-6 border border-yellow-500/20">
               <div className="flex items-center text-yellow-500">
                 <Clock size={16} className="mr-2" />
-                <span className="font-medium">Oferta por tempo limitado!</span>
+                <span className="font-medium">{t('productDetail.urgency.limitedOffer')}</span>
               </div>
-              <p className="text-white/70 text-sm mt-1">Restam apenas {product.stock < 10 ? product.stock : '10+'} unidades em estoque</p>
+              <p className="text-white/70 text-sm mt-1">
+                {t('productDetail.urgency.stockLeft', {
+                  count: product.stock < 10 ? product.stock : 10,
+                }) + (product.stock >= 10 ? '+' : '')}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Product description */}
         <div className="mt-12">
-          <h2 className="text-xl font-semibold text-white mb-4">Descrição do Produto</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">{t('productDetail.description.title')}</h2>
           <div className="bg-black-800 rounded-lg p-6">
             <div className="prose prose-invert max-w-none">
               {product.description.split('\n').map((paragraph, index) => (
@@ -494,11 +512,11 @@ const ProductDetail = () => {
         {/* Related products */}
         {relatedProducts.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-xl font-semibold text-white mb-4">Produtos Relacionados</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">{t('productDetail.related.title')}</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map(relatedProduct => (
-                <Link 
-                  key={relatedProduct.id} 
+                <Link
+                  key={relatedProduct.id}
                   to={`/marketplace/product/${relatedProduct.id}`}
                   className="bg-black-800 rounded-lg overflow-hidden border border-gem-purple/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
@@ -511,7 +529,7 @@ const ProductDetail = () => {
                       />
                     ) : (
                       <div className="w-full h-full bg-black-700 flex items-center justify-center">
-                        <span className="text-white/50">Sem imagem</span>
+                        <span className="text-white/50">{t('productDetail.media.noImage')}</span>
                       </div>
                     )}
                   </div>

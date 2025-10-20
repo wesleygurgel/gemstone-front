@@ -1,0 +1,286 @@
+{
+  "header": {
+    "title": "Marketplace",
+    "subtitle": "Discover our exclusive selection of precious metals and gemstones with guaranteed certification and provenance.",
+    "searchPlaceholder": "Search products...",
+    "login": "Login",
+    "logout": "Logout",
+    "myProfile": "My Profile",
+    "myOrders": "My Orders",
+    "favorites": "Favorites"
+  },
+  "filters": {
+    "title": "Filters",
+    "apply": "Apply",
+    "clear": "Clear Filters",
+    "category": "Categories",
+    "priceRange": "Price Range",
+    "min": "Minimum",
+    "max": "Maximum",
+    "sort": "Sort By",
+    "sortOptions": {
+      "relevance": "Relevance",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "bestselling": "Best Sellers"
+    },
+    "sections": {
+      "productType": "Product Type",
+      "productTypeOptions": {
+        "barra": "Bar",
+        "joia": "Jewelry",
+        "bruto": "Raw",
+        "certificado": "Certified"
+      },
+      "weight": "Weight / Carat",
+      "weightOptions": {
+        "1g": "1g",
+        "10g": "10g",
+        "50g": "50g",
+        "100g": "100g",
+        "1ct": "1ct",
+        "2ct": "2ct"
+      }
+    },
+    "clearOne": "Clear"
+  },
+  "categories": {
+    "metals": {
+      "title": "Metals",
+      "desc": "Gold, silver, and other precious metals"
+    },
+    "precious_stones": {
+      "title": "Precious Stones",
+      "desc": "Diamonds, emeralds, rubies, and sapphires"
+    },
+    "jewels": {
+      "title": "Jewels",
+      "desc": "Exclusive jewelry and accessories"
+    },
+    "exotics": {
+      "title": "Exotics",
+      "desc": "Rare and special pieces"
+    }
+  },
+  "products": {
+    "addToCart": "Add",
+    "added": "Added",
+    "adding": "Adding...",
+    "unavailable": "Unavailable",
+    "featured": "Featured",
+    "empty": "No products found.",
+    "emptyHint": "Try adjusting the filters or searching for another term."
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "continue": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "marketplace": "Marketplace"
+  },
+  "common": {
+    "retry": "Try again"
+  },
+  "productDetail": {
+    "errors": {
+      "loadFailed": "Failed to load the product. Please try again.",
+      "notFound": "Product not found"
+    },
+    "toasts": {
+      "addedToCart": "{{name}} added to cart",
+      "addToCartError": "Error adding item to cart",
+      "loginForWishlist": "Login to add items to favorites",
+      "removedFromWishlist": "{{name}} removed from favorites",
+      "addedToWishlist": "{{name}} added to favorites",
+      "wishlistError": "Error updating favorites"
+    },
+    "actions": {
+      "backToStore": "Back to store",
+      "unavailable": "Unavailable",
+      "processing": "Processing...",
+      "buyNow": "Buy now",
+      "adding": "Adding...",
+      "added": "Added to cart",
+      "addToCart": "Add to cart"
+    },
+    "media": {
+      "noImage": "No image",
+      "image": "image"
+    },
+    "payment": {
+      "installments": "Up to 12x interest-free",
+      "pixDiscount": "10% discount on PIX or Boleto ({{value}})"
+    },
+    "stock": {
+      "inStock": "In stock - {{count}} units available",
+      "unavailable": "Product unavailable"
+    },
+    "info": {
+      "shipping": {
+        "title": "Delivery",
+        "free": "Free shipping for all of Brazil",
+        "express": "Express delivery available"
+      },
+      "warranty": {
+        "title": "Warranty",
+        "months": "12 months warranty",
+        "returns": "30 days for returns"
+      }
+    },
+    "urgency": {
+      "limitedOffer": "Limited time offer!",
+      "stockLeft": "Only {{count}} units left in stock"
+    },
+    "description": {
+      "title": "Product Description"
+    },
+    "related": {
+      "title": "Related Products"
+    },
+    "wishlist": {
+      "addAria": "Add to favorites",
+      "removeAria": "Remove from favorites"
+    }
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "subtitle": "Products you've added to your wishlist",
+    "empty": {
+      "title": "Your favorites list is empty",
+      "message": "Add products to your favorites list to see them here.",
+      "button": "Explore Products"
+    },
+    "error": {
+      "title": "Error loading favorites",
+      "message": "Could not load your favorite products.",
+      "retry": "Try Again"
+    },
+    "list": {
+      "title": "Favorites List",
+      "items": "{{count}} item",
+      "items_plural": "{{count}} items"
+    }
+  },
+  "orders": {
+    "list": {
+      "title": "My Orders",
+      "subtitle": "Track the status of your orders",
+      "filters": {
+        "title": "Filters",
+        "status": "Order Status",
+        "paymentStatus": "Payment Status",
+        "apply": "Apply",
+        "clear": "Clear"
+      },
+      "empty": {
+        "title": "No orders found",
+        "message": "You haven't placed any orders yet or no orders match the selected filters.",
+        "button": "Explore Products"
+      },
+      "error": {
+        "title": "Error loading orders",
+        "message": "Could not load your orders.",
+        "retry": "Try Again"
+      },
+      "columns": {
+        "order": "Order",
+        "date": "Date",
+        "status": "Status",
+        "payment": "Payment",
+        "total": "Total",
+        "actions": "Actions"
+      },
+      "details": "Details"
+    },
+    "detail": {
+      "title": "Order Details",
+      "notFound": "Order not found",
+      "notFoundMessage": "The order you are looking for does not exist or has been removed.",
+      "error": "Failed to load order details. Please try again.",
+      "back": "Back to My Orders",
+      "retry": "Try Again",
+      "statuses": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled"
+      },
+      "paymentStatuses": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "paymentMethods": {
+        "credit_card": "Credit Card",
+        "debit_card": "Debit Card",
+        "bank_transfer": "Bank Transfer",
+        "paypal": "PayPal",
+        "other": "Other"
+      },
+      "sections": {
+        "items": "Order Items",
+        "statusTimeline": "Order Status",
+        "shipping": "Shipping Information",
+        "payment": "Payment Information",
+        "actions": "Actions"
+      },
+      "cancel": {
+        "button": "Cancel Order",
+        "confirm": "Are you sure you want to cancel this order?",
+        "success": "Order cancelled successfully",
+        "error": "Failed to cancel order. Please try again.",
+        "processing": "Cancelling..."
+      },
+      "labels": {
+        "total": "Total",
+        "quantity": "Quantity",
+        "each": "each",
+        "method": "Method",
+        "status": "Status"
+      }
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "metaDescription": "Manage your profile information on the Gemstone Marketplace",
+    "breadcrumb": "Profile",
+    "subtitle": "Manage your personal information and address",
+    "loading": "Loading profile...",
+    "notAvailable": "N/A",
+    "notProvided": "Not provided",
+    "memberSince": "Member since {{date}}",
+    "lastLogin": "Last login {{date}}",
+    "section": {
+      "contact": "Contact and Address Information"
+    },
+    "fields": {
+      "first_name": { "label": "First Name", "placeholder": "Your first name" },
+      "last_name": { "label": "Last Name", "placeholder": "Your last name" },
+      "phone_number": { "label": "Phone Number", "placeholder": "(00) 00000-0000" },
+      "address": { "label": "Address", "placeholder": "Street, number, complement" },
+      "city": { "label": "City", "placeholder": "Your city" },
+      "state": { "label": "State", "placeholder": "Your state" },
+      "country": { "label": "Country", "placeholder": "Your country" },
+      "postal_code": { "label": "Postal Code", "placeholder": "00000-000" }
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "toasts": {
+      "updateSuccess": "Profile updated successfully!",
+      "updateError": "Error updating profile. Please try again."
+    }
+  }
+}

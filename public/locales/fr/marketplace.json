@@ -1,0 +1,286 @@
+{
+  "header": {
+    "title": "Marketplace",
+    "subtitle": "Découvrez notre sélection exclusive de métaux précieux et de pierres précieuses avec certification et provenance garanties.",
+    "searchPlaceholder": "Rechercher des produits...",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "myProfile": "Mon Profil",
+    "myOrders": "Mes Commandes",
+    "favorites": "Favoris"
+  },
+  "filters": {
+    "title": "Filtres",
+    "apply": "Appliquer",
+    "clear": "Effacer les Filtres",
+    "category": "Catégories",
+    "priceRange": "Gamme de Prix",
+    "min": "Minimum",
+    "max": "Maximum",
+    "sort": "Trier Par",
+    "sortOptions": {
+      "relevance": "Pertinence",
+      "priceAsc": "Prix: Croissant",
+      "priceDesc": "Prix: Décroissant",
+      "bestselling": "Meilleures Ventes"
+    },
+    "sections": {
+      "productType": "Type de Produit",
+      "productTypeOptions": {
+        "barra": "Lingot",
+        "joia": "Bijou",
+        "bruto": "Brut",
+        "certificado": "Certifié"
+      },
+      "weight": "Poids / Carat",
+      "weightOptions": {
+        "1g": "1g",
+        "10g": "10g",
+        "50g": "50g",
+        "100g": "100g",
+        "1ct": "1ct",
+        "2ct": "2ct"
+      }
+    },
+    "clearOne": "Effacer"
+  },
+  "categories": {
+    "metals": {
+      "title": "Métaux",
+      "desc": "Or, argent et autres métaux précieux"
+    },
+    "precious_stones": {
+      "title": "Pierres Précieuses",
+      "desc": "Diamants, émeraudes, rubis et saphirs"
+    },
+    "jewels": {
+      "title": "Bijoux",
+      "desc": "Bijoux et accessoires exclusifs"
+    },
+    "exotics": {
+      "title": "Exotiques",
+      "desc": "Pièces rares et spéciales"
+    }
+  },
+  "products": {
+    "addToCart": "Ajouter",
+    "added": "Ajouté",
+    "adding": "Ajout...",
+    "unavailable": "Indisponible",
+    "featured": "Mis en avant",
+    "empty": "Aucun produit trouvé.",
+    "emptyHint": "Essayez d'ajuster les filtres ou de rechercher un autre terme."
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "checkout": "Finaliser la Commande",
+    "continue": "Continuer vos Achats",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "total": "Total"
+  },
+  "breadcrumb": {
+    "home": "Accueil",
+    "marketplace": "Marketplace"
+  },
+  "common": {
+    "retry": "Réessayer"
+  },
+  "productDetail": {
+    "errors": {
+      "loadFailed": "Échec du chargement du produit. Veuillez réessayer.",
+      "notFound": "Produit non trouvé"
+    },
+    "toasts": {
+      "addedToCart": "{{name}} ajouté au panier",
+      "addToCartError": "Erreur lors de l'ajout de l'article au panier",
+      "loginForWishlist": "Connectez-vous pour ajouter des articles aux favoris",
+      "removedFromWishlist": "{{name}} retiré des favoris",
+      "addedToWishlist": "{{name}} ajouté aux favoris",
+      "wishlistError": "Erreur lors de la mise à jour des favoris"
+    },
+    "actions": {
+      "backToStore": "Retour à la boutique",
+      "unavailable": "Indisponible",
+      "processing": "Traitement...",
+      "buyNow": "Acheter maintenant",
+      "adding": "Ajout...",
+      "added": "Ajouté au panier",
+      "addToCart": "Ajouter au panier"
+    },
+    "media": {
+      "noImage": "Aucune image",
+      "image": "image"
+    },
+    "payment": {
+      "installments": "Jusqu'à 12 fois sans intérêt",
+      "pixDiscount": "10% de réduction avec PIX ou Boleto ({{value}})"
+    },
+    "stock": {
+      "inStock": "En stock - {{count}} unités disponibles",
+      "unavailable": "Produit indisponible"
+    },
+    "info": {
+      "shipping": {
+        "title": "Livraison",
+        "free": "Livraison gratuite pour tout le Brésil",
+        "express": "Livraison express disponible"
+      },
+      "warranty": {
+        "title": "Garantie",
+        "months": "12 mois de garantie",
+        "returns": "30 jours pour retour"
+      }
+    },
+    "urgency": {
+      "limitedOffer": "Offre à durée limitée !",
+      "stockLeft": "Il ne reste que {{count}} unités en stock"
+    },
+    "description": {
+      "title": "Description du Produit"
+    },
+    "related": {
+      "title": "Produits Associés"
+    },
+    "wishlist": {
+      "addAria": "Ajouter aux favoris",
+      "removeAria": "Retirer des favoris"
+    }
+  },
+  "favorites": {
+    "title": "Mes Favoris",
+    "subtitle": "Produits que vous avez ajoutés à votre liste de souhaits",
+    "empty": {
+      "title": "Votre liste de favoris est vide",
+      "message": "Ajoutez des produits à votre liste de favoris pour les voir ici.",
+      "button": "Explorer les Produits"
+    },
+    "error": {
+      "title": "Erreur lors du chargement des favoris",
+      "message": "Impossible de charger vos produits favoris.",
+      "retry": "Réessayer"
+    },
+    "list": {
+      "title": "Liste de Favoris",
+      "items": "{{count}} article",
+      "items_plural": "{{count}} articles"
+    }
+  },
+  "orders": {
+    "list": {
+      "title": "Mes Commandes",
+      "subtitle": "Suivez le statut de vos commandes",
+      "filters": {
+        "title": "Filtres",
+        "status": "Statut de la Commande",
+        "paymentStatus": "Statut du Paiement",
+        "apply": "Appliquer",
+        "clear": "Effacer"
+      },
+      "empty": {
+        "title": "Aucune commande trouvée",
+        "message": "Vous n'avez pas encore passé de commande ou aucune commande ne correspond aux filtres sélectionnés.",
+        "button": "Explorer les Produits"
+      },
+      "error": {
+        "title": "Erreur lors du chargement des commandes",
+        "message": "Impossible de charger vos commandes.",
+        "retry": "Réessayer"
+      },
+      "columns": {
+        "order": "Commande",
+        "date": "Date",
+        "status": "Statut",
+        "payment": "Paiement",
+        "total": "Total",
+        "actions": "Actions"
+      },
+      "details": "Détails"
+    },
+    "detail": {
+      "title": "Détails de la Commande",
+      "notFound": "Commande non trouvée",
+      "notFoundMessage": "La commande que vous recherchez n'existe pas ou a été supprimée.",
+      "error": "Échec du chargement des détails de la commande. Veuillez réessayer.",
+      "back": "Retour à Mes Commandes",
+      "retry": "Réessayer",
+      "statuses": {
+        "pending": "En attente",
+        "processing": "En cours de traitement",
+        "shipped": "Expédié",
+        "delivered": "Livré",
+        "cancelled": "Annulé"
+      },
+      "paymentStatuses": {
+        "pending": "En attente",
+        "processing": "En cours de traitement",
+        "completed": "Terminé",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "paymentMethods": {
+        "credit_card": "Carte de Crédit",
+        "debit_card": "Carte de Débit",
+        "bank_transfer": "Virement Bancaire",
+        "paypal": "PayPal",
+        "other": "Autre"
+      },
+      "sections": {
+        "items": "Articles de la Commande",
+        "statusTimeline": "Statut de la Commande",
+        "shipping": "Informations de Livraison",
+        "payment": "Informations de Paiement",
+        "actions": "Actions"
+      },
+      "cancel": {
+        "button": "Annuler la Commande",
+        "confirm": "Êtes-vous sûr de vouloir annuler cette commande ?",
+        "success": "Commande annulée avec succès",
+        "error": "Échec de l'annulation de la commande. Veuillez réessayer.",
+        "processing": "Annulation..."
+      },
+      "labels": {
+        "total": "Total",
+        "quantity": "Quantité",
+        "each": "chacun",
+        "method": "Méthode",
+        "status": "Statut"
+      }
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "metaDescription": "Gérez vos informations de profil sur le Gemstone Marketplace",
+    "breadcrumb": "Profil",
+    "subtitle": "Gérez vos informations personnelles et votre adresse",
+    "loading": "Chargement du profil...",
+    "notAvailable": "N/A",
+    "notProvided": "Non fourni",
+    "memberSince": "Membre depuis {{date}}",
+    "lastLogin": "Dernière connexion {{date}}",
+    "section": {
+      "contact": "Informations de Contact et d'Adresse"
+    },
+    "fields": {
+      "first_name": { "label": "Prénom", "placeholder": "Votre prénom" },
+      "last_name": { "label": "Nom", "placeholder": "Votre nom" },
+      "phone_number": { "label": "Numéro de Téléphone", "placeholder": "(00) 00000-0000" },
+      "address": { "label": "Adresse", "placeholder": "Rue, numéro, complément" },
+      "city": { "label": "Ville", "placeholder": "Votre ville" },
+      "state": { "label": "État", "placeholder": "Votre état" },
+      "country": { "label": "Pays", "placeholder": "Votre pays" },
+      "postal_code": { "label": "Code Postal", "placeholder": "00000-000" }
+    },
+    "actions": {
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "save": "Sauvegarder les Modifications",
+      "saving": "Sauvegarde..."
+    },
+    "toasts": {
+      "updateSuccess": "Profil mis à jour avec succès !",
+      "updateError": "Erreur lors de la mise à jour du profil. Veuillez réessayer."
+    }
+  }
+}

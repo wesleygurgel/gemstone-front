@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Gemstone - Excelência em comércio de metais preciosos",
+    "description": "Comércio internacional de metais preciosos com integridade e responsabilidade. Especialistas em importação e exportação de ouro."
+  },
+  "header": {
+    "home": "Início",
+    "about": "Quem Somos",
+    "services": "Serviços",
+    "compliance": "Compliance",
+    "contact": "Contato",
+    "marketplace": "Marketplace",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "hero": {
+    "title": "Negócios éticos.\nOuro legítimo.\nParcerias globais.",
+    "subtitle": "Somos especialistas em importação e exportação, comercialização de metais e pedras preciosas com total transparência, segurança e conformidade internacional.",
+  "cta_main": "Fale com a {company}",
+    "cta_secondary": "Saiba Mais"
+  },
+  "about": {
+  "title": "Sobre a {company}",
+    "subtitle": "Especialistas em mineração, exportação e importação de ouro e pedras preciosas em todo o mundo",
+    "whoweare": "Quem Somos",
+  "text1": "A {company} atua na mineração de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água-marinha, com ampla experiência prática na exportação e importação de todos esses minerais para o mundo todo.",
+    "text2": "Com sede em Miami, Estados Unidos, e escritórios em Dubai, Roma, África e Brasil, operamos com eficiência e responsabilidade, conectando exportadores, refinarias e compradores institucionais.",
+    "missionvision": "Missão e Visão",
+    "mission": "Missão:",
+    "mission.text": "Garantir operações de comércio de metais preciosos seguras, transparentes e éticas em todo o mundo.",
+    "vision": "Visão:",
+    "vision.text": "Ser referência internacional em excelência, cumprimento normativo e inovação no setor de metais preciosos.",
+    "values": "Nossos Valores"
+  },
+  "values": {
+    "integrity": "Integridade",
+    "integrity.desc": "Operamos com os mais altos padrões éticos e transparência em todas as nossas transações.",
+    "responsibility": "Responsabilidade",
+    "responsibility.desc": "Assumimos o compromisso com práticas sustentáveis e responsáveis em toda a cadeia de suprimentos.",
+    "excellence": "Excelência",
+    "excellence.desc": "Buscamos a excelência em cada processo, garantindo qualidade e segurança em cada operação.",
+    "compliance": "Conformidade",
+    "compliance.desc": "Seguimos rigorosamente as normas e regulamentações internacionais do setor de metais preciosos."
+  },
+  "services": {
+    "title": "Soluções completas em importação e comércio de metais preciosos",
+    "subtitle": "Oferecemos serviços especializados para cada etapa do processo de comercialização de ouro",
+    "items": {
+      "0": {
+        "title": "Hand Carry – Dubai",
+        "subtitle": "",
+        "description": "Procedimentos seguros e personalizados para importação de ouro em bagagem de mão. Atuamos com Transguard Security e refinarias certificadas.",
+        "benefits": {
+          "0": "Segurança garantida pela Transguard",
+          "1": "Processo ágil e eficiente",
+          "2": "Acompanhamento em tempo real"
+        }
+      },
+      "1": {
+        "title": "Importação via Carga",
+        "subtitle": "(Cargo Carry)",
+        "description": "Coordenação logística para envio aéreo com documentação completa, inspeção e liberação alfandegária em Dubai.",
+        "benefits": {
+          "0": "Documentação completa e precisa",
+          "1": "Inspeção e verificação rigorosa",
+          "2": "Liberação alfandegária facilitada"
+        }
+      },
+      "2": {
+        "title": "Assay e Refino",
+        "subtitle": "",
+        "description": "Análise técnica em refinarias parceiras, com emissão de laudo (assay) antes da finalização da compra.",
+        "benefits": {
+          "0": "Parcerias com refinarias certificadas",
+          "1": "Laudos técnicos detalhados",
+          "2": "Garantia de pureza e qualidade"
+        }
+      },
+      "3": {
+        "title": "Compliance e Due Diligence",
+        "subtitle": "",
+        "description": "Acompanhamento completo na validação de documentos e KYC (Know Your Customer) de vendedores e exportadores.",
+        "benefits": {
+          "0": "Verificação rigorosa de documentos",
+          "1": "Processo KYC completo e seguro",
+          "2": "Conformidade com normas internacionais"
+        }
+      },
+      "4": {
+        "title": "Consultoria e Suporte",
+        "subtitle": "",
+        "description": "Apoio na estruturação de operações de exportação, orientações sobre licenças, impostos e certificações internacionais.",
+        "benefits": {
+          "0": "Consultoria especializada no setor",
+          "1": "Orientação sobre licenças e impostos",
+          "2": "Suporte para certificações internacionais"
+        }
+      },
+      "5": {
+        "title": "Venda de Ouro e Pedras Preciosas",
+        "subtitle": "",
+        "description": "Comercialização de ouro e pedras preciosas como diamantes, esmeraldas, turmalinas, rubi e água marinha com certificação de origem e qualidade.",
+        "benefits": {
+          "0": "Produtos com certificação de origem",
+          "1": "Garantia de autenticidade e qualidade",
+          "2": "Preços competitivos no mercado internacional"
+        }
+      }
+    },
+    "cta": "Entre em contato para mais informações"
+  },
+  "compliance": {
+    "title": "Compromisso com a legalidade, responsabilidade e direitos humanos",
+  "subtitle": "Na {company}, a conformidade é inegociável. Atuamos segundo os mais altos padrões internacionais de ética, governança e responsabilidade.",
+    "guidelines_title": "Nossas diretrizes incluem:",
+    "guidelines": [
+      "Adesão às normas da GiA, iCC, OECD e legislação dos EUA",
+      "Política rígida contra lavagem de dinheiro e financiamento ao terrorismo",
+      "Proibição de envolvimento com áreas de conflito ou violações de direitos humanos",
+      "Código de Conduta para colaboradores e parceiros comerciais",
+      "Processos de Due Diligence rigorosos em toda a cadeia de fornecimento"
+    ],
+    "documents_title": "Baixe nossos documentos institucionais:",
+    "documents": [
+      "Código de Conduta",
+      "Política de Supply Chain",
+      "Procedimentos Operacionais"
+    ],
+    "documents_footer": "Todos os nossos procedimentos são auditados regularmente por entidades independentes para garantir a conformidade com as normas internacionais.",
+    "transparency_title": "Compromisso com a transparência",
+    "transparency_text": "Acreditamos que a transparência é fundamental para construir confiança. Por isso, disponibilizamos todas as informações necessárias sobre nossos processos, parcerias e certificações."
+  },
+  "contact": {
+  "title": "Entre em contato com a {company}",
+    "subtitle": "Quer saber mais sobre nossos serviços ou iniciar uma parceria? Preencha o formulário abaixo ou entre em contato pelos canais oficiais.",
+    "address_title": "Endereço",
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "Estados Unidos",
+    "view_map": "Ver no Google Maps",
+    "email_title": "Email",
+    "email_response": "Responderemos em até 24 horas",
+    "send_email": "Enviar email",
+    "form": {
+      "name_label": "Nome",
+      "name_placeholder": "Seu nome",
+      "email_label": "Email",
+      "email_placeholder": "seu.email@exemplo.com",
+      "company_label": "Empresa",
+      "company_placeholder": "Nome da sua empresa",
+      "message_label": "Mensagem",
+      "message_placeholder": "Como podemos ajudar?",
+      "submit_button": "Enviar Mensagem",
+      "status_success": "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+      "status_error_fields": "Por favor, preencha todos os campos obrigatórios.",
+      "status_error_general": "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente."
+    }
+  },
+  "footer": {
+    "tagline": "Excelência em trading de metais preciosos com integridade e responsabilidade.",
+    "navigation_title": "Navegação",
+    "documents_title": "Documentos",
+    "contact_title": "Contato",
+    "links": [
+      "Início",
+      "Quem Somos",
+      "Serviços",
+      "Compliance & Ética",
+      "Contato"
+    ],
+    "legal": [
+      "Código de Conduta",
+      "Política de Supply Chain",
+      "Procedimentos Operacionais",
+      "Política de Privacidade"
+    ],
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "Estados Unidos",
+    "copyright": "© {year} {company}. Todos os direitos reservados."
+  }
+}

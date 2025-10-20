@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Gemstone - Excellence in Precious Metals Trading",
+    "description": "International trade of precious metals with integrity and responsibility. Specialists in gold import and export."
+  },
+  "header": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "compliance": "Compliance",
+    "contact": "Contact",
+    "marketplace": "Marketplace",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "title": "Ethical business.\nLegitimate gold.\nGlobal partnerships.",
+    "subtitle": "We are specialists in the import and export, trade of precious metals and gemstones with full transparency, security, and international compliance.",
+    "cta_main": "Speak with {company}",
+    "cta_secondary": "Learn More"
+  },
+  "about": {
+    "title": "About {company}",
+    "subtitle": "Specialists in mining, exporting, and importing gold and precious stones worldwide",
+    "whoweare": "Who We Are",
+  "text1": "{company} operates in the mining of gold and precious stones such as diamonds, emeralds, tourmalines, ruby, and aquamarine, with extensive hands-on experience in exporting and importing all these minerals around the world.",
+    "text2": "Headquartered in Miami, United States, with offices in Dubai, Rome, Africa, and Brazil, we operate efficiently and responsibly, connecting exporters, refineries, and institutional buyers.",
+    "missionvision": "Mission and Vision",
+    "mission": "Mission:",
+    "mission.text": "Ensure safe, transparent, and ethical precious metals trading operations worldwide.",
+    "vision": "Vision:",
+    "vision.text": "Be an international benchmark in excellence, compliance, and innovation in the precious metals sector.",
+    "values": "Our Values"
+  },
+  "values": {
+    "integrity": "Integrity",
+    "integrity.desc": "We operate with the highest ethical standards and transparency in all our transactions.",
+    "responsibility": "Responsibility",
+    "responsibility.desc": "We are committed to sustainable and responsible practices across the entire supply chain.",
+    "excellence": "Excellence",
+    "excellence.desc": "We pursue excellence in every process, ensuring quality and safety in each operation.",
+    "compliance": "Compliance",
+    "compliance.desc": "We strictly follow international standards and regulations in the precious metals industry."
+  },
+  "services": {
+    "title": "Complete Solutions in Precious Metals Import and Trade",
+    "subtitle": "We offer specialized services for every stage of the gold trading process",
+    "items": {
+      "0": {
+        "title": "Hand Carry – Dubai",
+        "subtitle": "",
+        "description": "Secure and personalized procedures for importing gold in hand luggage. We work with Transguard Security and certified refineries.",
+        "benefits": {
+          "0": "Security guaranteed by Transguard",
+          "1": "Agile and efficient process",
+          "2": "Real-time tracking"
+        }
+      },
+      "1": {
+        "title": "Cargo Import",
+        "subtitle": "(Cargo Carry)",
+        "description": "Logistics coordination for air freight with complete documentation, inspection, and customs clearance in Dubai.",
+        "benefits": {
+          "0": "Complete and accurate documentation",
+          "1": "Rigorous inspection and verification",
+          "2": "Facilitated customs clearance"
+        }
+      },
+      "2": {
+        "title": "Assay and Refining",
+        "subtitle": "",
+        "description": "Technical analysis at partner refineries, with the issuance of an assay report before finalizing the purchase.",
+        "benefits": {
+          "0": "Partnerships with certified refineries",
+          "1": "Detailed technical reports",
+          "2": "Guarantee of purity and quality"
+        }
+      },
+      "3": {
+        "title": "Compliance and Due Diligence",
+        "subtitle": "",
+        "description": "Complete support in validating documents and KYC (Know Your Customer) for sellers and exporters.",
+        "benefits": {
+          "0": "Rigorous document verification",
+          "1": "Complete and secure KYC process",
+          "2": "Compliance with international standards"
+        }
+      },
+      "4": {
+        "title": "Consulting and Support",
+        "subtitle": "",
+        "description": "Support in structuring export operations, guidance on licenses, taxes, and international certifications.",
+        "benefits": {
+          "0": "Specialized consulting in the sector",
+          "1": "Guidance on licenses and taxes",
+          "2": "Support for international certifications"
+        }
+      },
+      "5": {
+        "title": "Sale of Gold and Precious Stones",
+        "subtitle": "",
+        "description": "Trading of gold and precious stones such as diamonds, emeralds, tourmalines, rubies, and aquamarines with certification of origin and quality.",
+        "benefits": {
+          "0": "Products with certification of origin",
+          "1": "Guarantee of authenticity and quality",
+          "2": "Competitive prices in the international market"
+        }
+      }
+    },
+    "cta": "Contact us for more information"
+  },
+  "compliance": {
+    "title": "Commitment to Legality, Responsibility, and Human Rights",
+  "subtitle": "At {company}, compliance is non-negotiable. We operate according to the highest international standards of ethics, governance, and responsibility.",
+    "guidelines_title": "Our guidelines include:",
+    "guidelines": [
+      "Adherence to GIA, ICC, OECD standards and US legislation",
+      "Strict policy against money laundering and terrorism financing",
+      "Prohibition of involvement with conflict areas or human rights violations",
+      "Code of Conduct for employees and business partners",
+      "Rigorous Due Diligence processes throughout the supply chain"
+    ],
+    "documents_title": "Download our institutional documents:",
+    "documents": [
+      "Code of Conduct",
+      "Supply Chain Policy",
+      "Operational Procedures"
+    ],
+    "documents_footer": "All our procedures are regularly audited by independent entities to ensure compliance with international standards.",
+    "transparency_title": "Commitment to transparency",
+    "transparency_text": "We believe that transparency is fundamental to building trust. Therefore, we provide all necessary information about our processes, partnerships, and certifications."
+  },
+  "contact": {
+  "title": "Get in touch with {company}",
+    "subtitle": "Want to know more about our services or start a partnership? Fill out the form below or contact us through our official channels.",
+    "address_title": "Address",
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "United States",
+    "view_map": "View on Google Maps",
+    "email_title": "Email",
+    "email_response": "We will respond within 24 hours",
+    "send_email": "Send email",
+    "form": {
+      "name_label": "Name",
+      "name_placeholder": "Your name",
+      "email_label": "Email",
+      "email_placeholder": "your.email@example.com",
+      "company_label": "Company",
+      "company_placeholder": "Your company's name",
+      "message_label": "Message",
+      "message_placeholder": "How can we help?",
+      "submit_button": "Send Message",
+      "status_success": "Message sent successfully! We will get in touch soon.",
+      "status_error_fields": "Please fill in all required fields.",
+      "status_error_general": "An error occurred while sending your message. Please try again."
+    }
+  },
+  "footer": {
+    "tagline": "Excellence in precious metals trading with integrity and responsibility.",
+    "navigation_title": "Navigation",
+    "documents_title": "Documents",
+    "contact_title": "Contact",
+    "links": [
+      "Home",
+      "About Us",
+      "Services",
+      "Compliance",
+      "Contact"
+    ],
+    "legal": [
+      "Code of Conduct",
+      "Supply Chain Policy",
+      "Operational Procedures",
+      "Privacy Policy"
+    ],
+    "address_line1": "The Historic Alfred DuPont Building – Suite 731",
+    "address_line2": "169 E Flagler St, Miami, FL 33131",
+    "address_line3": "United States",
+    "copyright": "© {year} {company}. All rights reserved."
+  }
+}

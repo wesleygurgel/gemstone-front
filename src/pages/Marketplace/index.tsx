@@ -7,216 +7,178 @@ import ProductFilters from '@/components/marketplace/ProductFilters';
 import ProductGrid from '@/components/marketplace/ProductGrid';
 import { productService } from '@/services';
 import { ProductListItem } from '@/types/api';
+import { useTranslation } from 'react-i18next';
 
 const Marketplace = () => {
-  // State for products
+  const { t } = useTranslation('marketplace');
+
   const [products, setProducts] = useState<ProductListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // State for mobile drawer
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
-
-  // Get search parameters from URL
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Function to clear URL parameters
   const handleClearUrlParams = useCallback(() => {
-    // Create a new URLSearchParams object without the category_id parameter
     const newParams = new URLSearchParams(searchParams);
     newParams.delete('category_id');
     setSearchParams(newParams);
   }, [searchParams, setSearchParams]);
 
-  // Fetch products on component mount
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-
-        // Check if category_id is present in the URL
         const categoryId = searchParams.get('category_id');
-
-        // Create params object for API call
         const params: any = {};
-
-        // Apply category filter if present in URL
-        if (categoryId) {
-          params.category_id = categoryId;
-        }
+        if (categoryId) params.category_id = categoryId;
 
         const response = await productService.getProducts(params);
-
-        // Apply default sorting (relevance - by view_count) to the initial products
-        const sortedProducts = [...response];
-        sortedProducts.sort((a, b) => b.view_count - a.view_count);
-
-        setProducts(sortedProducts);
+        const sorted = [...response].sort((a, b) => b.view_count - a.view_count);
+        setProducts(sorted);
         setError(null);
-      } catch (err) {
-        setError('Falha ao carregar produtos. Por favor, tente novamente.');
+      } catch {
+        setError(
+          t('marketplace.errors.loadProducts', {
+            defaultValue: 'Failed to load products. Please try again.',
+          })
+        );
         setProducts([]);
       } finally {
         setLoading(false);
       }
     };
-
     fetchProducts();
-  }, [searchParams]);
+  }, [searchParams, t]);
 
-  // Handle filter changes
-  const handleFilterChange = useCallback(async (newFilters: any) => {
-    // Create params object for API call
-    const params: any = {};
-
-    // Apply price range filter if active
-    if (newFilters.priceRange.active) {
-      params.min_price = newFilters.priceRange.min;
-      params.max_price = newFilters.priceRange.max;
-    }
-
-    // Apply product type filters if active
-    if (newFilters.productTypes.active && newFilters.productTypes.selected.length > 0) {
-      params.product_type = newFilters.productTypes.selected.join(',');
-    }
-
-    // Apply weight filters if active
-    if (newFilters.weights.active && newFilters.weights.selected.length > 0) {
-      params.weight = newFilters.weights.selected.join(',');
-    }
-
-    // Apply category filter if active
-    if (newFilters.categories.active && newFilters.categories.selectedId) {
-      params.category_id = newFilters.categories.selectedId;
-    }
-
-    // Note: We don't apply sorting parameter to the API call anymore
-    // as sorting is now handled locally
-
-    // Fetch filtered products
-    setLoading(true);
-    try {
-      const response = await productService.getProducts(params);
-
-      // Apply the current sort to the filtered products
-      let sortedProducts = [...response];
-
-      // Apply sorting based on the filter's sort value
-      switch (newFilters.sort) {
-        case 'relevance':
-          // Sort by view_count (highest first)
-          sortedProducts.sort((a, b) => b.view_count - a.view_count);
-          break;
-        case 'price-asc':
-          // Sort by price (lowest first)
-          sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-          break;
-        case 'price-desc':
-          // Sort by price (highest first)
-          sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-          break;
-        case 'bestselling':
-          // Sort by sales_count (highest first)
-          sortedProducts.sort((a, b) => b.sales_count - a.sales_count);
-          break;
-        default:
-          // Default to relevance
-          sortedProducts.sort((a, b) => b.view_count - a.view_count);
+  const handleFilterChange = useCallback(
+    async (filters: any) => {
+      const params: any = {};
+      if (filters.priceRange.active) {
+        params.min_price = filters.priceRange.min;
+        params.max_price = filters.priceRange.max;
+      }
+      if (filters.productTypes.active && filters.productTypes.selected.length > 0) {
+        params.product_type = filters.productTypes.selected.join(',');
+      }
+      if (filters.weights.active && filters.weights.selected.length > 0) {
+        params.weight = filters.weights.selected.join(',');
+      }
+      if (filters.categories.active && filters.categories.selectedId) {
+        params.category_id = filters.categories.selectedId;
       }
 
-      setProducts(sortedProducts);
-      setError(null);
-    } catch (err) {
-      setError('Falha ao filtrar produtos. Por favor, tente novamente.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      setLoading(true);
+      try {
+        const response = await productService.getProducts(params);
+        let sorted = [...response];
+        switch (filters.sort) {
+          case 'price-asc':
+            sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            break;
+          case 'price-desc':
+            sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            break;
+          case 'bestselling':
+            sorted.sort((a, b) => b.sales_count - a.sales_count);
+            break;
+          default:
+            sorted.sort((a, b) => b.view_count - a.view_count);
+        }
+        setProducts(sorted);
+        setError(null);
+      } catch {
+        setError(
+          t('marketplace.errors.filterProducts', {
+            defaultValue: 'Failed to filter products. Please try again.',
+          })
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [t]
+  );
 
-  // Handle sort changes - now done locally without API calls
-  const handleSortChange = useCallback((newSort: string) => {
-    // Sort the products locally based on the selected sort option
-    const sortedProducts = [...products];
+  const handleSortChange = useCallback(
+    (sort: string) => {
+      const sorted = [...products];
+      switch (sort) {
+        case 'price-asc':
+          sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+          break;
+        case 'price-desc':
+          sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+          break;
+        case 'bestselling':
+          sorted.sort((a, b) => b.sales_count - a.sales_count);
+          break;
+        default:
+          sorted.sort((a, b) => b.view_count - a.view_count);
+      }
+      setProducts(sorted);
+    },
+    [products]
+  );
 
-    switch (newSort) {
-      case 'relevance':
-        // Sort by view_count (highest first)
-        sortedProducts.sort((a, b) => b.view_count - a.view_count);
-        break;
-      case 'price-asc':
-        // Sort by price (lowest first)
-        sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        break;
-      case 'price-desc':
-        // Sort by price (highest first)
-        sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-        break;
-      case 'bestselling':
-        // Sort by sales_count (highest first)
-        sortedProducts.sort((a, b) => b.sales_count - a.sales_count);
-        break;
-      default:
-        // Default to relevance
-        sortedProducts.sort((a, b) => b.view_count - a.view_count);
-    }
-
-    // Update the products state with the sorted products
-    setProducts(sortedProducts);
-  }, [products]);
-
-
-  // @ts-ignore
-  // @ts-ignore
   return (
     <MarketplaceLayout>
       <Helmet>
-        <title>Marketplace - Gemstone</title>
-        <meta name="description" content="Explore nossa seleção exclusiva de metais preciosos e pedras com certificação e procedência garantida." />
+        <title>{t('marketplace.meta.title', { defaultValue: 'Marketplace - Gemstone' })}</title>
+        <meta
+          name="description"
+          content={t('marketplace.meta.description', {
+            defaultValue:
+              'Explore our exclusive selection of certified precious metals and gemstones.',
+          })}
+        />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* Sidebar - visible on md and up */}
+          {/* Desktop Sidebar */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            {/* Filters */}
-            <ProductFilters 
-              initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
+            <ProductFilters
+              initialCategoryId={
+                searchParams.get('category_id')
+                  ? Number(searchParams.get('category_id'))
+                  : null
+              }
               onFilterChange={handleFilterChange}
               onSortChange={handleSortChange}
               onClearUrlParams={handleClearUrlParams}
             />
           </div>
 
-          {/* Main content */}
+          {/* Main */}
           <div className="flex-grow">
-            {/* Mobile filter button */}
             <div className="flex justify-between items-center mb-4 md:hidden">
-              <h2 className="text-xl font-semibold text-white">Produtos</h2>
+              <h2 className="text-xl font-semibold text-white">
+                {t('marketplace.products.title', { defaultValue: 'Products' })}
+              </h2>
               <button
                 onClick={() => setIsFilterDrawerOpen(true)}
                 className="flex items-center px-3 py-2 bg-black-800 rounded-lg border border-gem-purple/20 text-white/90 hover:text-gem-purple transition-colors"
               >
                 <Menu size={18} className="mr-2" />
-                Filtros
+                {t('marketplace.filters.title', { defaultValue: 'Filters' })}
               </button>
             </div>
 
-            {/* Product grid */}
-            <ProductGrid 
-              products={products}
-              loading={loading}
-              error={error}
-            />
+            <ProductGrid products={products} loading={loading} error={error} />
           </div>
         </div>
       </div>
 
-      {/* Mobile filter drawer */}
-      <ProductFilters 
-        isMobile={true}
+      {/* Mobile Drawer */}
+      <ProductFilters
+        isMobile
         isOpen={isFilterDrawerOpen}
-        onClose={() => {setIsFilterDrawerOpen(false)}}
-        initialCategoryId={searchParams.get('category_id') ? Number(searchParams.get('category_id')) : null}
+        onClose={() => setIsFilterDrawerOpen(false)}
+        initialCategoryId={
+          searchParams.get('category_id')
+            ? Number(searchParams.get('category_id'))
+            : null
+        }
         onFilterChange={handleFilterChange}
         onSortChange={handleSortChange}
         onClearUrlParams={handleClearUrlParams}

@@ -28,7 +28,7 @@ export const APP_NAME = import.meta.env.VITE_APP_NAME || 'GEMSTONE U.S.A. Diamon
 /**
  * Company full name
  */
-export const COMPANY_FULL_NAME = 'GEMSTONE U.S.A. Diamond\'s & Gold LLC';
+export const COMPANY_FULL_NAME = 'GEMSTONE\u00A0U.S.A.\u00A0Diamond\'s\u00A0&\u00A0Gold\u00A0LLC';
 
 /**
  * Application version

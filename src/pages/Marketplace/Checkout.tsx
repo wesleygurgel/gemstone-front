@@ -9,29 +9,29 @@ import { useToast } from '@/context/ToastContext';
 import { useAuth } from '@/context/AuthContext';
 import orderService from '@/services/orderService';
 import { CreateOrderRequest, PaymentMethod } from '@/types/api';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const { cart, loading: cartLoading, clearCart } = useCart();
   const { showToast } = useToast();
   const { user } = useAuth();
+  const { t } = useTranslation('marketplace');
 
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Confirmation
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // Form state
   const [formData, setFormData] = useState<CreateOrderRequest>({
     shipping_address: '',
     shipping_city: '',
     shipping_state: '',
-    shipping_country: 'Brasil',
+    shipping_country: t('checkout.form.countryDefault', { defaultValue: 'Brazil' }),
     shipping_postal_code: '',
     shipping_phone: '',
     payment_method: 'credit_card',
   });
 
-  // Pre-fill form with user data if available
   useEffect(() => {
     if (user?.profile) {
       setFormData(prevData => ({
@@ -45,77 +45,62 @@ const Checkout: React.FC = () => {
     }
   }, [user]);
 
-  // Redirect if cart is empty
   useEffect(() => {
     if (!cartLoading && (!cart || !cart.items || cart.items.length === 0) && !isCheckingOut) {
-      showToast('Seu carrinho está vazio', 'error');
+      showToast(t('checkout.toasts.cartEmpty'), 'error');
       navigate('/marketplace');
     }
-  }, [cart, cartLoading, navigate, showToast, isCheckingOut]);
+  }, [cart, cartLoading, navigate, showToast, isCheckingOut, t]);
 
-  // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  // Handle payment method selection
   const handlePaymentMethodChange = (method: PaymentMethod) => {
-    setFormData(prevData => ({
-      ...prevData,
-      payment_method: method,
-    }));
+    setFormData(prevData => ({ ...prevData, payment_method: method }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (step === 1) {
-      // Validate shipping information
-      if (!formData.shipping_address || !formData.shipping_city || !formData.shipping_state || 
-          !formData.shipping_postal_code || !formData.shipping_phone) {
-        showToast('Por favor, preencha todos os campos de endereço', 'error');
+      if (
+        !formData.shipping_address ||
+        !formData.shipping_city ||
+        !formData.shipping_state ||
+        !formData.shipping_postal_code ||
+        !formData.shipping_phone
+      ) {
+        showToast(t('checkout.errors.addressRequired'), 'error');
         return;
       }
       setStep(2);
     } else if (step === 2) {
-      // Create order
       try {
-        setIsCheckingOut(true); // Set checking out to true before creating order
+        setIsCheckingOut(true);
         setLoading(true);
 
         const order = await orderService.createOrder(formData);
-
-        // Store the order ID before clearing the cart
         const orderId = order.id;
 
-        showToast('Pedido realizado com sucesso!', 'success');
+        showToast(t('checkout.toasts.orderSuccess'), 'success');
         setStep(3);
 
-        // Clear the cart after setting the next step
         await clearCart();
 
-        // Navigate to order details after a delay using the stored orderId
-        // Create a local copy of orderId to ensure it's captured in the closure
         const orderIdForNavigation = orderId;
 
         setTimeout(() => {
-          // Check if orderId is valid before navigating
           if (!orderIdForNavigation) {
-            // Navigate to orders list instead of a specific order
             navigate('/marketplace/orders');
             return;
           }
-
           navigate(`/marketplace/orders/${orderIdForNavigation}`);
         }, 3000);
       } catch (error) {
-        showToast('Erro ao criar pedido. Por favor, tente novamente.', 'error');
-        setIsCheckingOut(false); // Reset in case of error
+        showToast(t('checkout.errors.orderFail'), 'error');
+        setIsCheckingOut(false);
       } finally {
         setLoading(false);
       }
@@ -125,62 +110,69 @@ const Checkout: React.FC = () => {
   return (
     <MarketplaceLayout>
       <Helmet>
-        <title>Checkout - Gemstone</title>
-        <meta name="description" content="Complete sua compra na Gemstone" />
+        <title>{t('checkout.meta.title')}</title>
+        <meta name="description" content={t('checkout.meta.description')} />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
         <div className="mb-4">
-          <Breadcrumb 
+          <Breadcrumb
             items={[
-              { label: 'Marketplace', path: '/marketplace', isLast: false },
-              { label: 'Checkout', path: '/checkout', isLast: true }
+              { label: t('breadcrumb.marketplace'), path: '/marketplace', isLast: false },
+              { label: t('checkout.title'), path: '/checkout', isLast: true },
             ]}
           />
         </div>
 
-        {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-gem-pink via-gem-purple to-gem-blue bg-clip-text text-transparent">
-            Checkout
+            {t('checkout.title')}
           </h1>
-          <p className="text-white/70">
-            Complete sua compra em poucos passos
-          </p>
+          <p className="text-white/70">{t('checkout.subtitle')}</p>
         </div>
 
-        {/* Checkout steps */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center">
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step >= 1 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'}`}>
+            <div
+              className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                step >= 1 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'
+              }`}
+            >
               <span className="text-white font-medium">1</span>
             </div>
             <div className={`w-16 h-1 ${step >= 2 ? 'bg-gem-purple' : 'bg-black-800'}`}></div>
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step >= 2 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'}`}>
+            <div
+              className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                step >= 2 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'
+              }`}
+            >
               <span className="text-white font-medium">2</span>
             </div>
             <div className={`w-16 h-1 ${step >= 3 ? 'bg-gem-purple' : 'bg-black-800'}`}></div>
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step >= 3 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'}`}>
+            <div
+              className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                step >= 3 ? 'bg-gem-purple' : 'bg-black-800 border border-gem-purple/30'
+              }`}
+            >
               <span className="text-white font-medium">3</span>
             </div>
           </div>
         </div>
 
-        {/* Main content */}
         <div className="max-w-3xl mx-auto">
-          {/* Step 1: Shipping Information */}
           {step === 1 && (
             <div className="bg-black-800 border border-gem-purple/20 rounded-lg p-6 mb-6">
               <div className="flex items-center mb-4">
                 <Truck className="text-gem-purple mr-2" size={24} />
-                <h2 className="text-xl font-semibold text-white">Informações de Entrega</h2>
+                <h2 className="text-xl font-semibold text-white">{t('checkout.sections.shipping.title')}</h2>
               </div>
 
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div className="col-span-2">
-                    <label htmlFor="shipping_address" className="block text-white/80 mb-1">Endereço</label>
+                    <label htmlFor="shipping_address" className="block text-white/80 mb-1">
+                      {t('checkout.form.address')}
+                    </label>
                     <input
                       type="text"
                       id="shipping_address"
@@ -188,13 +180,15 @@ const Checkout: React.FC = () => {
                       value={formData.shipping_address}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 bg-black-900 border border-gem-purple/30 rounded-md text-white focus:border-gem-purple focus:outline-none"
-                      placeholder="Rua, número, complemento"
+                      placeholder={t('checkout.form.addressPlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="shipping_city" className="block text-white/80 mb-1">Cidade</label>
+                    <label htmlFor="shipping_city" className="block text-white/80 mb-1">
+                      {t('checkout.form.city')}
+                    </label>
                     <input
                       type="text"
                       id="shipping_city"
@@ -202,13 +196,15 @@ const Checkout: React.FC = () => {
                       value={formData.shipping_city}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 bg-black-900 border border-gem-purple/30 rounded-md text-white focus:border-gem-purple focus:outline-none"
-                      placeholder="Sua cidade"
+                      placeholder={t('checkout.form.cityPlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="shipping_state" className="block text-white/80 mb-1">Estado</label>
+                    <label htmlFor="shipping_state" className="block text-white/80 mb-1">
+                      {t('checkout.form.state')}
+                    </label>
                     <input
                       type="text"
                       id="shipping_state"
@@ -216,13 +212,15 @@ const Checkout: React.FC = () => {
                       value={formData.shipping_state}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 bg-black-900 border border-gem-purple/30 rounded-md text-white focus:border-gem-purple focus:outline-none"
-                      placeholder="Seu estado"
+                      placeholder={t('checkout.form.statePlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="shipping_postal_code" className="block text-white/80 mb-1">CEP</label>
+                    <label htmlFor="shipping_postal_code" className="block text-white/80 mb-1">
+                      {t('checkout.form.postalCode')}
+                    </label>
                     <input
                       type="text"
                       id="shipping_postal_code"
@@ -230,13 +228,15 @@ const Checkout: React.FC = () => {
                       value={formData.shipping_postal_code}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 bg-black-900 border border-gem-purple/30 rounded-md text-white focus:border-gem-purple focus:outline-none"
-                      placeholder="00000-000"
+                      placeholder={t('checkout.form.postalCodePlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="shipping_phone" className="block text-white/80 mb-1">Telefone</label>
+                    <label htmlFor="shipping_phone" className="block text-white/80 mb-1">
+                      {t('checkout.form.phone')}
+                    </label>
                     <input
                       type="tel"
                       id="shipping_phone"
@@ -244,7 +244,7 @@ const Checkout: React.FC = () => {
                       value={formData.shipping_phone}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 bg-black-900 border border-gem-purple/30 rounded-md text-white focus:border-gem-purple focus:outline-none"
-                      placeholder="(00) 00000-0000"
+                      placeholder={t('checkout.form.phonePlaceholder')}
                       required
                     />
                   </div>
@@ -255,24 +255,23 @@ const Checkout: React.FC = () => {
                     type="submit"
                     className="px-6 py-2 bg-gradient-to-r from-gem-purple to-gem-blue text-white rounded-md hover:shadow-neon-purple transition-all duration-300"
                   >
-                    Continuar para Pagamento
+                    {t('checkout.buttons.continueToPayment')}
                   </button>
                 </div>
               </form>
             </div>
           )}
 
-          {/* Step 2: Payment Information */}
           {step === 2 && (
             <div className="bg-black-800 border border-gem-purple/20 rounded-lg p-6 mb-6">
               <div className="flex items-center mb-4">
                 <CreditCard className="text-gem-purple mr-2" size={24} />
-                <h2 className="text-xl font-semibold text-white">Informações de Pagamento</h2>
+                <h2 className="text-xl font-semibold text-white">{t('checkout.sections.payment.title')}</h2>
               </div>
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-6">
-                  <label className="block text-white/80 mb-2">Método de Pagamento</label>
+                  <label className="block text-white/80 mb-2">{t('checkout.sections.payment.method')}</label>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div
@@ -284,14 +283,16 @@ const Checkout: React.FC = () => {
                       onClick={() => handlePaymentMethodChange('credit_card')}
                     >
                       <div className="flex items-center">
-                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                          formData.payment_method === 'credit_card' ? 'border-gem-purple' : 'border-white/30'
-                        }`}>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                            formData.payment_method === 'credit_card' ? 'border-gem-purple' : 'border-white/30'
+                          }`}
+                        >
                           {formData.payment_method === 'credit_card' && (
                             <div className="w-3 h-3 rounded-full bg-gem-purple"></div>
                           )}
                         </div>
-                        <span className="text-white">Cartão de Crédito</span>
+                        <span className="text-white">{t('checkout.paymentMethods.creditCard')}</span>
                       </div>
                     </div>
 
@@ -304,14 +305,16 @@ const Checkout: React.FC = () => {
                       onClick={() => handlePaymentMethodChange('debit_card')}
                     >
                       <div className="flex items-center">
-                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                          formData.payment_method === 'debit_card' ? 'border-gem-purple' : 'border-white/30'
-                        }`}>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                            formData.payment_method === 'debit_card' ? 'border-gem-purple' : 'border-white/30'
+                          }`}
+                        >
                           {formData.payment_method === 'debit_card' && (
                             <div className="w-3 h-3 rounded-full bg-gem-purple"></div>
                           )}
                         </div>
-                        <span className="text-white">Cartão de Débito</span>
+                        <span className="text-white">{t('checkout.paymentMethods.debitCard')}</span>
                       </div>
                     </div>
 
@@ -324,14 +327,16 @@ const Checkout: React.FC = () => {
                       onClick={() => handlePaymentMethodChange('bank_transfer')}
                     >
                       <div className="flex items-center">
-                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                          formData.payment_method === 'bank_transfer' ? 'border-gem-purple' : 'border-white/30'
-                        }`}>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                            formData.payment_method === 'bank_transfer' ? 'border-gem-purple' : 'border-white/30'
+                          }`}
+                        >
                           {formData.payment_method === 'bank_transfer' && (
                             <div className="w-3 h-3 rounded-full bg-gem-purple"></div>
                           )}
                         </div>
-                        <span className="text-white">Transferência Bancária</span>
+                        <span className="text-white">{t('checkout.paymentMethods.bankTransfer')}</span>
                       </div>
                     </div>
 
@@ -344,39 +349,54 @@ const Checkout: React.FC = () => {
                       onClick={() => handlePaymentMethodChange('paypal')}
                     >
                       <div className="flex items-center">
-                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                          formData.payment_method === 'paypal' ? 'border-gem-purple' : 'border-white/30'
-                        }`}>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                            formData.payment_method === 'paypal' ? 'border-gem-purple' : 'border-white/30'
+                          }`}
+                        >
                           {formData.payment_method === 'paypal' && (
                             <div className="w-3 h-3 rounded-full bg-gem-purple"></div>
                           )}
                         </div>
-                        <span className="text-white">PayPal</span>
+                        <span className="text-white">{t('checkout.paymentMethods.paypal')}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Order Summary */}
                 <div className="border border-gem-purple/20 rounded-lg p-4 mb-6 bg-black-900">
-                  <h3 className="text-lg font-semibold text-white mb-3">Resumo do Pedido</h3>
+                  <h3 className="text-lg font-semibold text-white mb-3">{t('checkout.summary.title')}</h3>
 
                   <div className="space-y-2 mb-4">
                     {cart?.items.map(item => (
                       <div key={item.id} className="flex justify-between">
                         <span className="text-white/80">
-                          {item.product_details.name} x {item.quantity}
+                          <Trans
+                            i18nKey="checkout.summary.itemLine"
+                            values={{ name: item.product_details.name, qty: item.quantity }}
+                            defaultValue="{{name}} x {{qty}}"
+                          />
                         </span>
-                        <span className="text-white">R$ {parseFloat(item.total_price).toFixed(2)}</span>
+                        <span className="text-white">
+                          <Trans
+                            i18nKey="checkout.summary.currencyLine"
+                            values={{ value: parseFloat(item.total_price).toFixed(2) }}
+                            defaultValue="R$ {{value}}"
+                          />
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   <div className="border-t border-gem-purple/20 pt-2 mt-2">
                     <div className="flex justify-between font-medium">
-                      <span className="text-white">Total</span>
+                      <span className="text-white">{t('checkout.summary.total')}</span>
                       <span className="bg-gradient-to-r from-gem-purple to-gem-pink bg-clip-text text-transparent">
-                        R$ {cart ? parseFloat(cart.total_price).toFixed(2) : '0.00'}
+                        <Trans
+                          i18nKey="checkout.summary.currencyLine"
+                          values={{ value: cart ? parseFloat(cart.total_price).toFixed(2) : '0.00' }}
+                          defaultValue="R$ {{value}}"
+                        />
                       </span>
                     </div>
                   </div>
@@ -388,7 +408,7 @@ const Checkout: React.FC = () => {
                     onClick={() => setStep(1)}
                     className="px-6 py-2 bg-black-700 text-white/80 rounded-md hover:text-white transition-colors"
                   >
-                    Voltar
+                    {t('checkout.buttons.back')}
                   </button>
 
                   <button
@@ -399,10 +419,10 @@ const Checkout: React.FC = () => {
                     {loading ? (
                       <span className="flex items-center">
                         <span className="animate-spin h-4 w-4 mr-2 border-t-2 border-b-2 border-white rounded-full"></span>
-                        Processando...
+                        {t('checkout.buttons.processing')}
                       </span>
                     ) : (
-                      'Finalizar Pedido'
+                      t('checkout.buttons.finishOrder')
                     )}
                   </button>
                 </div>
@@ -410,21 +430,18 @@ const Checkout: React.FC = () => {
             </div>
           )}
 
-          {/* Step 3: Confirmation */}
           {step === 3 && (
             <div className="bg-black-800 border border-gem-purple/20 rounded-lg p-6 mb-6 text-center">
               <div className="flex flex-col items-center mb-6">
                 <CheckCircle className="text-gem-purple mb-4" size={64} />
-                <h2 className="text-2xl font-semibold text-white mb-2">Pedido Realizado com Sucesso!</h2>
-                <p className="text-white/70">
-                  Seu pedido foi recebido e está sendo processado.
-                </p>
+                <h2 className="text-2xl font-semibold text-white mb-2">
+                  {t('checkout.confirmation.title')}
+                </h2>
+                <p className="text-white/70">{t('checkout.confirmation.subtitle')}</p>
               </div>
 
               <div className="animate-pulse mb-6">
-                <p className="text-white/80">
-                  Redirecionando para os detalhes do pedido...
-                </p>
+                <p className="text-white/80">{t('checkout.confirmation.redirect')}</p>
               </div>
             </div>
           )}

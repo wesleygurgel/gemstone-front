@@ -1,0 +1,286 @@
+{
+  "header": {
+    "title": "المتجر",
+    "subtitle": "اكتشف مجموعتنا الحصرية من المعادن النفيسة والأحجار الكريمة مع شهادة ومصدر مضمونين.",
+    "searchPlaceholder": "البحث عن المنتجات...",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "myProfile": "ملفي الشخصي",
+    "myOrders": "طلباتي",
+    "favorites": "المفضلة"
+  },
+  "filters": {
+    "title": "الفلاتر",
+    "apply": "تطبيق",
+    "clear": "مسح الفلاتر",
+    "category": "الفئات",
+    "priceRange": "نطاق السعر",
+    "min": "الحد الأدنى",
+    "max": "الحد الأقصى",
+    "sort": "ترتيب حسب",
+    "sortOptions": {
+      "relevance": "الصلة",
+      "priceAsc": "السعر: من الأقل إلى الأعلى",
+      "priceDesc": "السعر: من الأعلى إلى الأقل",
+      "bestselling": "الأكثر مبيعًا"
+    },
+    "sections": {
+      "productType": "نوع المنتج",
+      "productTypeOptions": {
+        "barra": "سبيكة",
+        "joia": "مجوهرات",
+        "bruto": "خام",
+        "certificado": "معتمد"
+      },
+      "weight": "الوزن / القيراط",
+      "weightOptions": {
+        "1g": "1 غرام",
+        "10g": "10 غرام",
+        "50g": "50 غرام",
+        "100g": "100 غرام",
+        "1ct": "1 قيراط",
+        "2ct": "2 قيراط"
+      }
+    },
+    "clearOne": "مسح"
+  },
+  "categories": {
+    "metals": {
+      "title": "المعادن",
+      "desc": "الذهب والفضة والمعادن الثمينة الأخرى"
+    },
+    "precious_stones": {
+      "title": "الأحجار الكريمة",
+      "desc": "الألماس والزمرد والياقوت والزفير"
+    },
+    "jewels": {
+      "title": "المجوهرات",
+      "desc": "مجوهرات وإكسسوارات حصرية"
+    },
+    "exotics": {
+      "title": "الغريبة",
+      "desc": "قطع نادرة وخاصة"
+    }
+  },
+  "products": {
+    "addToCart": "إضافة",
+    "added": "تمت الإضافة",
+    "adding": "جارٍ الإضافة...",
+    "unavailable": "غير متوفر",
+    "featured": "مميز",
+    "empty": "لم يتم العثور على منتجات.",
+    "emptyHint": "حاول تعديل الفلاتر أو البحث عن مصطلح آخر."
+  },
+  "cart": {
+    "title": "عربة التسوق الخاصة بك",
+    "empty": "عربة التسوق فارغة",
+    "checkout": "إتمام الشراء",
+    "continue": "متابعة التسوق",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "total": "المجموع"
+  },
+  "breadcrumb": {
+    "home": "الرئيسية",
+    "marketplace": "المتجر"
+  },
+  "common": {
+    "retry": "حاول مرة أخرى"
+  },
+  "productDetail": {
+    "errors": {
+      "loadFailed": "فشل في تحميل المنتج. يرجى المحاولة مرة أخرى.",
+      "notFound": "المنتج غير موجود"
+    },
+    "toasts": {
+      "addedToCart": "تمت إضافة {{name}} إلى عربة التسوق",
+      "addToCartError": "خطأ في إضافة العنصر إلى عربة التسوق",
+      "loginForWishlist": "سجل الدخول لإضافة عناصر إلى المفضلة",
+      "removedFromWishlist": "تمت إزالة {{name}} من المفضلة",
+      "addedToWishlist": "تمت إضافة {{name}} إلى المفضلة",
+      "wishlistError": "خطأ في تحديث المفضلة"
+    },
+    "actions": {
+      "backToStore": "العودة إلى المتجر",
+      "unavailable": "غير متوفر",
+      "processing": "جارٍ المعالجة...",
+      "buyNow": "اشتر الآن",
+      "adding": "جارٍ الإضافة...",
+      "added": "تمت الإضافة إلى عربة التسوق",
+      "addToCart": "إضافة إلى عربة التسوق"
+    },
+    "media": {
+      "noImage": "لا توجد صورة",
+      "image": "صورة"
+    },
+    "payment": {
+      "installments": "حتى 12 قسطًا بدون فائدة",
+      "pixDiscount": "خصم 10% عند الدفع عبر PIX أو Boleto ({{value}})"
+    },
+    "stock": {
+      "inStock": "متوفر - {{count}} وحدة متاحة",
+      "unavailable": "المنتج غير متوفر"
+    },
+    "info": {
+      "shipping": {
+        "title": "التوصيل",
+        "free": "شحن مجاني لجميع أنحاء البرازيل",
+        "express": "التوصيل السريع متاح"
+      },
+      "warranty": {
+        "title": "الضمان",
+        "months": "12 شهر ضمان",
+        "returns": "30 يومًا للإرجاع"
+      }
+    },
+    "urgency": {
+      "limitedOffer": "عرض لفترة محدودة!",
+      "stockLeft": "متبقي {{count}} وحدات فقط في المخزون"
+    },
+    "description": {
+      "title": "وصف المنتج"
+    },
+    "related": {
+      "title": "منتجات ذات صلة"
+    },
+    "wishlist": {
+      "addAria": "إضافة إلى المفضلة",
+      "removeAria": "إزالة من المفضلة"
+    }
+  },
+  "favorites": {
+    "title": "المفضلة",
+    "subtitle": "المنتجات التي أضفتها إلى قائمة رغباتك",
+    "empty": {
+      "title": "قائمتك المفضلة فارغة",
+      "message": "أضف منتجات إلى قائمتك المفضلة لرؤيتها هنا.",
+      "button": "استكشاف المنتجات"
+    },
+    "error": {
+      "title": "خطأ في تحميل المفضلة",
+      "message": "تعذر تحميل منتجاتك المفضلة.",
+      "retry": "حاول مرة أخرى"
+    },
+    "list": {
+      "title": "قائمة المفضلة",
+      "items": "{{count}} عنصر",
+      "items_plural": "{{count}} عناصر"
+    }
+  },
+  "orders": {
+    "list": {
+      "title": "طلباتي",
+      "subtitle": "تتبع حالة طلباتك",
+      "filters": {
+        "title": "الفلاتر",
+        "status": "حالة الطلب",
+        "paymentStatus": "حالة الدفع",
+        "apply": "تطبيق",
+        "clear": "مسح"
+      },
+      "empty": {
+        "title": "لم يتم العثور على طلبات",
+        "message": "لم تقم بوضع أي طلبات بعد أو لا توجد طلبات تطابق الفلاتر المحددة.",
+        "button": "استكشاف المنتجات"
+      },
+      "error": {
+        "title": "خطأ في تحميل الطلبات",
+        "message": "تعذر تحميل طلباتك.",
+        "retry": "حاول مرة أخرى"
+      },
+      "columns": {
+        "order": "الطلب",
+        "date": "التاريخ",
+        "status": "الحالة",
+        "payment": "الدفع",
+        "total": "المجموع",
+        "actions": "الإجراءات"
+      },
+      "details": "التفاصيل"
+    },
+    "detail": {
+      "title": "تفاصيل الطلب",
+      "notFound": "الطلب غير موجود",
+      "notFoundMessage": "الطلب الذي تبحث عنه غير موجود أو تمت إزالته.",
+      "error": "فشل في تحميل تفاصيل الطلب. يرجى المحاولة مرة أخرى.",
+      "back": "العودة إلى طلباتي",
+      "retry": "حاول مرة أخرى",
+      "statuses": {
+        "pending": "في الانتظار",
+        "processing": "قيد المعالجة",
+        "shipped": "تم الشحن",
+        "delivered": "تم التسليم",
+        "cancelled": "ملغي"
+      },
+      "paymentStatuses": {
+        "pending": "في الانتظار",
+        "processing": "قيد المعالجة",
+        "completed": "مكتمل",
+        "failed": "فشل",
+        "refunded": "تم الاسترداد"
+      },
+      "paymentMethods": {
+        "credit_card": "بطاقة ائتمان",
+        "debit_card": "بطاقة خصم مباشر",
+        "bank_transfer": "تحويل بنكي",
+        "paypal": "PayPal",
+        "other": "أخرى"
+      },
+      "sections": {
+        "items": "عناصر الطلب",
+        "statusTimeline": "حالة الطلب",
+        "shipping": "معلومات الشحن",
+        "payment": "معلومات الدفع",
+        "actions": "الإجراءات"
+      },
+      "cancel": {
+        "button": "إلغاء الطلب",
+        "confirm": "هل أنت متأكد أنك تريد إلغاء هذا الطلب؟",
+        "success": "تم إلغاء الطلب بنجاح",
+        "error": "فشل في إلغاء الطلب. يرجى المحاولة مرة أخرى.",
+        "processing": "جارٍ الإلغاء..."
+      },
+      "labels": {
+        "total": "المجموع",
+        "quantity": "الكمية",
+        "each": "كل",
+        "method": "الطريقة",
+        "status": "الحالة"
+      }
+    }
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "metaDescription": "إدارة معلومات ملفك الشخصي في Gemstone Marketplace",
+    "breadcrumb": "الملف الشخصي",
+    "subtitle": "إدارة معلوماتك الشخصية وعنوانك",
+    "loading": "جارٍ تحميل الملف الشخصي...",
+    "notAvailable": "غير متوفر",
+    "notProvided": "لم يتم توفيره",
+    "memberSince": "عضو منذ {{date}}",
+    "lastLogin": "آخر تسجيل دخول {{date}}",
+    "section": {
+      "contact": "معلومات الاتصال والعنوان"
+    },
+    "fields": {
+      "first_name": { "label": "الاسم الأول", "placeholder": "اسمك الأول" },
+      "last_name": { "label": "اسم العائلة", "placeholder": "اسم عائلتك" },
+      "phone_number": { "label": "رقم الهاتف", "placeholder": "(00) 00000-0000" },
+      "address": { "label": "العنوان", "placeholder": "الشارع، الرقم، الشقة" },
+      "city": { "label": "المدينة", "placeholder": "مدينتك" },
+      "state": { "label": "الولاية", "placeholder": "ولايتك" },
+      "country": { "label": "البلد", "placeholder": "بلدك" },
+      "postal_code": { "label": "الرمز البريدي", "placeholder": "00000-000" }
+    },
+    "actions": {
+      "edit": "تعديل",
+      "cancel": "إلغاء",
+      "save": "حفظ التغييرات",
+      "saving": "جارٍ الحفظ..."
+    },
+    "toasts": {
+      "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
+      "updateError": "خطأ في تحديث الملف الشخصي. حاول مرة أخرى."
+    }
+  }
+}
